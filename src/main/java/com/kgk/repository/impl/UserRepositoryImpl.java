@@ -202,6 +202,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     public void deleteUser(User user) { mapper.delete(user); }
 
+    //TODO: delete methods for profile components
+
     private User setProfileComponents(User user) {
         user.setHobbies(findHobbiesByUserId(user.getUserId()));
         user.setCompetences(findCompetencesByUserId(user.getUserId()));
