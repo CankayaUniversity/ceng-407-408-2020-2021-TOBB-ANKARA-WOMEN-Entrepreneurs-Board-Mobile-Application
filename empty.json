@@ -1,0 +1,15 @@
+{
+  "provider": {
+    "name": "aws",
+    "iamRoleStatements": [
+      {
+        "Effect": "Allow",
+        "Action": [
+          "dynamodb:DescribeTable",
+          "dynamodb:Query"
+        ],
+        "Resource": ""
+      }
+    ]
+  }
+}
