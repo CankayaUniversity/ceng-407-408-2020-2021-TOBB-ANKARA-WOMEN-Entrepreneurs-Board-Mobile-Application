@@ -14,6 +14,7 @@ import javax.inject.Singleton;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Singleton
 public class UserRepositoryImpl implements UserRepository {
@@ -114,7 +115,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     public User saveUser(User user) {
         user.setRoleId("101");
-        //user.setUserId(UUID.randomUUID().toString())
+        //user.setUserId(UUID.randomUUID().toString());
         mapper.save(user);
 
         return mapper.load(User.class, user.getUserId());
