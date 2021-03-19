@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kgk.model.User;
 import com.kgk.model.profile.*;
@@ -14,7 +15,6 @@ import javax.inject.Singleton;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 @Singleton
 public class UserRepositoryImpl implements UserRepository {
@@ -108,24 +108,98 @@ public class UserRepositoryImpl implements UserRepository {
         return mapper.query(User.class, queryExpression);
     }
 
-    public User findUserById(String userId) {
+    public User findUserByIdAndSetProfileComp(String userId) {
         User user = mapper.load(User.class, userId, config);
         return setProfileComponents(user);
     }
 
+    @Override
+    public User findUserById(String userId) {
+        return mapper.load(User.class, userId, config);
+    }
+
     public User saveUser(User user) {
-        user.setRoleId("101");
-        //user.setUserId(UUID.randomUUID().toString());
+        user.setRoleId("101"); //roleId'ler Roles table'ından çekilsin
+
+        if (CollectionUtils.isNotEmpty(user.getHobbies())) {
+            user.getHobbies().forEach(
+                    hobbyInput -> {
+                        Hobby hobby = new Hobby();
+                        hobby.setHobbyName(hobbyInput.getHobbyName());
+                        hobby.setHobbyDesc(hobbyInput.getHobbyDesc());
+                        hobby.setUserId(user.getUserId());
+                        mapper.save(hobby);
+                        user.getHobbies().add(hobby);
+                    }
+            );
+        }
+
+        if (CollectionUtils.isNotEmpty(user.getCompetences())) {
+            user.getCompetences().forEach(
+                    competenceInput -> {
+                        Competence competence = new Competence();
+                        competence.setCompName(competenceInput.getCompName());
+                        competence.setCompDesc(competenceInput.getCompDesc());
+                        competence.setUserId(user.getUserId());
+                        mapper.save(competence);
+                        user.getCompetences().add(competence);
+                    }
+            );
+        }
+
+        if (CollectionUtils.isNotEmpty(user.getProjects())) {
+            user.getProjects().forEach(
+                    projectInput -> {
+                        Project project = new Project();
+                        project.setProjectName(projectInput.getProjectName());
+                        project.setProjectDesc(projectInput.getProjectDesc());
+                        project.setProjectDate(projectInput.getProjectDate());
+                        project.setUserId(user.getUserId());
+                        mapper.save(project);
+                        user.getProjects().add(project);
+                    }
+            );
+        }
+
+        if (CollectionUtils.isNotEmpty(user.getLanguages())) {
+            user.getLanguages().forEach(
+                    languageInput -> {
+                        Language language = new Language();
+                        language.setLangName(languageInput.getLangName());
+                        language.setLangLevel(languageInput.getLangLevel());
+                        language.setUserId(user.getUserId());
+                        mapper.save(language);
+                        user.getLanguages().add(language);
+                    }
+            );
+        }
+
+        if (CollectionUtils.isNotEmpty(user.getCertificates())) {
+            user.getCertificates().forEach(
+                    certificateInput -> {
+                        Certificate certificate = new Certificate();
+                        certificate.setCertName(certificateInput.getCertName());
+                        certificate.setCertDesc(certificateInput.getCertDesc());
+                        certificate.setCertFile(certificateInput.getCertFile());
+                        certificate.setValidity(certificateInput.getValidity());
+                        certificate.setUserId(user.getUserId());
+                        mapper.save(certificate);
+                        user.getCertificates().add(certificate);
+                    }
+            );
+        }
         mapper.save(user);
 
-        return mapper.load(User.class, user.getUserId());
+        //return mapper.load(User.class, user.getUserId());
+        return user;
     }
 
     public User updateUser(String userId, User user) {
-        User userRetrieved = findUserById(userId);
+        User userRetrieved = findUserByIdAndSetProfileComp(userId);
 
         if (CollectionUtils.isNotEmpty(user.getHobbies())) {
-            userRetrieved.getHobbies().clear();
+            //TODO: bu kısım karışık, gelen Collection'la db'deki Collection karşılaştırılıp,
+            // update edilmesi gerekli
             user.getHobbies().forEach(
                     hobbyInput -> {
                         Hobby hobby = new Hobby();
@@ -139,7 +213,6 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         if (CollectionUtils.isNotEmpty(user.getCompetences())) {
-            userRetrieved.getCompetences().clear();
             user.getCompetences().forEach(
                     competenceInput -> {
                         Competence competence = new Competence();
@@ -153,7 +226,6 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         if (CollectionUtils.isNotEmpty(user.getProjects())) {
-            userRetrieved.getProjects().clear();
             user.getProjects().forEach(
                     projectInput -> {
                         Project project = new Project();
@@ -168,7 +240,6 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         if (CollectionUtils.isNotEmpty(user.getLanguages())) {
-            userRetrieved.getLanguages().clear();
             user.getLanguages().forEach(
                     languageInput -> {
                         Language language = new Language();
@@ -182,7 +253,6 @@ public class UserRepositoryImpl implements UserRepository {
         }
 
         if (CollectionUtils.isNotEmpty(user.getCertificates())) {
-            userRetrieved.getCertificates().clear();
             user.getCertificates().forEach(
                     certificateInput -> {
                         Certificate certificate = new Certificate();

@@ -39,6 +39,11 @@ public class UserController {
       return userRepository.findUsersByRoleId(roleId);
     }
 
+    @Get("/{userId}")
+    public User showUserProfile(@PathVariable("userId") String userId) {
+        return userRepository.findUserByIdAndSetProfileComp(userId);
+    }
+
     //Authorize for Permission Admin
     @Put("/{userId}")
     public User assignRole(@PathVariable("userId") String userId, @Valid @Body String roleId) {

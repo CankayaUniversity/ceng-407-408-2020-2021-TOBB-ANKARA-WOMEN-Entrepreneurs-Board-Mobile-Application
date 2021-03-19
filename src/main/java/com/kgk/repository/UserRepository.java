@@ -21,6 +21,8 @@ public interface UserRepository {
 
   Collection<User> findUsersByRoleId(String roleId);
 
+  User findUserByIdAndSetProfileComp(String userId);
+
   User findUserById(String userId);
 
   User saveUser(User user);
