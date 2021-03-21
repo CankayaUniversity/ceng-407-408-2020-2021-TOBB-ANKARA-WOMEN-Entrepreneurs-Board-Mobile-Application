@@ -29,6 +29,6 @@ public interface UserRepository {
 
   User updateUser(String userId, User user);
 
-  void deleteUser(User user);
+  void deleteUser(String userId);
 
 }

@@ -8,7 +8,7 @@ import io.micronaut.http.annotation.*;
 import javax.validation.Valid;
 import java.util.Collection;
 
-@Controller("user-role")
+@Controller("api/user-role")
 public class UserRolesController {
 
     private final UserRolesRepository userRolesRepository;
@@ -37,9 +37,9 @@ public class UserRolesController {
         return userRolesRepository.findAllUsersWithRoleId(roleId);
     }
 
-    @Delete
-    public void delete(@Valid @Body UserRole userRole) {
-        userRolesRepository.deleteRole(userRole);
+    @Delete("/{roleId}")
+    public void delete(@PathVariable("roleId") String roleId) {
+        userRolesRepository.deleteRole(roleId);
     }
 
 }

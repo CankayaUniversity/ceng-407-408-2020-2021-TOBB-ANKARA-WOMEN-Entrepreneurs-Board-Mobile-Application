@@ -7,7 +7,7 @@ import io.micronaut.http.annotation.*;
 import javax.validation.Valid;
 import java.util.Collection;
 
-@Controller("/register-form")
+@Controller("/api/register-form")
 public class RegisterFormController {
 
     private final RegisterFormRepository registerFormRepository;
@@ -26,9 +26,9 @@ public class RegisterFormController {
         return registerFormRepository.updateRegisterForm(registerForm);
     }
 
-    @Delete
-    public void delete(@Valid @Body RegisterForm registerForm){
-        registerFormRepository.deleteRegisterForm(registerForm);
+    @Delete("/{registerId}")
+    public void delete(@PathVariable("registerId") String registerId){
+        registerFormRepository.deleteRegisterForm(registerId);
     }
 
     @Get

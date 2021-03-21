@@ -16,6 +16,6 @@ public interface RegisterFormRepository {
 
     RegisterForm updateRegisterForm(RegisterForm registerForm);
 
-    void deleteRegisterForm(RegisterForm registerForm);
+    void deleteRegisterForm(String registerId);
 
 }

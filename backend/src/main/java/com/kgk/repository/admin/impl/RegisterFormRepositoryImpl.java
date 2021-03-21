@@ -35,7 +35,7 @@ public class RegisterFormRepositoryImpl implements RegisterFormRepository {
     }
 
     @Override
-    public void deleteRegisterForm(RegisterForm registerForm) {
+    public void deleteRegisterForm(String registerId) {
 
     }
 }

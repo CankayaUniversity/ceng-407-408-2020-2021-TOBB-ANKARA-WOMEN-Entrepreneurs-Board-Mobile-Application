@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kgk.model.User;
+import com.kgk.model.chat.Group;
 import com.kgk.model.profile.*;
 import com.kgk.repository.UserRepository;
 import io.micronaut.core.util.CollectionUtils;
@@ -271,7 +272,10 @@ public class UserRepositoryImpl implements UserRepository {
         return userRetrieved;
     }
 
-    public void deleteUser(User user) { mapper.delete(user); }
+    public void deleteUser(String userId) {
+        User user = mapper.load(User.class, userId, config);
+        mapper.delete(user);
+    }
 
     //TODO: delete methods for profile components
 

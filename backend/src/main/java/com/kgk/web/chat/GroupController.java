@@ -7,7 +7,7 @@ import io.micronaut.http.annotation.*;
 import javax.validation.Valid;
 import java.util.Collection;
 
-@Controller("/group")
+@Controller("/api/group")
 public class GroupController {
 
     private final GroupRepository groupRepository;

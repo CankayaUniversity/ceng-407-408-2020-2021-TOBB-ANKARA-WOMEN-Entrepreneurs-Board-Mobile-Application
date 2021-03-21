@@ -14,5 +14,5 @@ public interface UserRolesRepository {
 
     UserRole updateUserRole(UserRole userRole);
 
-    void deleteRole(UserRole userRole);
+    void deleteRole(String roleId);
 }

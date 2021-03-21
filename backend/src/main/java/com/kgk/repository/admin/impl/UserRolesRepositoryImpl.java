@@ -30,7 +30,7 @@ public class UserRolesRepositoryImpl implements UserRolesRepository {
     }
 
     @Override
-    public void deleteRole(UserRole userRole) {
+    public void deleteRole(String roleId) {
 
     }
 

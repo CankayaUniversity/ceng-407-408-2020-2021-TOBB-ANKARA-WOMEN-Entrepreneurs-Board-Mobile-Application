@@ -7,7 +7,7 @@ import io.micronaut.http.annotation.*;
 import javax.validation.Valid;
 import java.util.Collection;
 
-@Controller("/user")
+@Controller("/api/user")
 public class UserController {
 
     private final UserRepository userRepository;
@@ -26,8 +26,8 @@ public class UserController {
       return userRepository.updateUser(userId, user);
     }
 
-    @Delete
-    public void delete(@Valid @Body User user){ userRepository.deleteUser(user); }
+    @Delete("/{userId}")
+    public void delete(@PathVariable("userId") String userId){ userRepository.deleteUser(userId); }
 
     @Get
     public Collection<User> listAll() {
