@@ -1,0 +1,7 @@
+{
+  "name": "tobb-kgk-wcoop",
+  "integrations": {
+    "cordova": {}
+  },
+  "type": "angular"
+}
