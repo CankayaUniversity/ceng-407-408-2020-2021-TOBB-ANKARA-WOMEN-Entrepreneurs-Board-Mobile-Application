@@ -39,20 +39,14 @@ public class User {
 
     private String photo;
 
-    @NonNull
-    @NotBlank
     private Long birthDate;
 
-    @NonNull
-    @NotBlank
     private String occupation;
 
     @NonNull
     @NotBlank
     private String phone;
 
-    @NonNull
-    @NotBlank
     private String university;
 
     private Collection<Hobby> hobbies = new HashSet<>();
@@ -137,22 +131,20 @@ public class User {
     }
 
     @DynamoDBAttribute(attributeName = "birthDate")
-    @NonNull
     public Long getBirthDate() {
       return birthDate;
     }
 
-    public void setBirthDate(@NonNull Long birthDate) {
+    public void setBirthDate(Long birthDate) {
       this.birthDate = birthDate;
     }
 
     @DynamoDBAttribute(attributeName = "occupation")
-    @NonNull
     public String getOccupation() {
       return occupation;
     }
 
-    public void setOccupation(@NonNull String occupation) {
+    public void setOccupation(String occupation) {
       this.occupation = occupation;
     }
 
@@ -167,12 +159,11 @@ public class User {
     }
 
     @DynamoDBAttribute(attributeName = "university")
-    @NonNull
     public String getUniversity() {
       return university;
     }
 
-    public void setUniversity(@NonNull String university) { this.university = university; }
+    public void setUniversity( String university) { this.university = university; }
 
     public Collection<Hobby> getHobbies() { return hobbies; }
 
