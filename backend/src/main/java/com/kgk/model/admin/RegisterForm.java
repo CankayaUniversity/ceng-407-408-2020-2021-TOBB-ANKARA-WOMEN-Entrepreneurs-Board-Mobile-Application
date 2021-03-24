@@ -36,7 +36,7 @@ public class RegisterForm {
 
     @NonNull
     @NotBlank
-    private String occupation;
+    private String tobbRegisterId;
 
     @NonNull
     private String registerDate;
@@ -98,14 +98,14 @@ public class RegisterForm {
         this.password = password;
     }
 
-    @DynamoDBAttribute(attributeName = "occupation")
+    @DynamoDBAttribute(attributeName = "tobbRegisterId")
     @NonNull
-    public String getOccupation() {
-        return occupation;
+    public String getTobbRegisterId() {
+        return tobbRegisterId;
     }
 
-    public void setOccupation(@NonNull String occupation) {
-        this.occupation = occupation;
+    public void setTobbRegisterId(@NonNull String tobbRegisterId) {
+        this.tobbRegisterId = tobbRegisterId;
     }
 
     @DynamoDBAttribute(attributeName = "registerDate")
