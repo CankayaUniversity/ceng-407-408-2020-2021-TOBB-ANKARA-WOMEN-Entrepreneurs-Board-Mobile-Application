@@ -1,19 +1,18 @@
 package com.kgk.web.admin;
 
-import com.kgk.model.User;
 import com.kgk.model.admin.UserRole;
-import com.kgk.repository.admin.UserRolesRepository;
+import com.kgk.repository.admin.UserRoleRepository;
 import io.micronaut.http.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
 
 @Controller("api/user-role")
-public class UserRolesController {
+public class UserRoleController {
 
-    private final UserRolesRepository userRolesRepository;
+    private final UserRoleRepository userRolesRepository;
 
-    public UserRolesController(UserRolesRepository userRolesRepository) {
+    public UserRoleController(UserRoleRepository userRolesRepository) {
         this.userRolesRepository = userRolesRepository;
     }
 

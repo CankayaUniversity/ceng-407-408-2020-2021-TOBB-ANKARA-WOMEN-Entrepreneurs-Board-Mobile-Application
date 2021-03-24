@@ -4,7 +4,7 @@ import com.kgk.model.admin.UserRole;
 
 import java.util.Collection;
 
-public interface UserRolesRepository {
+public interface UserRoleRepository {
 
     Collection<UserRole> listAllUserRoles();
 

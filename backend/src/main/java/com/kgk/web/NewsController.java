@@ -8,13 +8,14 @@ import io.micronaut.http.annotation.*;
 import javax.validation.Valid;
 import java.util.Collection;
 
-@Controller("/news")
+@Controller("/api/feed")
 public class NewsController {
     private final NewsRepository newsRepository;
 
     public NewsController(NewsRepository NewsRepository, NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
     }
+
     @Post
     public void save(@Valid @Body News news) { }
 
