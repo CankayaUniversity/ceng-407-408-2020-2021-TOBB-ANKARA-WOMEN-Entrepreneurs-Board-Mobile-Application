@@ -2,7 +2,9 @@ package com.kgk.web;
 
 import com.kgk.model.RegisterForm;
 import com.kgk.repository.RegisterFormRepository;
-import io.micronaut.http.annotation.*;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Body;
 
 import javax.validation.Valid;
 

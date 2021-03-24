@@ -25,7 +25,7 @@ public class GroupMemberRepositoryImpl implements GroupMemberRepository {
         this.config = config;
     }
 
-    public Collection<GroupMember> listAllMembersByGroupId(String groupId) {
+    public Collection<GroupMember> listAllUsersByGroupId(String groupId) {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":groupId", new AttributeValue().withS(groupId));
 
@@ -36,7 +36,7 @@ public class GroupMemberRepositoryImpl implements GroupMemberRepository {
         return mapper.query(GroupMember.class, queryExpression);
     }
 
-    public GroupMember addMember(String userId, String groupId) {
+    public GroupMember addUser(String userId, String groupId) {
         GroupMember groupMember = new GroupMember();
         groupMember.setGroupId(groupId);
         groupMember.setUserId(userId);
@@ -47,7 +47,7 @@ public class GroupMemberRepositoryImpl implements GroupMemberRepository {
         return groupMember;
     }
 
-    public void removeMember(String userId) {
+    public void removeUser(String userId) {
         GroupMember groupMember = mapper.load(GroupMember.class, userId, config);
         mapper.delete(groupMember);
     }

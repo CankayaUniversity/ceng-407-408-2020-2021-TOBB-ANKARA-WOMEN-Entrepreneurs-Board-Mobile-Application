@@ -7,7 +7,7 @@ import java.util.Collection;
 
 public interface UserRepository {
 
-  Collection<User> listAllUsers();
+  Collection<User> listAllUsers(); //list all users
 
   Collection<Hobby> findHobbiesByUserId(String userId);
 
@@ -19,16 +19,16 @@ public interface UserRepository {
 
   Collection<Certificate> findCertificatesByUserId(String userId);
 
-  Collection<User> findUsersByRoleId(String roleId);
+  Collection<User> findUsersByRoleId(String roleId); //find users with a specific role
 
   User findUserByIdAndSetProfileComp(String userId);
 
-  User findUserById(String userId);
+  User findUserById(String userId); //find a specific user
 
-  User saveUser(User user);
+  User saveUser(User user); //save user info to database
 
-  User updateUser(String userId, User user);
+  User updateUser(String userId, User user); //update user info on database
 
-  void deleteUser(String userId);
+  void deleteUser(String userId); //delete user from database
 
 }

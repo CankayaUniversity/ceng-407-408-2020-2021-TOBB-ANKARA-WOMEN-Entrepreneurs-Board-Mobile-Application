@@ -6,13 +6,10 @@ import java.util.Collection;
 
 public interface UserRoleRepository {
 
-    Collection<UserRole> listAllUserRoles();
+    Collection<UserRole> listAllUserRoles(); //list all users with their roles
 
-    Collection<UserRole> findAllUsersWithRoleId(String roleId);
+    Collection<UserRole> findAllUsersWithRoleId(String roleId); //find users with a specific role
 
-    UserRole saveUserRole(UserRole userRole);
+    UserRole changeRole(UserRole userRole); //give/take role to/from user
 
-    UserRole updateUserRole(UserRole userRole);
-
-    void deleteRole(String roleId);
 }

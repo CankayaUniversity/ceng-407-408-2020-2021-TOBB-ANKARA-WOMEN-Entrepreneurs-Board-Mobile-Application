@@ -2,7 +2,13 @@ package com.kgk.web;
 
 import com.kgk.model.User;
 import com.kgk.repository.UserRepository;
-import io.micronaut.http.annotation.*;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Put;
+import io.micronaut.http.annotation.Delete;
+import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.http.annotation.Body;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -14,6 +20,21 @@ public class UserController {
 
     public UserController(UserRepository userRepository) {
       this.userRepository = userRepository;
+    }
+
+    @Get
+    public Collection<User> listAll() {
+        return userRepository.listAllUsers();
+    }
+
+    @Get("/by-roleId/{roleId}")
+    public Collection<User> listByYear(@PathVariable("roleId") String roleId) {
+        return userRepository.findUsersByRoleId(roleId);
+    }
+
+    @Get("/{userId}")
+    public User showUserProfile(@PathVariable("userId") String userId) {
+        return userRepository.findUserByIdAndSetProfileComp(userId);
     }
 
     @Post
@@ -28,21 +49,6 @@ public class UserController {
 
     @Delete("/{userId}")
     public void delete(@PathVariable("userId") String userId){ userRepository.deleteUser(userId); }
-
-    @Get
-    public Collection<User> listAll() {
-      return userRepository.listAllUsers();
-    }
-
-    @Get("/by-roleId/{roleId}")
-    public Collection<User> listByYear(@PathVariable("roleId") String roleId) {
-      return userRepository.findUsersByRoleId(roleId);
-    }
-
-    @Get("/{userId}")
-    public User showUserProfile(@PathVariable("userId") String userId) {
-        return userRepository.findUserByIdAndSetProfileComp(userId);
-    }
 
     //Authorize for Permission Admin
     @Put("/{userId}")
