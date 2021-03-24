@@ -2,7 +2,13 @@ package com.kgk.web.chat;
 
 import com.kgk.model.chat.*;
 import com.kgk.repository.chat.*;
-import io.micronaut.http.annotation.*;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Post;
+import io.micronaut.http.annotation.Put;
+import io.micronaut.http.annotation.Delete;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.PathVariable;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -43,18 +49,18 @@ public class GroupController {
     }
 
     @Get("/{groupId}")
-    public Collection<GroupMember> listAllMembersByGroupId(@PathVariable("groupId") String groupId) {
-        return groupMemberRepository.listAllMembersByGroupId(groupId);
+    public Collection<GroupMember> listAllUsersByGroupId(@PathVariable("groupId") String groupId) {
+        return groupMemberRepository.listAllUsersByGroupId(groupId);
     }
 
     @Post("/{userId}/{groupId}")
-    public GroupMember addMember(@PathVariable("userId") String userId, @PathVariable("groupId") String groupId) {
-        return groupMemberRepository.addMember(userId, groupId);
+    public GroupMember addUser(@PathVariable("userId") String userId, @PathVariable("groupId") String groupId) {
+        return groupMemberRepository.addUser(userId, groupId);
     }
 
     @Delete("/{userId}")
-    public void removeMember(@PathVariable("userId") String userId) {
-        groupMemberRepository.removeMember(userId);
+    public void removeUser(@PathVariable("userId") String userId) {
+        groupMemberRepository.removeUser(userId);
     }
 
     @Get("/messages/{groupId}")

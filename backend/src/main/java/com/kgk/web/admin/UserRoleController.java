@@ -2,7 +2,11 @@ package com.kgk.web.admin;
 
 import com.kgk.model.admin.UserRole;
 import com.kgk.repository.admin.UserRoleRepository;
-import io.micronaut.http.annotation.*;
+import io.micronaut.http.annotation.Controller;
+import io.micronaut.http.annotation.Put;
+import io.micronaut.http.annotation.Get;
+import io.micronaut.http.annotation.Body;
+import io.micronaut.http.annotation.PathVariable;
 
 import javax.validation.Valid;
 import java.util.Collection;
@@ -16,16 +20,6 @@ public class UserRoleController {
         this.userRolesRepository = userRolesRepository;
     }
 
-    @Post
-    public UserRole save(@Valid @Body UserRole userRole) {
-        return userRolesRepository.saveUserRole(userRole);
-    }
-
-    @Put
-    public UserRole update(@Valid @Body UserRole userRole) {
-        return userRolesRepository.updateUserRole(userRole);
-    }
-
     @Get
     public Collection<UserRole> listAll(){
         return userRolesRepository.listAllUserRoles();
@@ -36,9 +30,9 @@ public class UserRoleController {
         return userRolesRepository.findAllUsersWithRoleId(roleId);
     }
 
-    @Delete("/{roleId}")
-    public void delete(@PathVariable("roleId") String roleId) {
-        userRolesRepository.deleteRole(roleId);
+    @Put
+    public UserRole update(@Valid @Body UserRole userRole) {
+        return userRolesRepository.changeRole(userRole);
     }
 
 }

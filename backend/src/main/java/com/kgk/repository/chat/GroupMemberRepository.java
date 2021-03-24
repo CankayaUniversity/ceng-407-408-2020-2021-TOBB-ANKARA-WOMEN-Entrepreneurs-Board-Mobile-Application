@@ -6,10 +6,10 @@ import java.util.Collection;
 
 public interface GroupMemberRepository {
 
-    Collection<GroupMember> listAllMembersByGroupId(String groupId);
+    Collection<GroupMember> listAllUsersByGroupId(String groupId); //list all users of a specific group
 
-    GroupMember addMember(String userId, String groupId);
+    GroupMember addUser(String userId, String groupId); //add users to a group
 
-    void removeMember(String userId);
+    void removeUser(String userId); //remove users from a group
 
 }
