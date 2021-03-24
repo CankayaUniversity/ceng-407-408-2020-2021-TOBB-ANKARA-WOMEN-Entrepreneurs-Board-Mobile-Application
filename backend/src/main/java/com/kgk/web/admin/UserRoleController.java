@@ -7,7 +7,7 @@ import io.micronaut.http.annotation.*;
 import javax.validation.Valid;
 import java.util.Collection;
 
-@Controller("api/user-role")
+@Controller("/api/user-role")
 public class UserRoleController {
 
     private final UserRoleRepository userRolesRepository;
