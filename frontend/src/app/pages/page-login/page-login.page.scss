@@ -45,6 +45,21 @@ ion-content {
       color: #3e4999;
     }
 
+    ion-item {
+      border-radius: 50px;
+      height: 55px;
+      box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.08);
+      --highlight-height: 0px;
+
+      a {
+        font-size: 17px;
+        letter-spacing: 0.5px;
+        text-decoration: none;
+      }
+    }
+
+
+
     ion-button {
       --background: #3e4999;
       margin-top: 35px;
@@ -55,6 +70,9 @@ ion-content {
       box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.05);
       --box-shadow: none;
     }
+  }
+  a{
+    color: #717171;
   }
 }
 
