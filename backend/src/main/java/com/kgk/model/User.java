@@ -17,7 +17,11 @@ public class User {
     private String userId; //hash key
 
     @NonNull
-    private String roleId; //range key
+    @NotBlank
+    private String city;   //range key
+
+    @NonNull
+    private String roleId;
 
     @NonNull
     @NotBlank
@@ -52,6 +56,8 @@ public class User {
 
     private String occupation;
 
+    private String description;
+
     private List<Catalog> catalogList = new ArrayList<>();
 
     public User() {}
@@ -68,7 +74,17 @@ public class User {
       this.userId = userId;
     }
 
-    @DynamoDBRangeKey(attributeName = "roleId")
+    @DynamoDBRangeKey(attributeName = "city")
+    @NonNull
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(@NonNull String city) {
+        this.city = city;
+    }
+
+    @DynamoDBAttribute(attributeName = "roleId")
     @NonNull
     public String getRoleId() {
       return roleId;
@@ -143,6 +159,15 @@ public class User {
       this.occupation = occupation;
     }
 
+    @DynamoDBAttribute(attributeName = "description")
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @DynamoDBAttribute(attributeName = "phone")
     @NonNull
     public String getPhone() {
@@ -179,4 +204,5 @@ public class User {
     public void setCatalogList(List<Catalog> catalogList) {
         this.catalogList = catalogList;
     }
+
 }

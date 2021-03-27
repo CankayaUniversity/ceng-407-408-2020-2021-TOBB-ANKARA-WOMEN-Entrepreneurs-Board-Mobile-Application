@@ -1,7 +1,6 @@
 package com.kgk.repository;
 
 import com.kgk.model.User;
-import com.kgk.model.profile.*;
 
 import java.util.Collection;
 

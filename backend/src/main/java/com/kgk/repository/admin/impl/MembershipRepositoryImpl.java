@@ -6,7 +6,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kgk.model.RegisterForm;
 import com.kgk.model.User;
-import com.kgk.model.profile.Competence;
 import com.kgk.repository.admin.MembershipRepository;
 
 import javax.inject.Singleton;
@@ -42,19 +41,24 @@ public class MembershipRepositoryImpl implements MembershipRepository {
     public void approveRegisterForm(String registerId) {
         User user = new User();
         RegisterForm registerForm = mapper.load(RegisterForm.class, registerId, config);
+
+        registerForm.setApproved(true);
         user.setRoleId("101");
         user.setFirstName(registerForm.getFirstName());
         user.setLastName(registerForm.getLastName());
         user.setEmail(registerForm.getEmail());
+        user.setPassword(registerForm.getPassword());
         user.setPhone(registerForm.getPhone());
+        user.setCity(registerForm.getCity());
+        user.setTobbRegisterId(registerForm.getTobbRegisterId());
 
+        mapper.save(registerForm);
         mapper.save(user);
     }
 
     @Override
     public void declineRegisterForm(String registerId) {
         RegisterForm registerForm = mapper.load(RegisterForm.class, registerId, config);
-
         mapper.delete(registerForm);
     }
 
