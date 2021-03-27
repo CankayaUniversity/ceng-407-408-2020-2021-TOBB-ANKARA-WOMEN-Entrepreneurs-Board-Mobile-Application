@@ -33,6 +33,7 @@ ion-content {
       font-size: 30px;
       color: #3e4999;
       margin-top: 25%;
+      margin-left: 15px;
       text-align: center;
     }
 
@@ -47,7 +48,7 @@ ion-content {
 
   #form {
     margin-top: 5%;
-    padding-left: 30px;
+    padding-left: 50px;
     padding-right: 30px;
 
     ion-icon{
@@ -71,7 +72,9 @@ ion-content {
     ion-button {
       --background: #3e4999;
       margin-top: 35px;
+      margin-left: 70px;
       height: 48px;
+      width: 60%;
       font-size: 18px;
       text-transform: initial;
       border-radius: 50px;
