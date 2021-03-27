@@ -1,14 +1,13 @@
 package com.kgk.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
-import com.kgk.model.profile.*;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.annotation.Introspected;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import java.util.Collection;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 
 @Introspected
 @DynamoDBTable(tableName = "Users")
@@ -37,27 +36,23 @@ public class User {
     @NotBlank
     private String password;
 
-    private String photo;
-
-    private Long birthDate;
-
-    private String occupation;
+    @NonNull
+    @NotBlank
+    private String tobbRegisterId;
 
     @NonNull
     @NotBlank
     private String phone;
 
-    private String university;
+    private String photo;
 
-    private Collection<Hobby> hobbies = new HashSet<>();
+    private Long birthDate;
 
-    private Collection<Competence> competences = new HashSet<>();
+    private String sector;
 
-    private Collection<Language> languages = new HashSet<>();
+    private String occupation;
 
-    private Collection<Project> projects = new HashSet<>();
-
-    private Collection<Certificate> certificates = new HashSet<>();
+    private List<Catalog> catalogList = new ArrayList<>();
 
     public User() {}
 
@@ -158,31 +153,30 @@ public class User {
       this.phone = phone;
     }
 
-    @DynamoDBAttribute(attributeName = "university")
-    public String getUniversity() {
-      return university;
+    @DynamoDBAttribute(attributeName = "tobbRegisterId")
+    @NonNull
+    public String getTobbRegisterId() {
+        return tobbRegisterId;
     }
 
-    public void setUniversity( String university) { this.university = university; }
+    public void setTobbRegisterId(@NonNull String tobbRegisterId) {
+        this.tobbRegisterId = tobbRegisterId;
+    }
 
-    public Collection<Hobby> getHobbies() { return hobbies; }
+    @DynamoDBAttribute(attributeName = "sector")
+    public String getSector() {
+        return sector;
+    }
 
-    public void setHobbies(Collection<Hobby> hobbies) { this.hobbies = hobbies; }
+    public void setSector(String sector) {
+        this.sector = sector;
+    }
 
-    public Collection<Competence> getCompetences() { return competences; }
+    public List<Catalog> getCatalogList() {
+        return catalogList;
+    }
 
-    public void setCompetences(Collection<Competence> competences) { this.competences = competences; }
-
-    public Collection<Language> getLanguages() { return languages; }
-
-    public void setLanguages(Collection<Language> languages) { this.languages = languages; }
-
-    public Collection<Project> getProjects() { return projects; }
-
-    public void setProjects(Collection<Project> projects) { this.projects = projects; }
-
-    public Collection<Certificate> getCertificates() { return certificates; }
-
-    public void setCertificates(Collection<Certificate> certificates) { this.certificates = certificates; }
-
+    public void setCatalogList(List<Catalog> catalogList) {
+        this.catalogList = catalogList;
+    }
 }

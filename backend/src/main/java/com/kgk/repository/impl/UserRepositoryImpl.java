@@ -4,13 +4,11 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.document.spec.GetItemSpec;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kgk.model.User;
-import com.kgk.model.chat.Group;
-import com.kgk.model.profile.*;
 import com.kgk.repository.UserRepository;
 import io.micronaut.core.util.CollectionUtils;
+import io.micronaut.core.util.StringUtils;
 
 import javax.inject.Singleton;
 import java.util.Collection;
@@ -32,70 +30,7 @@ public class UserRepositoryImpl implements UserRepository {
     public Collection<User> listAllUsers() {
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
         Collection<User> users = mapper.scan(User.class, scanExpression);
-        users.forEach(
-                user -> setProfileComponents(user)
-        );
         return users;
-    }
-
-    @Override
-    public Collection<Hobby> findHobbiesByUserId(String userId) {
-        Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":userId", new AttributeValue().withS(userId));
-
-        DynamoDBQueryExpression<Hobby> queryExpression = new DynamoDBQueryExpression<Hobby>()
-                .withKeyConditionExpression("userId = :userId")
-                .withExpressionAttributeValues(eav);
-
-        return mapper.query(Hobby.class, queryExpression);
-    }
-
-    @Override
-    public Collection<Competence> findCompetencesByUserId(String userId) {
-        Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":userId", new AttributeValue().withS(userId));
-
-        DynamoDBQueryExpression<Competence> queryExpression = new DynamoDBQueryExpression<Competence>()
-                .withKeyConditionExpression("userId = :userId")
-                .withExpressionAttributeValues(eav);
-
-        return mapper.query(Competence.class, queryExpression);
-    }
-
-    @Override
-    public Collection<Project> findProjectsByUserId(String userId) {
-        Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":userId", new AttributeValue().withS(userId));
-
-        DynamoDBQueryExpression<Project> queryExpression = new DynamoDBQueryExpression<Project>()
-                .withKeyConditionExpression("userId = :userId")
-                .withExpressionAttributeValues(eav);
-
-        return mapper.query(Project.class, queryExpression);
-    }
-
-    @Override
-    public Collection<Language> findLanguagesByUserId(String userId) {
-        Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":userId", new AttributeValue().withS(userId));
-
-        DynamoDBQueryExpression<Language> queryExpression = new DynamoDBQueryExpression<Language>()
-                .withKeyConditionExpression("userId = :userId")
-                .withExpressionAttributeValues(eav);
-
-        return mapper.query(Language.class, queryExpression);
-    }
-
-    @Override
-    public Collection<Certificate> findCertificatesByUserId(String userId) {
-        Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":userId", new AttributeValue().withS(userId));
-
-        DynamoDBQueryExpression<Certificate> queryExpression = new DynamoDBQueryExpression<Certificate>()
-                .withKeyConditionExpression("userId = :userId")
-                .withExpressionAttributeValues(eav);
-
-        return mapper.query(Certificate.class, queryExpression);
     }
 
     public Collection<User> findUsersByRoleId(String roleId) {
@@ -109,11 +44,6 @@ public class UserRepositoryImpl implements UserRepository {
         return mapper.query(User.class, queryExpression);
     }
 
-    public User findUserByIdAndSetProfileComp(String userId) {
-        User user = mapper.load(User.class, userId, config);
-        return setProfileComponents(user);
-    }
-
     @Override
     public User findUserById(String userId) {
         return mapper.load(User.class, userId, config);
@@ -121,172 +51,38 @@ public class UserRepositoryImpl implements UserRepository {
 
     public User saveUser(User user) {
         user.setRoleId("101"); //roleId'ler Roles table'ından çekilsin
-
-        if (CollectionUtils.isNotEmpty(user.getHobbies())) {
-            user.getHobbies().forEach(
-                    hobbyInput -> {
-                        Hobby hobby = new Hobby();
-                        hobby.setHobbyName(hobbyInput.getHobbyName());
-                        hobby.setHobbyDesc(hobbyInput.getHobbyDesc());
-                        hobby.setUserId(user.getUserId());
-                        mapper.save(hobby);
-                        user.getHobbies().add(hobby);
-                    }
-            );
-        }
-
-        if (CollectionUtils.isNotEmpty(user.getCompetences())) {
-            user.getCompetences().forEach(
-                    competenceInput -> {
-                        Competence competence = new Competence();
-                        competence.setCompName(competenceInput.getCompName());
-                        competence.setCompDesc(competenceInput.getCompDesc());
-                        competence.setUserId(user.getUserId());
-                        mapper.save(competence);
-                        user.getCompetences().add(competence);
-                    }
-            );
-        }
-
-        if (CollectionUtils.isNotEmpty(user.getProjects())) {
-            user.getProjects().forEach(
-                    projectInput -> {
-                        Project project = new Project();
-                        project.setProjectName(projectInput.getProjectName());
-                        project.setProjectDesc(projectInput.getProjectDesc());
-                        project.setProjectDate(projectInput.getProjectDate());
-                        project.setUserId(user.getUserId());
-                        mapper.save(project);
-                        user.getProjects().add(project);
-                    }
-            );
-        }
-
-        if (CollectionUtils.isNotEmpty(user.getLanguages())) {
-            user.getLanguages().forEach(
-                    languageInput -> {
-                        Language language = new Language();
-                        language.setLangName(languageInput.getLangName());
-                        language.setLangLevel(languageInput.getLangLevel());
-                        language.setUserId(user.getUserId());
-                        mapper.save(language);
-                        user.getLanguages().add(language);
-                    }
-            );
-        }
-
-        if (CollectionUtils.isNotEmpty(user.getCertificates())) {
-            user.getCertificates().forEach(
-                    certificateInput -> {
-                        Certificate certificate = new Certificate();
-                        certificate.setCertName(certificateInput.getCertName());
-                        certificate.setCertDesc(certificateInput.getCertDesc());
-                        certificate.setCertFile(certificateInput.getCertFile());
-                        certificate.setValidity(certificateInput.getValidity());
-                        certificate.setUserId(user.getUserId());
-                        mapper.save(certificate);
-                        user.getCertificates().add(certificate);
-                    }
-            );
-        }
         mapper.save(user);
 
+        if (CollectionUtils.isNotEmpty(user.getCatalogList())) {
+
+        }
         //return mapper.load(User.class, user.getUserId());
         return user;
     }
 
     public User updateUser(String userId, User user) {
-        User userRetrieved = findUserByIdAndSetProfileComp(userId);
-
-        if (CollectionUtils.isNotEmpty(user.getHobbies())) {
-            //TODO: bu kısım karışık, gelen Collection'la db'deki Collection karşılaştırılıp,
-            // update edilmesi gerekli
-            user.getHobbies().forEach(
-                    hobbyInput -> {
-                        Hobby hobby = new Hobby();
-                        hobby.setHobbyName(hobbyInput.getHobbyName());
-                        hobby.setHobbyDesc(hobbyInput.getHobbyDesc());
-                        hobby.setUserId(user.getUserId());
-                        mapper.save(hobby);
-                        userRetrieved.getHobbies().add(hobby);
-                    }
-            );
-        }
-
-        if (CollectionUtils.isNotEmpty(user.getCompetences())) {
-            user.getCompetences().forEach(
-                    competenceInput -> {
-                        Competence competence = new Competence();
-                        competence.setCompName(competenceInput.getCompName());
-                        competence.setCompDesc(competenceInput.getCompDesc());
-                        competence.setUserId(user.getUserId());
-                        mapper.save(competence);
-                        userRetrieved.getCompetences().add(competence);
-                    }
-            );
-        }
-
-        if (CollectionUtils.isNotEmpty(user.getProjects())) {
-            user.getProjects().forEach(
-                    projectInput -> {
-                        Project project = new Project();
-                        project.setProjectName(projectInput.getProjectName());
-                        project.setProjectDesc(projectInput.getProjectDesc());
-                        project.setProjectDate(projectInput.getProjectDate());
-                        project.setUserId(user.getUserId());
-                        mapper.save(project);
-                        userRetrieved.getProjects().add(project);
-                    }
-            );
-        }
-
-        if (CollectionUtils.isNotEmpty(user.getLanguages())) {
-            user.getLanguages().forEach(
-                    languageInput -> {
-                        Language language = new Language();
-                        language.setLangName(languageInput.getLangName());
-                        language.setLangLevel(languageInput.getLangLevel());
-                        language.setUserId(user.getUserId());
-                        mapper.save(language);
-                        userRetrieved.getLanguages().add(language);
-                    }
-            );
-        }
-
-        if (CollectionUtils.isNotEmpty(user.getCertificates())) {
-            user.getCertificates().forEach(
-                    certificateInput -> {
-                        Certificate certificate = new Certificate();
-                        certificate.setCertName(certificateInput.getCertName());
-                        certificate.setCertDesc(certificateInput.getCertDesc());
-                        certificate.setCertFile(certificateInput.getCertFile());
-                        certificate.setValidity(certificateInput.getValidity());
-                        certificate.setUserId(user.getUserId());
-                        mapper.save(certificate);
-                        userRetrieved.getCertificates().add(certificate);
-                    }
-            );
-        }
+        User userRetrieved = findUserById(userId);
         mapper.save(userRetrieved);
 
         return userRetrieved;
     }
 
+    public User changePassword(String userId, String oldPassword, String newPassword) {
+        User user = findUserById(userId);
+        if (StringUtils.isNotEmpty(oldPassword)) {
+            if (oldPassword.equals(user.getPassword())) {
+                user.setPassword(newPassword);
+                mapper.save(user);
+
+                return user;
+            }
+        }
+        return null;
+    }
+
     public void deleteUser(String userId) {
         User user = mapper.load(User.class, userId, config);
         mapper.delete(user);
-    }
-
-    //TODO: delete methods for profile components
-
-    private User setProfileComponents(User user) {
-        user.setHobbies(findHobbiesByUserId(user.getUserId()));
-        user.setCompetences(findCompetencesByUserId(user.getUserId()));
-        user.setProjects(findProjectsByUserId(user.getUserId()));
-        user.setLanguages(findLanguagesByUserId(user.getUserId()));
-        user.setCertificates(findCertificatesByUserId(user.getUserId()));
-
-        return user;
     }
 
 }
