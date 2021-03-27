@@ -13,14 +13,12 @@ public class News {
     //@NonNull
     //private String userId;  //range key
 
-    @NonNull
     private String newsTitle;
 
-    @NonNull
     private String newsBody;
 
-    @NonNull
     private Long publishDate;
+
 
     private boolean meeting;
 

@@ -9,6 +9,7 @@ import java.util.Collection;
 
 @Controller("/api/feed")
 public class FeedController {
+    //TODO: UPDATE METHODU YAZILACAK PUT İLE
     private final NewsRepository newsRepository;
 
     public FeedController(NewsRepository NewsRepository, NewsRepository newsRepository) {
