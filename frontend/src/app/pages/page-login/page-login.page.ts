@@ -16,5 +16,8 @@ export class PageLoginPage implements OnInit {
   logMeIn(){
     this.router.navigate(['/home']);
   }
+  regMeIn(){
+    this.router.navigate(['/register']);
+  }
 
 }
