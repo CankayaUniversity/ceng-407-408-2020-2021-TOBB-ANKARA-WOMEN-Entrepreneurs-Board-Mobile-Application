@@ -1,5 +1,4 @@
-package com.kgk.model;
-
+package com.kgk.model.admin;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import edu.umd.cs.findbugs.annotations.NonNull;
@@ -11,8 +10,8 @@ public class News {
 
     private String newsId; //hash key
 
-    @NonNull
-    private String userId;  //range key (tüm member'ların news ekleme hakkı olacak mı?)
+    //@NonNull
+    //private String userId;  //range key
 
     @NonNull
     private String newsTitle;
@@ -22,6 +21,16 @@ public class News {
 
     @NonNull
     private Long publishDate;
+
+    private boolean meeting;
+
+    private Long startTime;
+
+    private Long endTime;
+
+    private String meetingPlace;
+
+    private String meetingUrl;
 
     public News() {}
 
@@ -38,7 +47,7 @@ public class News {
         this.newsId= newsId;
     }
 
-    @DynamoDBRangeKey(attributeName = "userId")
+    /*@DynamoDBRangeKey(attributeName = "userId")
     @NonNull
     public String getUserId() {
         return userId;
@@ -46,7 +55,7 @@ public class News {
 
     public void setUserId(@NonNull String userId) {
         this.userId = userId;
-    }
+    }*/
 
     @DynamoDBAttribute(attributeName = "newsTitle")
     @NonNull
@@ -75,5 +84,50 @@ public class News {
 
     public void setPublishDate(Long publishDate) {
         this.publishDate = publishDate;
+    }
+
+    @DynamoDBAttribute(attributeName = "meeting")
+    public boolean isMeeting() {
+        return meeting;
+    }
+
+    public void setMeeting(boolean meeting) {
+        this.meeting = meeting;
+    }
+
+    @DynamoDBAttribute(attributeName = "startTime")
+    public Long getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(Long startTime) {
+        this.startTime = startTime;
+    }
+
+    @DynamoDBAttribute(attributeName = "endTime")
+    public Long getEndTime() {
+        return endTime;
+    }
+
+    public void setEndTime(Long endTime) {
+        this.endTime = endTime;
+    }
+
+    @DynamoDBAttribute(attributeName = "meetingPlace")
+    public String getMeetingPlace() {
+        return meetingPlace;
+    }
+
+    public void setMeetingPlace(String meetingPlace) {
+        this.meetingPlace = meetingPlace;
+    }
+
+    @DynamoDBAttribute(attributeName = "meetingUrl")
+    public String getMeetingUrl() {
+        return meetingUrl;
+    }
+
+    public void setMeetingUrl(String meetingUrl) {
+        this.meetingUrl = meetingUrl;
     }
 }

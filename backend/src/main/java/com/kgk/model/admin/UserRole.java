@@ -7,7 +7,7 @@ import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.annotation.Introspected;
 
 @Introspected
-@DynamoDBTable(tableName = "UserRoles")
+//@DynamoDBTable(tableName = "UserRoles")
 public class UserRole {
 
     @NonNull
@@ -17,7 +17,7 @@ public class UserRole {
     private String roleId; //range key
 
     // Partition key
-    @DynamoDBHashKey(attributeName = "userId")
+    //@DynamoDBHashKey(attributeName = "userId")
     @NonNull
     public String getUserId() {
         return userId;
@@ -27,7 +27,7 @@ public class UserRole {
         this.userId = userId;
     }
 
-    @DynamoDBRangeKey(attributeName = "roleId")
+    //@DynamoDBRangeKey(attributeName = "roleId")
     @NonNull
     public String getRoleId() {
         return roleId;

@@ -27,11 +27,13 @@ public class MembershipRepositoryImpl implements MembershipRepository {
 
     @Override
     public Collection<RegisterForm> listAllUnapprovedRegisterForms() {
+        //TODO: CurrentUser's city info must pulled
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":approved", new AttributeValue().withBOOL(false));
+        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
 
         DynamoDBQueryExpression<RegisterForm> queryExpression = new DynamoDBQueryExpression<RegisterForm>()
-                .withKeyConditionExpression("approved = :approved")
+                .withKeyConditionExpression("approved = :approved") //TODO: add city to key expression
                 .withExpressionAttributeValues(eav);
 
         return mapper.query(RegisterForm.class, queryExpression);

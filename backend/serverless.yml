@@ -50,87 +50,19 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-    hobbiesTable:
+    catalogsTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: Hobbies
+        TableName: Catalogs
         AttributeDefinitions:
-          - AttributeName: hobbyId
+          - AttributeName: catalogId
             AttributeType: S
-          - AttributeName: userId
+          - AttributeName: roleId
             AttributeType: S
         KeySchema:
-          - AttributeName: hobbyId
+          - AttributeName: catalogId
             KeyType: HASH
-          - AttributeName: userId
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-    competencesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: Competences
-        AttributeDefinitions:
-          - AttributeName: compId
-            AttributeType: S
-          - AttributeName: userId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: compId
-            KeyType: HASH
-          - AttributeName: userId
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-    languagesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: Languages
-        AttributeDefinitions:
-          - AttributeName: langId
-            AttributeType: S
-          - AttributeName: userId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: langId
-            KeyType: HASH
-          - AttributeName: userId
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-    projectsTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: Projects
-        AttributeDefinitions:
-          - AttributeName: projectId
-            AttributeType: S
-          - AttributeName: userId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: projectId
-            KeyType: HASH
-          - AttributeName: userId
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-    certificatesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: Certificates
-        AttributeDefinitions:
-          - AttributeName: certId
-            AttributeType: S
-          - AttributeName: userId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: certId
-            KeyType: HASH
-          - AttributeName: userId
+          - AttributeName: roleId
             KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5
@@ -210,60 +142,45 @@ resources:
           AttributeDefinitions:
             - AttributeName: registerId
               AttributeType: S
+            - AttributeName: city
+              AttributeType: S
           KeySchema:
             - AttributeName: registerId
               KeyType: HASH
-          ProvisionedThroughput:
-            ReadCapacityUnits: 5
-            WriteCapacityUnits: 5
-      cvsTable:
-        Type: AWS::DynamoDB::Table
-        Properties:
-          TableName: CVs
-          AttributeDefinitions:
-            - AttributeName: cvId
-              AttributeType: S
-            - AttributeName: uploadedBy
-              AttributeType: S
-          KeySchema:
-            - AttributeName: cvId
-              KeyType: HASH
-            - AttributeName: uploadedBy
+            - AttributeName: city
               KeyType: RANGE
           ProvisionedThroughput:
             ReadCapacityUnits: 5
             WriteCapacityUnits: 5
-      advertisementRequestsTable:
+      rolesTable:
         Type: AWS::DynamoDB::Table
         Properties:
-          TableName: AdvertisementRequests
+          TableName: Roles
           AttributeDefinitions:
-            - AttributeName: advId
-              AttributeType: S
-            - AttributeName: requestBy
-              AttributeType: S
-          KeySchema:
-            - AttributeName: advId
-              KeyType: HASH
-            - AttributeName: requestBy
-              KeyType: RANGE
-          ProvisionedThroughput:
-            ReadCapacityUnits: 5
-            WriteCapacityUnits: 5
-      userRolesTable:
-        Type: AWS::DynamoDB::Table
-        Properties:
-          TableName: UserRoles
-          AttributeDefinitions:
-            - AttributeName: userId
-              AttributeType: S
             - AttributeName: roleId
               AttributeType: S
+            - AttributeName: roleName
+              AttributeType: S
           KeySchema:
-            - AttributeName: userId
-              KeyType: HASH
             - AttributeName: roleId
-              KeyType: RANGE
+              KeyType: HASH
           ProvisionedThroughput:
             ReadCapacityUnits: 5
             WriteCapacityUnits: 5
+      #userRolesTable:
+      #  Type: AWS::DynamoDB::Table
+      #  Properties:
+      #    TableName: UserRoles
+      #    AttributeDefinitions:
+      #      - AttributeName: userId
+      #        AttributeType: S
+      #      - AttributeName: roleId
+      #        AttributeType: S
+      #    KeySchema:
+      #      - AttributeName: userId
+      #        KeyType: HASH
+      #      - AttributeName: roleId
+      #        KeyType: RANGE
+      #    ProvisionedThroughput:
+      #      ReadCapacityUnits: 5
+      #      WriteCapacityUnits: 5
