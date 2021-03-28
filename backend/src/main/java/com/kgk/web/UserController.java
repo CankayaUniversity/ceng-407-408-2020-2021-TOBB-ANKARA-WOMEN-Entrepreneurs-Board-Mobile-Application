@@ -32,11 +32,6 @@ public class UserController {
         return userRepository.listAllUsers();
     }
 
-    @Get("/by-roleId/{roleId}")
-    public Collection<User> listByYear(@PathVariable("roleId") String roleId) {
-        return userRepository.findUsersByRoleId(roleId);
-    }
-
     @Get("/{userId}")
     public User showUserProfile(@PathVariable("userId") String userId) {
         return userRepository.findUserById(userId);
