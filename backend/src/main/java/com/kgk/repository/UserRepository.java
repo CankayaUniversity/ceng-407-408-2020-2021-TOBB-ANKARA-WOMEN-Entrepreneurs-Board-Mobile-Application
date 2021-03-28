@@ -12,7 +12,7 @@ public interface UserRepository {
 
   User findUserById(String userId); //find a specific user
 
-  User saveUser(User user); //save user info to database
+  //User saveUser(User user); //save user info to database
 
   User updateUser(String userId, User user); //update user info on database
 

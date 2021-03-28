@@ -24,7 +24,6 @@ public class CatalogRepositoryImpl implements CatalogRepository {
         this.config = config;
     }
 
-
     @Override
     public List<Catalog> listCatalogsByUserId(String userId) {
         Map<String, AttributeValue> eav = new HashMap<>();
@@ -38,13 +37,15 @@ public class CatalogRepositoryImpl implements CatalogRepository {
     }
 
     @Override
-    public Catalog findCatalogByCatalogId(String catalogId) {
-        return mapper.load(Catalog.class, catalogId, config);
+    public Catalog findCatalogByCatalogId(String userId, String catalogId) {
+        return mapper.load(Catalog.class, catalogId, userId, config);
     }
 
     @Override
-    public Catalog addCatalog(Catalog catalog) {
+    public Catalog addCatalog(String userId, Catalog catalog) {
+        catalog.setUserId(userId);
         mapper.save(catalog);
+        System.out.println("[CATALOG REPO] Catalog is saved");
         return mapper.load(Catalog.class, catalog.getCatalogId());
     }
 
@@ -56,8 +57,10 @@ public class CatalogRepositoryImpl implements CatalogRepository {
     }*/
 
     @Override
-    public void deleteCatalog(String catalogId) {
-        Catalog catalog = mapper.load(Catalog.class, catalogId, config);
+    public void deleteCatalog(String userId, String catalogId) {
+        Catalog catalog = mapper.load(Catalog.class, catalogId, userId, config);
         mapper.delete(catalog);
+        System.out.println("[CATALOG REPO] Catalog is deleted");
     }
+
 }

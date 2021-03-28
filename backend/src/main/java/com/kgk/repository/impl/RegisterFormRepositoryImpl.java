@@ -24,8 +24,8 @@ public class RegisterFormRepositoryImpl implements RegisterFormRepository {
     public void saveRegisterForm(RegisterForm registerForm) {
         registerForm.setApproved(false);
         registerForm.setRegisterDate(ZonedDateTime.now().toEpochSecond());
-
         mapper.save(registerForm);
+        System.out.println("[REGISTER FORM REPO] Register form is saved");
     }
 
 }

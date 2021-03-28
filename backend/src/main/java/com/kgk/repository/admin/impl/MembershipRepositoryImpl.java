@@ -40,28 +40,31 @@ public class MembershipRepositoryImpl implements MembershipRepository {
     }
 
     @Override
-    public void approveRegisterForm(String registerId) {
+    public void approveRegisterForm(String registerId, RegisterForm registerForm) {
         User user = new User();
-        RegisterForm registerForm = mapper.load(RegisterForm.class, registerId, config);
+        RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, registerForm.getCity(), config);
 
-        registerForm.setApproved(true);
+        retrievedForm.setApproved(true);
         user.setRoleId("101");
-        user.setFirstName(registerForm.getFirstName());
-        user.setLastName(registerForm.getLastName());
-        user.setEmail(registerForm.getEmail());
-        user.setPassword(registerForm.getPassword());
-        user.setPhone(registerForm.getPhone());
-        user.setCity(registerForm.getCity());
-        user.setTobbRegisterId(registerForm.getTobbRegisterId());
+        user.setFirstName(retrievedForm.getFirstName());
+        user.setLastName(retrievedForm.getLastName());
+        user.setEmail(retrievedForm.getEmail());
+        user.setPassword(retrievedForm.getPassword());
+        user.setPhone(retrievedForm.getPhone());
+        user.setCity(retrievedForm.getCity());
+        user.setTobbRegisterId(retrievedForm.getTobbRegisterId());
 
-        mapper.save(registerForm);
+        mapper.save(retrievedForm);
+        System.out.println("[MEMBERSHIP REPO] Register form is updated");
         mapper.save(user);
+        System.out.println("[MEMBERSHIP REPO] User is saved");
     }
 
     @Override
-    public void declineRegisterForm(String registerId) {
-        RegisterForm registerForm = mapper.load(RegisterForm.class, registerId, config);
-        mapper.delete(registerForm);
+    public void declineRegisterForm(String registerId, String city) {
+        RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, city, config);
+        mapper.delete(retrievedForm);
+        System.out.println("[MEMBERSHIP REPO] Register form is deleted");
     }
 
 }

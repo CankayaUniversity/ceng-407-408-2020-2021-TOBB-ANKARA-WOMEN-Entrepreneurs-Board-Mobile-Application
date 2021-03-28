@@ -6,9 +6,10 @@ import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.Delete;
+import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.PathVariable;
 
-
+import javax.validation.Valid;
 import java.util.Collection;
 
 @Controller("/api/membership")
@@ -26,12 +27,12 @@ public class MembershipController {
     }
 
     @Put("/{registerId}")
-    public void approve(@PathVariable("registerId") String registerId) {
-        membershipRepository.approveRegisterForm(registerId);
+    public void approve(@PathVariable("registerId") String registerId, @Valid @Body RegisterForm registerForm) {
+        membershipRepository.approveRegisterForm(registerId, registerForm);
     }
 
-    @Delete("/{registerId}")
-    public void decline(@PathVariable("registerId") String registerId) {
-        membershipRepository.declineRegisterForm(registerId);
+    @Delete("/{registerId}/{city}")
+    public void decline(@PathVariable("registerId") String registerId, @PathVariable("city") String city) {
+        membershipRepository.declineRegisterForm(registerId, city);
     }
 }

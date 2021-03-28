@@ -8,12 +8,12 @@ public interface CatalogRepository {
 
     List<Catalog> listCatalogsByUserId(String userId);
 
-    Catalog findCatalogByCatalogId(String catalogId);
+    Catalog findCatalogByCatalogId(String userId, String catalogId);
 
-    Catalog addCatalog(Catalog catalog);
+    Catalog addCatalog(String userId, Catalog catalog);
 
     //Catalog updateCatalog(String catalogId, Catalog catalog);
 
-    void deleteCatalog(String catalogId);
+    void deleteCatalog(String userId, String catalogId);
 
 }

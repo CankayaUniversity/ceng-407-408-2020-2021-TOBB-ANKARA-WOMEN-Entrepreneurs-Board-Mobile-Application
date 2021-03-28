@@ -37,15 +37,15 @@ public class UserController {
         return userRepository.findUserById(userId);
     }
 
-    @Get("/{catalogId}")
-    public Catalog showCatalog(@PathVariable("catalogId") String catalogId) {
-        return catalogRepository.findCatalogByCatalogId(catalogId);
+    @Get("/{userId}/{catalogId}")
+    public Catalog showCatalog(@PathVariable("userId") String userId, @PathVariable("catalogId") String catalogId) {
+        return catalogRepository.findCatalogByCatalogId(userId, catalogId);
     }
 
-    @Post
+    /*@Post
     public User save(@Valid @Body User user) {
       return userRepository.saveUser(user);
-    }
+    }*/
 
     @Put("/{userId}")
     public User update(@PathVariable("userId") String userId, @Valid @Body User user) {
@@ -61,13 +61,18 @@ public class UserController {
     @Delete("/{userId}")
     public void delete(@PathVariable("userId") String userId){ userRepository.deleteUser(userId); }
 
+    /*@Delete("/{userId}/{catalogId}")
+    public void deleteCatalog(@PathVariable("userId") String userId, @PathVariable("catalogId") String catalogId) {
+        catalogRepository.deleteCatalog(userId, catalogId);
+    }*/
+
     //Authorize for Permission Admin
-    @Put("/{userId}")
+    /*@Put("/{userId}")
     public User assignRole(@PathVariable("userId") String userId, @Valid @Body String roleId) {
       User user = userRepository.findUserById(userId);
       user.setRoleId(roleId);
 
       return userRepository.updateUser(userId, user);
-    }
+    }*/
 
 }

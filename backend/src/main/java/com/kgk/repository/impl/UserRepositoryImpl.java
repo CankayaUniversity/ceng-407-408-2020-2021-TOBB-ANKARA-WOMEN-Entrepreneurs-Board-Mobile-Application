@@ -67,16 +67,16 @@ public class UserRepositoryImpl implements UserRepository {
         return user;
     }
 
+    /*@Override
     public User saveUser(User user) {
         user.setRoleId("101"); //roleId'ler Roles table'ından çekilsin
         mapper.save(user);
-
+        System.out.println("[USER REPO] User is saved");
         return user;
         //return mapper.load(User.class, user.getUserId());
-    }
+    }*/
 
     public User updateUser(String userId, User user) {
-
         if (CollectionUtils.isNotEmpty(user.getCatalogList())) {
             List<Catalog> oldCatalogs = catalogRepository.listCatalogsByUserId(userId);
             oldCatalogs.stream()
@@ -86,10 +86,12 @@ public class UserRepositoryImpl implements UserRepository {
 
             user.getCatalogList().stream()
                     .forEach(
-                            catalog -> user.getCatalogList().add(catalogRepository.addCatalog(catalog))
+                            catalog -> user.getCatalogList().add(catalogRepository.addCatalog(user.getUserId(), catalog))
                     );
         }
+
         mapper.save(user);
+        System.out.println("[USER REPO] User is updated");
 
         return user;
     }
@@ -100,15 +102,18 @@ public class UserRepositoryImpl implements UserRepository {
             if (oldPassword.equals(user.getPassword())) {
                 user.setPassword(newPassword);
                 mapper.save(user);
+                System.out.println("[USER REPO] User's password is updated");
 
                 return user;
             }
         }
+        System.out.println("[USER REPO] Either old password is null, or it does not match");
         return null;
     }
 
     public void deleteUser(String userId) {
         User user = mapper.load(User.class, userId, config);
+        System.out.println("[USER REPO] User is deleted");
         mapper.delete(user);
     }
 

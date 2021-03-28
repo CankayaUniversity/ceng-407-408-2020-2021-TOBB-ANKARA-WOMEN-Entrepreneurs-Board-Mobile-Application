@@ -57,12 +57,12 @@ resources:
         AttributeDefinitions:
           - AttributeName: catalogId
             AttributeType: S
-          - AttributeName: roleId
+          - AttributeName: userId
             AttributeType: S
         KeySchema:
           - AttributeName: catalogId
             KeyType: HASH
-          - AttributeName: roleId
+          - AttributeName: userId
             KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5

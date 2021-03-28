@@ -9,8 +9,8 @@ public interface MembershipRepository {
 
     Collection<RegisterForm> listAllUnapprovedRegisterForms(); //lists all unapproved register forms
 
-    void approveRegisterForm(String registerId); //creates a new user
+    void approveRegisterForm(String registerId, RegisterForm registerForm); //creates a new user
 
-    void declineRegisterForm(String registerId); //deletes the register form
+    void declineRegisterForm(String registerId, String city); //deletes the register form
 
 }
