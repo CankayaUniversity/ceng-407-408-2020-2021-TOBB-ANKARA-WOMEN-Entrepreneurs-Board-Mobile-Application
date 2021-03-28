@@ -14,13 +14,16 @@ public class Group {
     private String groupId; //hash key
 
     @NonNull
+    private Long createdAt; //range key
+
+    @NonNull
     @NotBlank
     private String groupName;
 
     private String groupDesc;
 
     @NonNull
-    private String createdBy; //range key - userId
+    private String createdBy; //userId
 
     public Group() {}
 
@@ -31,6 +34,16 @@ public class Group {
     public String getGroupId() { return groupId; }
 
     public void setGroupId(String groupId) { this.groupId = groupId; }
+
+    @DynamoDBRangeKey(attributeName = "createdAt")
+    @NonNull
+    public Long getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(@NonNull Long createdAt) {
+        this.createdAt = createdAt;
+    }
 
     @DynamoDBAttribute(attributeName = "groupName")
     @NonNull
@@ -43,7 +56,7 @@ public class Group {
 
     public void setGroupDesc(String groupDesc) { this.groupDesc = groupDesc; }
 
-    @DynamoDBRangeKey(attributeName = "createdBy")
+    @DynamoDBAttribute(attributeName = "createdBy")
     @NonNull
     public String getCreatedBy() { return createdBy; }
 
