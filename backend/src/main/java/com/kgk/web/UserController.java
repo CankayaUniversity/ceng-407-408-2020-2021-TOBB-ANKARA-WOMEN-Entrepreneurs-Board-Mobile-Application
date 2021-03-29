@@ -53,6 +53,7 @@ public class UserController {
     }
 
     @Put("/change-password/{userId}")
+    //TODO: tek body gönderilmeli, direk update metoduna mı dahil olsa
     public User changePassword(@PathVariable("userId") String userId, @Valid @Body String oldPassword,
                                @Valid @Body String newPassword) {
         return userRepository.changePassword(userId, oldPassword, newPassword);

@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Singleton
 public class CatalogRepositoryImpl implements CatalogRepository {
@@ -38,15 +39,17 @@ public class CatalogRepositoryImpl implements CatalogRepository {
 
     @Override
     public Catalog findCatalogByCatalogId(String userId, String catalogId) {
-        return mapper.load(Catalog.class, catalogId, userId, config);
+        return mapper.load(Catalog.class, userId, catalogId, config);
     }
 
     @Override
     public Catalog addCatalog(String userId, Catalog catalog) {
+        catalog.setCatalogId(UUID.randomUUID().toString());
         catalog.setUserId(userId);
         mapper.save(catalog);
         System.out.println("[CATALOG REPO] Catalog is saved");
-        return mapper.load(Catalog.class, catalog.getCatalogId());
+
+        return mapper.load(Catalog.class, userId, catalog.getCatalogId(), config);
     }
 
     /*@Override
@@ -58,7 +61,7 @@ public class CatalogRepositoryImpl implements CatalogRepository {
 
     @Override
     public void deleteCatalog(String userId, String catalogId) {
-        Catalog catalog = mapper.load(Catalog.class, catalogId, userId, config);
+        Catalog catalog = mapper.load(Catalog.class, userId, catalogId, config);
         mapper.delete(catalog);
         System.out.println("[CATALOG REPO] Catalog is deleted");
     }

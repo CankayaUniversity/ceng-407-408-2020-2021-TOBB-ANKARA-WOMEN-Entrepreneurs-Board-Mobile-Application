@@ -17,6 +17,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Singleton
 public class UserRepositoryImpl implements UserRepository {
@@ -77,17 +78,25 @@ public class UserRepositoryImpl implements UserRepository {
     }*/
 
     public User updateUser(String userId, User user) {
+        User userRetrieved = mapper.load(User.class, userId, user.getCity(), config);
+        user.copyFrom(userRetrieved);
+
         if (CollectionUtils.isNotEmpty(user.getCatalogList())) {
             List<Catalog> oldCatalogs = catalogRepository.listCatalogsByUserId(userId);
-            oldCatalogs.stream()
-                    .forEach(
-                            oldCatalog -> mapper.delete(oldCatalog)
-                    );
 
-            user.getCatalogList().stream()
-                    .forEach(
-                            catalog -> user.getCatalogList().add(catalogRepository.addCatalog(user.getUserId(), catalog))
-                    );
+            if (CollectionUtils.isNotEmpty(oldCatalogs)) {
+                oldCatalogs.stream()
+                        .forEach(
+                                oldCatalog -> mapper.delete(oldCatalog)
+                        );
+            }
+
+            user.setCatalogList(
+                    user.getCatalogList()
+                            .stream()
+                            .map(catalog -> catalogRepository.addCatalog(userId, catalog))
+                            .collect(Collectors.toList())
+            );
         }
 
         mapper.save(user);
@@ -113,6 +122,15 @@ public class UserRepositoryImpl implements UserRepository {
 
     public void deleteUser(String userId) {
         User user = mapper.load(User.class, userId, config);
+        List<Catalog> catalogs = catalogRepository.listCatalogsByUserId(userId);
+
+        if (CollectionUtils.isNotEmpty(catalogs)) {
+            catalogs.stream()
+                    .forEach(
+                            catalog -> mapper.delete(catalog)
+                    );
+        }
+
         System.out.println("[USER REPO] User is deleted");
         mapper.delete(user);
     }

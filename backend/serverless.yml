@@ -40,13 +40,24 @@ resources:
         AttributeDefinitions:
           - AttributeName: userId
             AttributeType: S
+          - AttributeName: city
+            AttributeType: S
           - AttributeName: roleId
             AttributeType: S
         KeySchema:
           - AttributeName: userId
             KeyType: HASH
-          - AttributeName: roleId
+          - AttributeName: city
             KeyType: RANGE
+        LocalSecondaryIndexes:
+          - IndexName: usersByRoleId
+            KeySchema:
+              - AttributeName: userId
+                KeyType: HASH
+              - AttributeName: roleId
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
@@ -55,14 +66,14 @@ resources:
       Properties:
         TableName: Catalogs
         AttributeDefinitions:
-          - AttributeName: catalogId
-            AttributeType: S
           - AttributeName: userId
+            AttributeType: S
+          - AttributeName: catalogId
             AttributeType: S
         KeySchema:
-          - AttributeName: catalogId
-            KeyType: HASH
           - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: catalogId
             KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5
