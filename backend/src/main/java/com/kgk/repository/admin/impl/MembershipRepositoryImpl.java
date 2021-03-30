@@ -5,7 +5,10 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kgk.model.RegisterForm;
+import com.kgk.model.Role;
+import com.kgk.model.RoleType;
 import com.kgk.model.User;
+import com.kgk.model.admin.UserRole;
 import com.kgk.repository.admin.MembershipRepository;
 
 import javax.inject.Singleton;
@@ -42,10 +45,12 @@ public class MembershipRepositoryImpl implements MembershipRepository {
     @Override
     public void approveRegisterForm(String registerId, RegisterForm registerForm) {
         User user = new User();
+        UserRole userRole = new UserRole();
         RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, registerForm.getCity(), config);
 
         retrievedForm.setApproved(true);
-        user.setRoleId("101");
+        Role role = mapper.load(Role.class, RoleType.MEMBER.toString(), config);
+        user.setRoleId(role.getRoleId());
         user.setFirstName(retrievedForm.getFirstName());
         user.setLastName(retrievedForm.getLastName());
         user.setEmail(retrievedForm.getEmail());
@@ -53,8 +58,13 @@ public class MembershipRepositoryImpl implements MembershipRepository {
         user.setPhone(retrievedForm.getPhone());
         user.setCity(retrievedForm.getCity());
         user.setTobbRegisterId(retrievedForm.getTobbRegisterId());
-
         mapper.save(retrievedForm);
+
+        userRole.setRoleId(user.getRoleId());
+        userRole.setUserId(user.getUserId());
+        userRole.setCity(user.getCity());
+        mapper.save(userRole);
+
         System.out.println("[MEMBERSHIP REPO] Register form is updated");
         mapper.save(user);
         System.out.println("[MEMBERSHIP REPO] User is saved");
@@ -63,6 +73,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
     @Override
     public void declineRegisterForm(String registerId, String city) {
         RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, city, config);
+        //TODO: save the retrievedForm to DeletedRegisterForms table first, then delete
         mapper.delete(retrievedForm);
         System.out.println("[MEMBERSHIP REPO] Register form is deleted");
     }
