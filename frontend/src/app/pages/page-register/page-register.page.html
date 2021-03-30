@@ -1,17 +1,17 @@
 <ion-content>
   <button round (click)="goBack()"><img src="../../../assets/ok-left.png"></button>
-  <form id="form">
+  <form  [formGroup]="ionicForm" (ngSubmit)="submitForm()" novalidate id="form">
     <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="person-sharp"></ion-icon>
-      <ion-input placeholder="First Name" required="First Name"></ion-input>
+      <ion-input formControlName="firstname" placeholder="First Name" required></ion-input>
     </ion-item>
     <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="person-sharp"></ion-icon>
-      <ion-input placeholder="Last Name"></ion-input>
+      <ion-input formControlName="lastname" placeholder="Last Name" required></ion-input>
     </ion-item>
     <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="mail"></ion-icon>
-      <ion-input placeholder="E-mail"></ion-input>
+      <ion-input formControlName="email" type = "email" placeholder="E-mail" required></ion-input>
     </ion-item>
     <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="business"></ion-icon>
@@ -21,11 +21,11 @@
     </ion-item>
     <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="document"></ion-icon>
-      <ion-input type="number" placeholder="Registration Number"></ion-input>
+      <ion-input formControlName="registrationnum" type="number" placeholder="Registration Number" required></ion-input>
     </ion-item>
     <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="call"></ion-icon>
-      <ion-input type="number" placeholder="Mobile Phone"></ion-input>
+      <ion-input formControlName="mobile" type="number" placeholder="Mobile Phone" required></ion-input>
     </ion-item>
 
     <div class = "row">

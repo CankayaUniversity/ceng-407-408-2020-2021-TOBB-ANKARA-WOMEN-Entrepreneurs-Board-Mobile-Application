@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+
 interface Occupation {
   name: string;
 }
@@ -11,9 +13,11 @@ interface Occupation {
   styleUrls: ['./page-register.page.scss'],
 })
 export class PageRegisterPage implements OnInit {
-
   public isToggled   = false;
-  constructor(private router: Router) { }
+  ionicForm: FormGroup;
+  constructor(public formBuilder: FormBuilder, private router: Router) { }
+
+
   occupations: Occupation[] = [
     {
       name: 'Adalet ve Güvenlik',
@@ -95,11 +99,21 @@ export class PageRegisterPage implements OnInit {
     }
   ];
 
+  submitForm() {
+    console.log(this.ionicForm.value);
+  }
   compareWith(o1: Occupation, o2: Occupation) {
     return o1 && o2 ? o1.name === o2.name : o1 === o2;
   }
 
   ngOnInit() {
+    this.ionicForm = this.formBuilder.group({
+      firstname: ['', [Validators.required, Validators.minLength(2)]],
+      lastname: ['', [Validators.required, Validators.minLength(2)]],
+      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
+      registrationnum: ['', [Validators.required]],
+      mobile: ['', [Validators.required, Validators.pattern('^[0-9]+$')]]
+    });
   }
 
   regMeIn(){
@@ -111,5 +125,7 @@ export class PageRegisterPage implements OnInit {
   notify() {
     this.isToggled = !this.isToggled;
   }
+
+
 
 }
