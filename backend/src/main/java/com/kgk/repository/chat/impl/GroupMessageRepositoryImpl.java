@@ -8,7 +8,6 @@ import com.kgk.model.chat.GroupMessage;
 import com.kgk.repository.chat.GroupMessageRepository;
 
 import javax.inject.Singleton;
-import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +39,7 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
         GroupMessage groupMessage = new GroupMessage();
         groupMessage.setGroupId(groupId);
         groupMessage.setMessage(message);
-        groupMessage.setSendAt(ZonedDateTime.now().toEpochSecond());
+        groupMessage.setSendAt(System.currentTimeMillis());
         mapper.save(groupMessage);
 
         return groupMessage;

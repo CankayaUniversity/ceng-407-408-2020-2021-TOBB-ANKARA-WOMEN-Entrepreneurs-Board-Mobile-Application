@@ -6,7 +6,6 @@ import com.kgk.model.RegisterForm;
 import com.kgk.repository.RegisterFormRepository;
 
 import javax.inject.Singleton;
-import java.time.ZonedDateTime;
 
 @Singleton
 public class RegisterFormRepositoryImpl implements RegisterFormRepository {
@@ -23,7 +22,7 @@ public class RegisterFormRepositoryImpl implements RegisterFormRepository {
     @Override
     public void saveRegisterForm(RegisterForm registerForm) {
         registerForm.setApproved(false);
-        registerForm.setRegisterDate(ZonedDateTime.now().toEpochSecond());
+        registerForm.setRegisterDate(System.currentTimeMillis());
         mapper.save(registerForm);
         System.out.println("[REGISTER FORM REPO] Register form is saved");
     }

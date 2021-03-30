@@ -8,7 +8,6 @@ import com.kgk.model.chat.GroupMember;
 import com.kgk.repository.chat.GroupMemberRepository;
 
 import javax.inject.Singleton;
-import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -40,7 +39,7 @@ public class GroupMemberRepositoryImpl implements GroupMemberRepository {
         GroupMember groupMember = new GroupMember();
         groupMember.setGroupId(groupId);
         groupMember.setUserId(userId);
-        groupMember.setJoinedAt(ZonedDateTime.now().toEpochSecond());
+        groupMember.setJoinedAt(System.currentTimeMillis());
 
         mapper.save(groupMember);
         //return mapper.load(GroupMember.class, groupMember.getUserId());
