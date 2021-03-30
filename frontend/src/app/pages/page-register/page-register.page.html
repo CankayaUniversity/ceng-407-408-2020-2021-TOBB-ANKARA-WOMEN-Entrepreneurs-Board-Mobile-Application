@@ -1,37 +1,41 @@
 <ion-content>
   <button round (click)="goBack()"><img src="../../../assets/ok-left.png"></button>
   <form id="form">
-    <ion-item class="ion-margin-bottom">
+    <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="person-sharp"></ion-icon>
-      <ion-input placeholder="First Name"></ion-input>
+      <ion-input placeholder="First Name" required="First Name"></ion-input>
     </ion-item>
-    <ion-item class="ion-margin-bottom">
+    <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="person-sharp"></ion-icon>
       <ion-input placeholder="Last Name"></ion-input>
     </ion-item>
-    <ion-item class="ion-margin-bottom">
+    <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="mail"></ion-icon>
       <ion-input placeholder="E-mail"></ion-input>
     </ion-item>
-    <ion-item class="ion-margin-bottom">
+    <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="business"></ion-icon>
-      <ion-input placeholder="Occupation"></ion-input>
+      <ion-select placeholder="Occupation" [compareWith]="compareWith">
+        <ion-select-option *ngFor="let occupation of occupations" [value]="occupation">{{occupation.name}}</ion-select-option>
+      </ion-select>
     </ion-item>
-    <ion-item class="ion-margin-bottom">
+    <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="document"></ion-icon>
       <ion-input type="number" placeholder="Registration Number"></ion-input>
     </ion-item>
-    <ion-item class="ion-margin-bottom">
+    <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="call"></ion-icon>
       <ion-input type="number" placeholder="Mobile Phone"></ion-input>
     </ion-item>
 
     <div class = "row">
       <div class= "checkBox" >
-        <ion-checkbox color="secondary" [checked]="isToggled" (ionChange)="notify()"></ion-checkbox>
+        <br>
+        <ion-checkbox color="tertiary" checked slot="start" [checked]="isToggled" (ionChange)="notify()"></ion-checkbox>
       </div>
       <div class= "conditions" >
-        <p>I accept the conditions of use</p>
+        <br>
+        <ion-label>I agree with the terms and conditions</ion-label>
       </div>
     </div>
 

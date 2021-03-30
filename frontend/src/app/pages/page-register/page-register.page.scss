@@ -29,9 +29,6 @@ ion-content{
       float: left;
     }
 
-    ion-checkbox{
-      color: #3e4999;
-    }
     p{
       color: #717171;
       font-weight: 600;
@@ -51,12 +48,23 @@ ion-content{
       height: 55px;
       box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.08);
       --highlight-height: 0px;
+      color: #717171;
 
       ion-input {
         font-size: 18px;
         --padding-top: 20px;
         --padding-bottom: 15px;
         --padding-start: 5px;
+      }
+      ion-select {
+        font-size: 18px;
+        font-color: #717171;
+        --padding-top: 20px;
+        --padding-bottom: 15px;
+        --padding-start: 5px;
+      }
+      ion-select-option{
+        border-radius: 100%;
       }
 
       a {
@@ -65,12 +73,17 @@ ion-content{
         text-decoration: none;
       }
     }
-
-
+    ion-label{
+      color: #717171;
+      font-weight: 600;
+      font-size: 14px;
+      text-align: center;
+      margin-left: 15px;
+    }
 
     ion-button {
       --background: #3e4999;
-      margin-top: 35px;
+      margin-top: 80px;
       margin-left: 70px;
       height: 48px;
       width: 60%;
