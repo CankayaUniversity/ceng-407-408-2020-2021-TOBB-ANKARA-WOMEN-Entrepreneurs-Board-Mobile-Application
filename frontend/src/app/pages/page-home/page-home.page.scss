@@ -1,20 +1,16 @@
 
 ion-content.background {
-  --background: url(../../../assets/home-buttons.png) 0 0/100% 100% no-repeat;
+  background-color: #3e4999;
+  --background: url(../../../assets/homepage.png) 0 0/100% 100% no-repeat;
 }
 
-button{
+.round {
   position: absolute;
   bottom: 5px;
   right: 15px;
-  border-radius: 50%;
-  margin: 4px 2px;
-  padding: 20px;
   background-color: transparent;
+  width: 80px;
+  height: 80px;
 }
 
-img{
-  width: 50px;
-  height: 50px;
-}
 

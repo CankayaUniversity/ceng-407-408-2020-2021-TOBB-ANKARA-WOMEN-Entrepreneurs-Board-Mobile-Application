@@ -19,7 +19,11 @@ const routes: Routes = [
   {
     path: 'login',
     loadChildren: () => import('./pages/page-login/page-login.module').then( m => m.PageLoginPageModule)
+  },  {
+    path: 'page-feed',
+    loadChildren: () => import('./pages/page-feed/page-feed.module').then( m => m.PageFeedPageModule)
   },
+
 ];
 
 @NgModule({
