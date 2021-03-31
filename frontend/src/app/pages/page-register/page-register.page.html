@@ -1,32 +1,65 @@
 <ion-content>
   <button round (click)="goBack()"><img src="../../../assets/ok-left.png"></button>
-  <form  [formGroup]="ionicForm" (ngSubmit)="submitForm()" novalidate id="form">
+  <form  [formGroup]="ionicForm" (ngSubmit)="submitForm(ionicForm.value)" id="form">
     <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="person-sharp"></ion-icon>
-      <ion-input formControlName="firstname" placeholder="First Name" required></ion-input>
+      <ion-input formControlName="firstname" required="true" placeholder="First Name"></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.firstname.errors?.required">
+      First Name is required.
+    </span>
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.firstname.errors?.minlength">
+      Min 2 chars long.
+    </span>
     <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="person-sharp"></ion-icon>
-      <ion-input formControlName="lastname" placeholder="Last Name" required></ion-input>
+      <ion-input formControlName="lastname" required="true" placeholder="Last Name"></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.lastname.errors?.required">
+      Last Name is required.
+    </span>
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.lastname.errors?.minlength">
+      Min 2 chars long.
+    </span>
     <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="mail"></ion-icon>
-      <ion-input formControlName="email" type = "email" placeholder="E-mail" required></ion-input>
+      <ion-input formControlName="email" required="true" type = "email" placeholder="E-mail"></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.email.errors?.required">
+      Email is required.
+    </span>
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.email.errors?.pattern">
+      Enter valid email.
+    </span>
     <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="business"></ion-icon>
-      <ion-select placeholder="Occupation" [compareWith]="compareWith">
+      <ion-select formControlName="occupation" placeholder="Occupation" [compareWith]="compareWith">
         <ion-select-option *ngFor="let occupation of occupations" [value]="occupation">{{occupation.name}}</ion-select-option>
       </ion-select>
     </ion-item>
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.occupation.errors?.required">
+      Occupation is required.
+    </span>
     <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="document"></ion-icon>
-      <ion-input formControlName="registrationnum" type="number" placeholder="Registration Number" required></ion-input>
+      <ion-input formControlName="registrationnum" required="true" type="number" placeholder="Registration Number"></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.registrationnum.errors?.required">
+      Registration number is required.
+    </span>
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.registrationnum.errors?.pattern">
+      Number values allowed.
+    </span>
     <ion-item color = "whitesmoke" class="ion-margin-bottom">
       <ion-icon name="call"></ion-icon>
-      <ion-input formControlName="mobile" type="number" placeholder="Mobile Phone" required></ion-input>
+      <ion-input formControlName="mobile" required="true" type="number" placeholder="Mobile Phone"></ion-input>
     </ion-item>
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.mobile.errors?.required">
+      Phone number is required.
+    </span>
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.mobile.errors?.pattern">
+      Number values allowed.
+    </span>
 
     <div class = "row">
       <div class= "checkBox" >
@@ -39,6 +72,6 @@
       </div>
     </div>
 
-    <ion-button expand="block" shape="round" (click)="regMeIn()" [disabled]="!isToggled">Register</ion-button>
+    <ion-button expand="block" shape="round" [disabled]="!ionicForm.valid" type="submit" (click)="regMeIn()" [disabled]="!isToggled">Register</ion-button>
   </form>
 </ion-content>

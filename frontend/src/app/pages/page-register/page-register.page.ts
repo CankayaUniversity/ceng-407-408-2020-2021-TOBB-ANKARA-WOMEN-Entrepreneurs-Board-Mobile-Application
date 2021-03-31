@@ -15,7 +15,57 @@ interface Occupation {
 export class PageRegisterPage implements OnInit {
   public isToggled   = false;
   ionicForm: FormGroup;
-  constructor(public formBuilder: FormBuilder, private router: Router) { }
+  submitted =  false;
+  constructor(public formBuilder: FormBuilder, private router: Router) {
+    this.ionicForm = formBuilder.group({
+      firstname: [
+        '',
+        Validators.compose([
+          Validators.minLength(2),
+          Validators.maxLength(50),
+          Validators.pattern('[0-9a-z-A-Z-_]*'),
+          Validators.required
+        ])
+      ],
+      lastname: [
+        '',
+        Validators.compose([
+          Validators.minLength(2),
+          Validators.maxLength(50),
+          Validators.pattern('[0-9a-z-A-Z-_]*'),
+          Validators.required
+        ])
+      ],
+      email: [
+        '',
+        Validators.compose([
+          Validators.minLength(4),
+          Validators.pattern('[0-9a-z-A-Z@.]*'),
+          Validators.required
+        ])
+      ],
+      occupation: [
+        '',
+        Validators.compose([
+          Validators.required
+        ])
+      ],
+      registrationnum: [
+        '',
+        Validators.compose([
+        Validators.pattern('^[0-9]+$'),
+        Validators.required
+        ])
+      ],
+      mobile: [
+        '',
+        Validators.compose([
+          Validators.pattern('^[0-9]+$'),
+          Validators.required
+        ])
+      ],
+    });
+  }
 
 
   occupations: Occupation[] = [
@@ -99,21 +149,24 @@ export class PageRegisterPage implements OnInit {
     }
   ];
 
-  submitForm() {
-    console.log(this.ionicForm.value);
+  get errorCtr() {
+    return this.ionicForm.controls;
+  }
+
+  submitForm(formData: any) {
+    this.submitted = true;
+    if (!this.ionicForm.valid) {
+      console.log('All fields are required.');
+      return false;
+    } else {
+      console.log(formData);
+    }
   }
   compareWith(o1: Occupation, o2: Occupation) {
     return o1 && o2 ? o1.name === o2.name : o1 === o2;
   }
 
   ngOnInit() {
-    this.ionicForm = this.formBuilder.group({
-      firstname: ['', [Validators.required, Validators.minLength(2)]],
-      lastname: ['', [Validators.required, Validators.minLength(2)]],
-      email: ['', [Validators.required, Validators.pattern('[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,3}$')]],
-      registrationnum: ['', [Validators.required]],
-      mobile: ['', [Validators.required, Validators.pattern('^[0-9]+$')]]
-    });
   }
 
   regMeIn(){
@@ -125,7 +178,6 @@ export class PageRegisterPage implements OnInit {
   notify() {
     this.isToggled = !this.isToggled;
   }
-
 
 
 }
