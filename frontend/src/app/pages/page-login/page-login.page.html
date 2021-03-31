@@ -1,11 +1,3 @@
-<ion-header class="ion-no-border">
-  <ion-toolbar>
-    <ion-buttons slot="start">
-    </ion-buttons>
-
-  </ion-toolbar>
-</ion-header>
-
 <ion-content padding class="background">
   <div id="women">
     <img src="../../../assets/women/NEW_minibilgisyarli_kiz080321-@2x.png" />
@@ -14,17 +6,23 @@
     <br><br><br><br><br><br><br><br>
     <br><br><br><br>
     <h1>Merhaba!</h1>
-    <form id="form">
-      <ion-item color = "whitesmoke"class="ion-margin-bottom">
-        <ion-icon class="ion-margin-bottom" name="person-sharp"></ion-icon>
-        <app-input placeholder="Username"></app-input>
-      </ion-item>
-      <ion-item color = "whitesmoke" class="ion-margin-bottom">
-        <ion-icon class="ion-margin-bottom" name="lock-closed-sharp"></ion-icon>
-        <app-input type="password" placeholder="Password"></app-input>
-      </ion-item>
 
-      <ion-button expand="block" shape="round" (click)="logMeIn()">Sign in</ion-button>
+    <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)" id="form">
+      <ion-item color = "whitesmoke"class="ion-margin-bottom">
+        <ion-icon name="person-sharp"></ion-icon>
+        <ion-input formControlName="username" required="true" placeholder="Username"></ion-input>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="submitted && errorCtr.username.errors?.required">
+        Username is required.
+      </span>
+      <ion-item color = "whitesmoke" class="ion-margin-bottom">
+        <ion-icon name="lock-closed-sharp"></ion-icon>
+        <ion-input formControlName="password" required="true" type="password" placeholder="Password"></ion-input>
+      </ion-item>
+      <span class="error ion-padding" *ngIf="submitted && errorCtr.password.errors?.required">
+        Password is required.
+      </span>
+      <ion-button expand="block" shape="round" [disabled]="!loginForm.valid" type="submit" (click)="logMeIn()">Sign in</ion-button>
     </form>
     <p>Don't have an account?
       <a (click)="regMeIn()" ><u>Sign up</u></a>

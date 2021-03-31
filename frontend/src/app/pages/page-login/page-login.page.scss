@@ -1,12 +1,3 @@
-ion-toolbar {
-  --background: #3e4999;
-
-  ion-button {
-    text-transform: initial;
-    font-size: 17px;
-  }
-}
-
 ion-content {
   --background: url(../../../assets/backgroundBubble.png) 0 0/100% 100% no-repeat;
 
@@ -32,7 +23,7 @@ ion-content {
       font-weight: 700;
       font-size: 30px;
       color: #3e4999;
-      margin-top: 25%;
+      margin-top: 30%;
       margin-left: 15px;
       text-align: center;
     }
@@ -59,6 +50,14 @@ ion-content {
       height: 55px;
       box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.08);
       --highlight-height: 0px;
+
+      ion-input {
+        font-size: 18px;
+        color: #717171;
+        --padding-top: 20px;
+        --padding-bottom: 15px;
+        --padding-start: 5px;
+      }
 
       a {
         font-size: 17px;
