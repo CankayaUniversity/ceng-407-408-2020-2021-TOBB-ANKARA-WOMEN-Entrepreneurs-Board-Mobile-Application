@@ -102,13 +102,27 @@ resources:
         AttributeDefinitions:
           - AttributeName: groupId
             AttributeType: S
-          - AttributeName: createdAt
-            AttributeType: N
+          - AttributeName: city
+            AttributeType: S
+          - AttributeName: createdBy
+            AttributeType: S
         KeySchema:
           - AttributeName: groupId
             KeyType: HASH
-          - AttributeName: createdAt
+          - AttributeName: city
             KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: groupsByCreatedBy
+            KeySchema:
+              - AttributeName: createdBy
+                KeyType: HASH
+              - AttributeName: city
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5

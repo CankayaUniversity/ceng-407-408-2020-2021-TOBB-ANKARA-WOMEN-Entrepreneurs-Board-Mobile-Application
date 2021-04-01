@@ -6,11 +6,11 @@ import java.util.List;
 
 public interface GroupRepository {
 
-    List<Group> listAllGroupsByUserId(String userId); //lists all the groups that the user belongs
+    List<Group> listAllGroupsByUserId(String createdBy, String city); //lists all the groups that the user belongs
 
     Group createGroup(Group group); //saves the created group to database
 
-    Group updateGroup(Group group); //update group info on database
+    Group updateGroup(String groupId, String city, Group group); //update group info on database
 
-    void deleteGroup(String groupId); //delete group from database
+    void deleteGroup(String groupId, String city); //delete group from database
 }

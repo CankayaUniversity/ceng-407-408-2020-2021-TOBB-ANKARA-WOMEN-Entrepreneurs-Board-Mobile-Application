@@ -29,9 +29,9 @@ public class GroupController {
     }
 
     //GroupRepository methods
-    @Get("/{userId}")
-    public List<Group> listAllGroupsByUserId(@PathVariable("userId") String userId) {
-        return groupRepository.listAllGroupsByUserId(userId);
+    @Get("/{createdBy}/{city}")
+    public List<Group> listAllGroupsByUserId(@PathVariable("createdBy") String createdBy, @PathVariable("city") String city) {
+        return groupRepository.listAllGroupsByUserId(createdBy, city);
     }
 
     @Post
@@ -39,14 +39,15 @@ public class GroupController {
         return groupRepository.createGroup(group);
     }
 
-    @Put
-    public Group updateGroup(@Valid @Body Group group){
-        return groupRepository.updateGroup(group);
+    @Put("/{groupId}/{city}")
+    public Group updateGroup(@PathVariable("groupId") String groupId, @PathVariable("city") String city,
+                             @Valid @Body Group group){
+        return groupRepository.updateGroup(groupId, city, group);
     }
 
-    @Delete("/{groupId}")
-    public void deleteGroup(@PathVariable("groupId") String groupId) {
-        groupRepository.deleteGroup(groupId);
+    @Delete("/{groupId}/{city}")
+    public void deleteGroup(@PathVariable("groupId") String groupId, @PathVariable("city") String city) {
+        groupRepository.deleteGroup(groupId, city);
     }
 
     //GroupMemberRepository methods
