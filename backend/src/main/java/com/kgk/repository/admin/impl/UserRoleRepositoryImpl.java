@@ -3,7 +3,6 @@ package com.kgk.repository.admin.impl;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kgk.model.User;
 import com.kgk.model.admin.UserRole;
@@ -13,9 +12,10 @@ import io.micronaut.core.util.CollectionUtils;
 
 import javax.inject.Singleton;
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Singleton
 public class UserRoleRepositoryImpl implements UserRoleRepository {
@@ -33,7 +33,7 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
     }
 
     @Override
-    public Collection<UserRole> listAllUserRoles() {
+    public List<UserRole> listAllUserRoles() {
         //TODO: CurrenUser's city info must pulled
         Map<String, AttributeValue> eav = new HashMap<>();
         //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
@@ -42,10 +42,10 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
                 .withKeyConditionExpression("city = :city")
                 .withExpressionAttributeValues(eav);
 
-        Collection<User> users = mapper.query(User.class, queryExpression);
+        List<User> users = mapper.query(User.class, queryExpression).stream().collect(Collectors.toList());
 
         if (CollectionUtils.isNotEmpty(users)) {
-            Collection<UserRole> userRoles = new ArrayList<>();
+            List<UserRole> userRoles = new ArrayList<>();
             users.forEach(
                     user -> {
                         UserRole userRole = new UserRole();
@@ -60,7 +60,7 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
     }
 
     @Override
-    public Collection<UserRole> findAllUsersWithRoleId(String roleId) {
+    public List<UserRole> findAllUsersWithRoleId(String roleId) {
         //TODO: CurrenUser's city info must pulled
         Map<String, AttributeValue> eav = new HashMap<>();
         //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
@@ -70,10 +70,10 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
                 .withKeyConditionExpression("roleId = :roleId") //TODO: add city to key expression
                 .withExpressionAttributeValues(eav);
 
-        Collection<User> users = mapper.query(User.class, queryExpression);
+        List<User> users = mapper.query(User.class, queryExpression).stream().collect(Collectors.toList());
 
         if (CollectionUtils.isNotEmpty(users)) {
-            Collection<UserRole> userRoles = new ArrayList<>();
+            List<UserRole> userRoles = new ArrayList<>();
             users.forEach(
                     user -> {
                         UserRole userRole = new UserRole();

@@ -13,7 +13,6 @@ import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.core.util.StringUtils;
 
 import javax.inject.Singleton;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,9 +33,9 @@ public class UserRepositoryImpl implements UserRepository {
         this.catalogRepository = catalogRepository;
     }
 
-    public Collection<User> listAllUsers() {
+    public List<User> listAllUsers() {
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
-        Collection<User> users = mapper.scan(User.class, scanExpression);
+        List<User> users = mapper.scan(User.class, scanExpression).stream().collect(Collectors.toList());
         users.forEach(
                 user -> user.setCatalogList(catalogRepository.listCatalogsByUserId(user.getUserId()))
         );
@@ -44,7 +43,7 @@ public class UserRepositoryImpl implements UserRepository {
         return users;
     }
 
-    public Collection<User> findUsersByRoleId(String roleId) {
+    public List<User> findUsersByRoleId(String roleId) {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":roleId", new AttributeValue().withS(roleId));
 
@@ -52,7 +51,7 @@ public class UserRepositoryImpl implements UserRepository {
                 .withKeyConditionExpression("roleId = :roleId")
                 .withExpressionAttributeValues(eav);
 
-        Collection<User> users = mapper.query(User.class, queryExpression);
+        List<User> users = mapper.query(User.class, queryExpression).stream().collect(Collectors.toList());
         users.forEach(
                 user -> user.setCatalogList(catalogRepository.listCatalogsByUserId(user.getUserId()))
         );

@@ -13,7 +13,7 @@ import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Body;
 
 import javax.validation.Valid;
-import java.util.Collection;
+import java.util.List;
 
 @Controller("/api/user")
 public class UserController {
@@ -28,7 +28,7 @@ public class UserController {
     }
 
     @Get
-    public Collection<User> listAll() {
+    public List<User> listAll() {
         return userRepository.listAllUsers();
     }
 

@@ -11,7 +11,7 @@ import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.PathVariable;
 
 import javax.validation.Valid;
-import java.util.Collection;
+import java.util.List;
 
 @Controller("/api/group")
 public class GroupController {
@@ -28,8 +28,9 @@ public class GroupController {
         this.groupMessageRepository = groupMessageRepository;
     }
 
+    //GroupRepository methods
     @Get("/{userId}")
-    public Collection<Group> listAllGroupsByUserId(@PathVariable("userId") String userId) {
+    public List<Group> listAllGroupsByUserId(@PathVariable("userId") String userId) {
         return groupRepository.listAllGroupsByUserId(userId);
     }
 
@@ -48,8 +49,9 @@ public class GroupController {
         groupRepository.deleteGroup(groupId);
     }
 
+    //GroupMemberRepository methods
     @Get("/{groupId}")
-    public Collection<GroupMember> listAllUsersByGroupId(@PathVariable("groupId") String groupId) {
+    public List<GroupMember> listAllUsersByGroupId(@PathVariable("groupId") String groupId) {
         return groupMemberRepository.listAllUsersByGroupId(groupId);
     }
 
@@ -63,8 +65,9 @@ public class GroupController {
         groupMemberRepository.removeUser(userId);
     }
 
+    //GroupMessageRepository methods
     @Get("/messages/{groupId}")
-    public Collection<GroupMessage> listAllMessagesByGroupId(@PathVariable("groupId") String groupId) {
+    public List<GroupMessage> listAllMessagesByGroupId(@PathVariable("groupId") String groupId) {
         return groupMessageRepository.listAllMessagesByGroupId(groupId);
     }
 

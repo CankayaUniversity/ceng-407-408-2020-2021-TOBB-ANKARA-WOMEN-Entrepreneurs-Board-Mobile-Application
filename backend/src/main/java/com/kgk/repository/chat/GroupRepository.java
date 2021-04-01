@@ -2,11 +2,11 @@ package com.kgk.repository.chat;
 
 import com.kgk.model.chat.Group;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface GroupRepository {
 
-    Collection<Group> listAllGroupsByUserId(String userId); //lists all the groups that the user belongs
+    List<Group> listAllGroupsByUserId(String userId); //lists all the groups that the user belongs
 
     Group createGroup(Group group); //saves the created group to database
 

@@ -8,9 +8,10 @@ import com.kgk.model.chat.GroupMessage;
 import com.kgk.repository.chat.GroupMessageRepository;
 
 import javax.inject.Singleton;
-import java.util.Collection;
+import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Singleton
 public class GroupMessageRepositoryImpl implements GroupMessageRepository {
@@ -24,7 +25,7 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
         this.config = config;
     }
 
-    public Collection<GroupMessage> listAllMessagesByGroupId(String groupId) {
+    public List<GroupMessage> listAllMessagesByGroupId(String groupId) {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":groupId", new AttributeValue().withS(groupId));
 
@@ -32,7 +33,7 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
                 .withKeyConditionExpression("groupId = :groupId")
                 .withExpressionAttributeValues(eav);
 
-        return mapper.query(GroupMessage.class, queryExpression);
+        return mapper.query(GroupMessage.class, queryExpression).stream().collect(Collectors.toList());
     }
 
     public GroupMessage saveMessage(String groupId, String message) {

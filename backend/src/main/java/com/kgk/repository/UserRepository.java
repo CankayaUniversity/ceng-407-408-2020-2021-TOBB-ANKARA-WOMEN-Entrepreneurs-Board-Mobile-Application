@@ -2,13 +2,13 @@ package com.kgk.repository;
 
 import com.kgk.model.User;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface UserRepository {
 
-  Collection<User> listAllUsers(); //list all users
+  List<User> listAllUsers(); //list all users
 
-  Collection<User> findUsersByRoleId(String roleId); //find users with a specific role
+  List<User> findUsersByRoleId(String roleId); //find users with a specific role
 
   User findUserById(String userId); //find a specific user
 

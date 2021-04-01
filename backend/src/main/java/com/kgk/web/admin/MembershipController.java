@@ -10,7 +10,7 @@ import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.PathVariable;
 
 import javax.validation.Valid;
-import java.util.Collection;
+import java.util.List;
 
 @Controller("/api/membership")
 public class MembershipController {
@@ -22,7 +22,7 @@ public class MembershipController {
     }
 
     @Get
-    public Collection<RegisterForm> listAll(){
+    public List<RegisterForm> listAll(){
         return membershipRepository.listAllUnapprovedRegisterForms();
     }
 

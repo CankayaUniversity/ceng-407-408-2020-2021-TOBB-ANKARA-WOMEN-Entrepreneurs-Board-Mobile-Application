@@ -13,9 +13,10 @@ import com.kgk.model.admin.UserRole;
 import com.kgk.repository.admin.MembershipRepository;
 
 import javax.inject.Singleton;
-import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Singleton
 public class MembershipRepositoryImpl implements MembershipRepository {
@@ -30,7 +31,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
     }
 
     @Override
-    public Collection<RegisterForm> listAllUnapprovedRegisterForms() {
+    public List<RegisterForm> listAllUnapprovedRegisterForms() {
         //TODO: CurrentUser's city info must pulled
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":approved", new AttributeValue().withBOOL(false));
@@ -40,7 +41,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
                 .withKeyConditionExpression("approved = :approved") //TODO: add city to key expression
                 .withExpressionAttributeValues(eav);
 
-        return mapper.query(RegisterForm.class, queryExpression);
+        return mapper.query(RegisterForm.class, queryExpression).stream().collect(Collectors.toList());
     }
 
     @Override
