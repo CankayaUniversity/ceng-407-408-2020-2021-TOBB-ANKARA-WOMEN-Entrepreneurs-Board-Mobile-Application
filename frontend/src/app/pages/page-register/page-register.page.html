@@ -31,7 +31,6 @@
     <span class="error ion-padding" *ngIf="submitted && errorCtr.email.errors?.pattern">
       Enter valid email.
     </span>
-
     <ion-item color = "whitesmoke">
       <ion-icon name="person-sharp"></ion-icon>
       <ion-input formControlName="username" required="true" placeholder="Username"></ion-input>
@@ -42,7 +41,6 @@
     <span class="error ion-padding" *ngIf="submitted && errorCtr.username.errors?.minlength">
       Min 4 chars long.
     </span>
-
     <ion-item color = "whitesmoke">
       <ion-icon name="lock-closed-sharp"></ion-icon>
       <ion-input formControlName="password" required="true" type="password" placeholder="Password"></ion-input>
@@ -53,7 +51,6 @@
     <span class="error ion-padding" *ngIf="submitted && errorCtr.password.errors?.minlength">
       Min 6 chars long.
     </span>
-
     <ion-item color = "whitesmoke">
       <ion-icon name="business"></ion-icon>
       <ion-select formControlName="occupation" placeholder="Occupation" [compareWith]="compareWith">
