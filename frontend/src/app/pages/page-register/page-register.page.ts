@@ -44,6 +44,23 @@ export class PageRegisterPage implements OnInit {
           Validators.required
         ])
       ],
+      username: [
+        '',
+        Validators.compose([
+          Validators.minLength(4),
+          Validators.maxLength(30),
+          Validators.pattern('[0-9a-z-A-Z-_]*'),
+          Validators.required
+        ])
+      ],
+      password: [
+        '',
+        Validators.compose([
+          Validators.minLength(6),
+          Validators.pattern('[0-9a-z-A-Z@.#*$!?&+-/]*'),
+          Validators.required
+        ])
+      ],
       occupation: [
         '',
         Validators.compose([
@@ -157,9 +174,11 @@ export class PageRegisterPage implements OnInit {
     this.submitted = true;
     if (!this.ionicForm.valid) {
       console.log('All fields are required.');
+      this.router.navigate(['/register']);
       return false;
     } else {
       console.log(formData);
+      this.router.navigate(['/home']);
     }
   }
   compareWith(o1: Occupation, o2: Occupation) {
@@ -169,9 +188,10 @@ export class PageRegisterPage implements OnInit {
   ngOnInit() {
   }
 
+  /*This method might come in handy for ion-button in the future
   regMeIn(){
     this.router.navigate(['/home']);
-  }
+  }*/
   goBack(){
     this.router.navigate(['/login']);
   }

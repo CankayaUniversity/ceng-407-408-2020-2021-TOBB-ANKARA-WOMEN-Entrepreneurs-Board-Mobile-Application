@@ -7,7 +7,7 @@ ion-content{
     bottom: 5px;
     right: 15px;
     border-radius: 50%;
-    padding: 20px;
+    padding: 5px;
     background-color: transparent;
   }
 
@@ -47,6 +47,8 @@ ion-content{
       color: #3e4999;
     }
     ion-item {
+      padding-top: 5px;
+      margin-bottom: 5px;
       border-radius: 50px;
       height: 55px;
       box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.08);
@@ -93,7 +95,7 @@ ion-content{
       font-size: 18px;
       text-transform: initial;
       border-radius: 50px;
-      box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.05);
+      box-shadow:0 4px 100px 0 #e5e5e5;
       --box-shadow: none;
     }
   }
