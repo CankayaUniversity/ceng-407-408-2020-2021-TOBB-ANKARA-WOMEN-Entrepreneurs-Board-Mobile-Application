@@ -2,7 +2,7 @@ package com.kgk.repository.impl;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
-import com.kgk.model.RegisterForm;
+import com.kgk.model.admin.RegisterForm;
 import com.kgk.repository.RegisterFormRepository;
 
 import javax.inject.Singleton;

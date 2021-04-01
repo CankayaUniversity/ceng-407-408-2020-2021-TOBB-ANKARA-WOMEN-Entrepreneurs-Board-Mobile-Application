@@ -1,7 +1,6 @@
 package com.kgk.repository.admin;
 
-import com.kgk.model.RegisterForm;
-import com.kgk.model.User;
+import com.kgk.model.admin.RegisterForm;
 
 import java.util.Collection;
 

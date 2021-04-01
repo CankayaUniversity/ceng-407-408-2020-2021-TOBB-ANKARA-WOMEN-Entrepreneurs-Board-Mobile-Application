@@ -4,7 +4,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.kgk.model.RegisterForm;
+import com.kgk.model.admin.DeletedRegisterForm;
+import com.kgk.model.admin.RegisterForm;
 import com.kgk.model.Role;
 import com.kgk.model.RoleType;
 import com.kgk.model.User;
@@ -74,6 +75,19 @@ public class MembershipRepositoryImpl implements MembershipRepository {
     public void declineRegisterForm(String registerId, String city) {
         RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, city, config);
         //TODO: save the retrievedForm to DeletedRegisterForms table first, then delete
+        DeletedRegisterForm deletedRegisterForm = new DeletedRegisterForm();
+        deletedRegisterForm.setFirstName(retrievedForm.getFirstName());
+        deletedRegisterForm.setLastName(retrievedForm.getLastName());
+        deletedRegisterForm.setEmail(retrievedForm.getEmail());
+        deletedRegisterForm.setPassword(retrievedForm.getPassword());
+        deletedRegisterForm.setPhone(retrievedForm.getPhone());
+        deletedRegisterForm.setCity(retrievedForm.getCity());
+        deletedRegisterForm.setTobbRegisterId(retrievedForm.getTobbRegisterId());
+        deletedRegisterForm.setRegisterDate(retrievedForm.getRegisterDate());
+
+        mapper.save(deletedRegisterForm);
+        System.out.println("[MEMBERSHIP REPO] Deleted Register Form is saved to DeletedRagisterForm table");
+
         mapper.delete(retrievedForm);
         System.out.println("[MEMBERSHIP REPO] Register form is deleted");
     }

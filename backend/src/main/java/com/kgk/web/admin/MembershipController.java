@@ -1,6 +1,6 @@
 package com.kgk.web.admin;
 
-import com.kgk.model.RegisterForm;
+import com.kgk.model.admin.RegisterForm;
 import com.kgk.repository.admin.MembershipRepository;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;

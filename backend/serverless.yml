@@ -196,12 +196,12 @@ resources:
       Properties:
         TableName: DeletedRegisterForms
         AttributeDefinitions:
-          - AttributeName: registerId
+          - AttributeName: deletedRegisterId
             AttributeType: S
           - AttributeName: city
             AttributeType: S
         KeySchema:
-          - AttributeName: registerId
+          - AttributeName: deletedRegisterId
             KeyType: HASH
           - AttributeName: city
             KeyType: RANGE
