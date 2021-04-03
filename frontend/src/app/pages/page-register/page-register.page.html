@@ -1,6 +1,6 @@
 <ion-content>
   <button class = "round" (click)="goBack()"><img src="../../../assets/ok-left.png"></button>
-  <form  [formGroup]="ionicForm" (ngSubmit)="submitForm(ionicForm.value)" id="form">
+  <form  [formGroup]="ionicForm" (ngSubmit)="submitForm()" id="form">
     <ion-item color = "whitesmoke">
       <ion-icon name="person-sharp"></ion-icon>
       <ion-input formControlName="firstname" required="true" placeholder="First Name"></ion-input>

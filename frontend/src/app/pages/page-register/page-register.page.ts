@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../../environments/environment';
+import {RegisterForm} from '../../providers/model/register-form.type';
 
 interface Occupation {
   name: string;
@@ -16,7 +19,7 @@ export class PageRegisterPage implements OnInit {
   public isToggled   = false;
   ionicForm: FormGroup;
   submitted =  false;
-  constructor(public formBuilder: FormBuilder, private router: Router) {
+  constructor(public formBuilder: FormBuilder, private router: Router, private http: HttpClient) {
     this.ionicForm = formBuilder.group({
       firstname: [
         '',
@@ -170,15 +173,25 @@ export class PageRegisterPage implements OnInit {
     return this.ionicForm.controls;
   }
 
-  submitForm(formData: any) {
+  async submitForm() {
+    const formData: RegisterForm = this.ionicForm.value;
+
     this.submitted = true;
-    if (!this.ionicForm.valid) {
+    if (this.ionicForm.invalid) {
       console.log('All fields are required.');
       this.router.navigate(['/register']);
       return false;
     } else {
       console.log(formData);
-      this.router.navigate(['/home']);
+
+      try {
+        // For database action
+        const res = await this.http.post<RegisterForm>(environment.apiUrl + '/api/register-form', formData).toPromise();
+        this.router.navigate(['/home']);
+      } catch (e) {
+        // error toast
+      }
+
     }
   }
   compareWith(o1: Occupation, o2: Occupation) {
