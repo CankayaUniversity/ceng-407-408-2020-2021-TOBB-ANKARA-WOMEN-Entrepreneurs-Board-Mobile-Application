@@ -1,0 +1,33 @@
+ion-content.background {
+  //background-color: #3e4999;
+  --background: url(../../../assets/feed-back.png) 0 0/100% 100% no-repeat;
+}
+
+.feed{
+  font-size: 30px;
+  margin-left: 13%;
+  margin-top:115px;
+  display:inline-block;
+  font-weight: bold;
+
+}
+
+.card{
+  margin-top: 10%;
+  margin-left: 6%;
+  width: 80%;
+  height: 63%;
+  display:inline-block;
+}
+
+ion-card-content{
+  height: 44%;
+}
+
+.card-image{
+  width: 80%;
+  height: 35%;
+  display: inline-block;
+  margin: 3%;
+
+}

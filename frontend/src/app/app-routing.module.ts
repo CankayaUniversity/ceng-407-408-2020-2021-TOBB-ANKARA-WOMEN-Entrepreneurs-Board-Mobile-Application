@@ -15,15 +15,18 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./pages/page-home/page-home.module').then( m => m.PageHomePageModule)
   },
-
   {
     path: 'login',
     loadChildren: () => import('./pages/page-login/page-login.module').then( m => m.PageLoginPageModule)
-  },  {
-    path: 'page-feed',
+  },
+  {
+    path: 'feed',
     loadChildren: () => import('./pages/page-feed/page-feed.module').then( m => m.PageFeedPageModule)
   },
-
+  {
+    path: 'tabs',
+    loadChildren: () => import('./pages/page-tabs/page-tabs.module').then( m => m.PageTabsPageModule)
+  },
 ];
 
 @NgModule({
