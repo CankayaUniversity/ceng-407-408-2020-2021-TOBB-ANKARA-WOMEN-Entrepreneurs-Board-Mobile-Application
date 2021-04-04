@@ -16,7 +16,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Singleton
 public class GroupRepositoryImpl implements GroupRepository {
@@ -47,7 +46,7 @@ public class GroupRepositoryImpl implements GroupRepository {
                 .withExpressionAttributeValues(eav)
                 .withConsistentRead(false);
 
-        return mapper.query(Group.class, queryExpression).stream().collect(Collectors.toList());
+        return mapper.query(Group.class, queryExpression);
     }
 
     public Group createGroup(Group group) {

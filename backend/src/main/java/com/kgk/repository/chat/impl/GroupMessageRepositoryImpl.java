@@ -11,7 +11,6 @@ import javax.inject.Singleton;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Singleton
 public class GroupMessageRepositoryImpl implements GroupMessageRepository {
@@ -33,7 +32,7 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
                 .withKeyConditionExpression("groupId = :groupId")
                 .withExpressionAttributeValues(eav);
 
-        return mapper.query(GroupMessage.class, queryExpression).stream().collect(Collectors.toList());
+        return mapper.query(GroupMessage.class, queryExpression);
     }
 
     public GroupMessage saveMessage(String groupId, String message) {

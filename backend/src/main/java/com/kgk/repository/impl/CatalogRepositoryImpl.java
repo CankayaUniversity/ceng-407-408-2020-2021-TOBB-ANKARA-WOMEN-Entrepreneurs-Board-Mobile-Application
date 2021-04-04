@@ -12,7 +12,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @Singleton
 public class CatalogRepositoryImpl implements CatalogRepository {
@@ -35,7 +34,7 @@ public class CatalogRepositoryImpl implements CatalogRepository {
                 .withKeyConditionExpression("userId = :userId")
                 .withExpressionAttributeValues(eav);
 
-        return mapper.query(Catalog.class, queryExpression).stream().collect(Collectors.toList());
+        return mapper.query(Catalog.class, queryExpression);
     }
 
     @Override

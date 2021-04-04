@@ -5,7 +5,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
 import com.kgk.model.DeletedItem;
 import com.kgk.model.admin.RegisterForm;
 import com.kgk.model.Role;
@@ -18,7 +17,6 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Singleton
 public class MembershipRepositoryImpl implements MembershipRepository {
@@ -38,12 +36,13 @@ public class MembershipRepositoryImpl implements MembershipRepository {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":approved", new AttributeValue().withBOOL(false));
         //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        eav.put(":city", new AttributeValue().withS("Ankara"));
 
         DynamoDBQueryExpression<RegisterForm> queryExpression = new DynamoDBQueryExpression<RegisterForm>()
-                .withKeyConditionExpression("approved = :approved") //TODO: add city to key expression
+                .withKeyConditionExpression("approved = :approved and city = :city")
                 .withExpressionAttributeValues(eav);
 
-        return mapper.query(RegisterForm.class, queryExpression).stream().collect(Collectors.toList());
+        return mapper.query(RegisterForm.class, queryExpression);
     }
 
     @Override
@@ -82,14 +81,13 @@ public class MembershipRepositoryImpl implements MembershipRepository {
         deletedItem.setDeletedTime(System.currentTimeMillis());
         deletedItem.setOriginalId(retrievedForm.getRegisterId());
 
-        ObjectWriter ow = new ObjectMapper().writer().withDefaultPrettyPrinter();
         try {
             //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
             //Converting the Object to JSONString
             String json = om.writeValueAsString(retrievedForm);
             deletedItem.setJson(json);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

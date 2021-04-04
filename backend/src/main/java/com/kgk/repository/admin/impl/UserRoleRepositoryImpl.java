@@ -15,7 +15,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.stream.Collectors;
 
 @Singleton
 public class UserRoleRepositoryImpl implements UserRoleRepository {
@@ -37,12 +36,13 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
         //TODO: CurrenUser's city info must pulled
         Map<String, AttributeValue> eav = new HashMap<>();
         //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        eav.put(":city", new AttributeValue().withS("Ankara"));
 
         DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
                 .withKeyConditionExpression("city = :city")
                 .withExpressionAttributeValues(eav);
 
-        List<User> users = mapper.query(User.class, queryExpression).stream().collect(Collectors.toList());
+        List<User> users = mapper.query(User.class, queryExpression);
 
         if (CollectionUtils.isNotEmpty(users)) {
             List<UserRole> userRoles = new ArrayList<>();
@@ -64,13 +64,14 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
         //TODO: CurrenUser's city info must pulled
         Map<String, AttributeValue> eav = new HashMap<>();
         //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        eav.put(":city", new AttributeValue().withS("Ankara"));
         eav.put(":roleId", new AttributeValue().withS(roleId));
 
         DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
-                .withKeyConditionExpression("roleId = :roleId") //TODO: add city to key expression
+                .withKeyConditionExpression("city = :city and roleId = :roleId") //TODO: add city to key expression
                 .withExpressionAttributeValues(eav);
 
-        List<User> users = mapper.query(User.class, queryExpression).stream().collect(Collectors.toList());
+        List<User> users = mapper.query(User.class, queryExpression);
 
         if (CollectionUtils.isNotEmpty(users)) {
             List<UserRole> userRoles = new ArrayList<>();

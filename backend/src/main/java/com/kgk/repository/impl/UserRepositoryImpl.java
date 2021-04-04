@@ -51,7 +51,7 @@ public class UserRepositoryImpl implements UserRepository {
                 .withKeyConditionExpression("roleId = :roleId")
                 .withExpressionAttributeValues(eav);
 
-        List<User> users = mapper.query(User.class, queryExpression).stream().collect(Collectors.toList());
+        List<User> users = mapper.query(User.class, queryExpression);
         users.forEach(
                 user -> user.setCatalogList(catalogRepository.listCatalogsByUserId(user.getUserId()))
         );
