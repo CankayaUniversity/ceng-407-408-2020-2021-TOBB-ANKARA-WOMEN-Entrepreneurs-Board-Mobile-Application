@@ -48,6 +48,9 @@ public class RegisterForm {
     private String tobbRegisterId;
 
     @NonNull
+    private String occupation;
+
+    @NonNull
     private Long registerDate;
 
     @NonNull
@@ -135,6 +138,16 @@ public class RegisterForm {
 
     public void setTobbRegisterId(@NonNull String tobbRegisterId) {
         this.tobbRegisterId = tobbRegisterId;
+    }
+
+    @DynamoDBAttribute(attributeName = "occupation")
+    @NonNull
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(@NonNull String occupation) {
+        this.occupation = occupation;
     }
 
     @DynamoDBAttribute(attributeName = "registerDate")
