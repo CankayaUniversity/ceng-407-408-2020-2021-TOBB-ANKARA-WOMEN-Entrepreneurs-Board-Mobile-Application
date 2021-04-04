@@ -78,7 +78,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     public User updateUser(String userId, User user) {
         User userRetrieved = mapper.load(User.class, userId, user.getCity(), config);
-        user.copyFrom(userRetrieved);
+        userRetrieved.copyFrom(user);
 
         if (CollectionUtils.isNotEmpty(user.getCatalogList())) {
             List<Catalog> oldCatalogs = catalogRepository.listCatalogsByUserId(userId);

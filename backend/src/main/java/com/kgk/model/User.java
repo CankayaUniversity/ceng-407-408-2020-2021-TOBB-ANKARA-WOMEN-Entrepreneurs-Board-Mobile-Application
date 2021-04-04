@@ -54,13 +54,12 @@ public class User {
     @NotBlank
     private String phone;
 
+    @NonNull
+    private String occupation;
+
     private String photo;
 
     private Long birthDate;
-
-    private String sector;
-
-    private String occupation;
 
     private String description;
 
@@ -157,11 +156,12 @@ public class User {
     }
 
     @DynamoDBAttribute(attributeName = "occupation")
+    @NonNull
     public String getOccupation() {
       return occupation;
     }
 
-    public void setOccupation(String occupation) {
+    public void setOccupation(@NonNull String occupation) {
       this.occupation = occupation;
     }
 
@@ -194,15 +194,6 @@ public class User {
         this.tobbRegisterId = tobbRegisterId;
     }
 
-    @DynamoDBAttribute(attributeName = "sector")
-    public String getSector() {
-        return sector;
-    }
-
-    public void setSector(String sector) {
-        this.sector = sector;
-    }
-
     public List<Catalog> getCatalogList() {
         return catalogList;
     }
@@ -212,7 +203,7 @@ public class User {
     }
 
     public void copyFrom(User user) {
-        this.setUserId(user.getUserId());
+        //this.setUserId(user.getUserId());
         this.setCity(user.city);
         this.setRoleId(user.getRoleId());
         this.setFirstName(user.getFirstName());
@@ -220,6 +211,7 @@ public class User {
         this.setEmail(user.getEmail());
         this.setPassword(user.getPassword());
         this.setTobbRegisterId(user.getTobbRegisterId());
+        this.setOccupation(user.getOccupation());
         this.setPhone(user.getPhone());
 
         if (StringUtils.isNotEmpty(user.getPhoto()))
@@ -227,12 +219,6 @@ public class User {
 
         if (user.getBirthDate() != null)
             this.setBirthDate(user.getBirthDate());
-
-        if (StringUtils.isNotEmpty(user.getSector()))
-            this.setSector(user.getSector());
-
-        if (StringUtils.isNotEmpty(user.getOccupation()))
-            this.setOccupation(user.getOccupation());
 
         if (StringUtils.isNotEmpty(user.getDescription()))
             this.setDescription(user.getDescription());

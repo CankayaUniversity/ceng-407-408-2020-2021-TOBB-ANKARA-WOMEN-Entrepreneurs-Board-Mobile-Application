@@ -44,6 +44,9 @@ public class DeletedRegisterForm {
     private String tobbRegisterId;
 
     @NonNull
+    private String occupation;
+
+    @NonNull
     private Long registerDate;
 
     @NonNull
@@ -161,4 +164,13 @@ public class DeletedRegisterForm {
         this.roleId = roleId;
     }
 
+    @DynamoDBAttribute(attributeName = "occupation")
+    @NonNull
+    public String getOccupation() {
+        return occupation;
+    }
+
+    public void setOccupation(@NonNull String occupation) {
+        this.occupation = occupation;
+    }
 }

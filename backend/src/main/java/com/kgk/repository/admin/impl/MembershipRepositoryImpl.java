@@ -60,6 +60,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
         user.setPhone(retrievedForm.getPhone());
         user.setCity(retrievedForm.getCity());
         user.setTobbRegisterId(retrievedForm.getTobbRegisterId());
+        user.setOccupation(retrievedForm.getOccupation());
         mapper.save(retrievedForm);
 
         userRole.setRoleId(user.getRoleId());
@@ -75,7 +76,6 @@ public class MembershipRepositoryImpl implements MembershipRepository {
     @Override
     public void declineRegisterForm(String registerId, String city) {
         RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, city, config);
-        //TODO: save the retrievedForm to DeletedRegisterForms table first, then delete
         DeletedRegisterForm deletedRegisterForm = new DeletedRegisterForm();
         deletedRegisterForm.setFirstName(retrievedForm.getFirstName());
         deletedRegisterForm.setLastName(retrievedForm.getLastName());
@@ -84,6 +84,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
         deletedRegisterForm.setPhone(retrievedForm.getPhone());
         deletedRegisterForm.setCity(retrievedForm.getCity());
         deletedRegisterForm.setTobbRegisterId(retrievedForm.getTobbRegisterId());
+        deletedRegisterForm.setOccupation(retrievedForm.getOccupation());
         deletedRegisterForm.setRegisterDate(retrievedForm.getRegisterDate());
 
         mapper.save(deletedRegisterForm);
