@@ -3,22 +3,22 @@
   <form  [formGroup]="ionicForm" (ngSubmit)="submitForm()" id="form">
     <ion-item color = "whitesmoke">
       <ion-icon name="person-sharp"></ion-icon>
-      <ion-input formControlName="firstname" required="true" placeholder="First Name"></ion-input>
+      <ion-input formControlName="firstName" required="true" placeholder="First Name"></ion-input>
     </ion-item>
-    <span class="error ion-padding" *ngIf="submitted && errorCtr.firstname.errors?.required">
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.firstName.errors?.required">
       First Name is required.
     </span>
-    <span class="error ion-padding" *ngIf="submitted && errorCtr.firstname.errors?.minlength">
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.firstName.errors?.minlength">
       Min 2 chars long.
     </span>
     <ion-item color = "whitesmoke">
       <ion-icon name="person-sharp"></ion-icon>
-      <ion-input formControlName="lastname" required="true" placeholder="Last Name"></ion-input>
+      <ion-input formControlName="lastName" required="true" placeholder="Last Name"></ion-input>
     </ion-item>
-    <span class="error ion-padding" *ngIf="submitted && errorCtr.lastname.errors?.required">
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.lastName.errors?.required">
       Last Name is required.
     </span>
-    <span class="error ion-padding" *ngIf="submitted && errorCtr.lastname.errors?.minlength">
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.lastName.errors?.minlength">
       Min 2 chars long.
     </span>
     <ion-item color = "whitesmoke">

@@ -21,7 +21,7 @@ export class PageRegisterPage implements OnInit {
   submitted =  false;
   constructor(public formBuilder: FormBuilder, private router: Router, private http: HttpClient) {
     this.ionicForm = formBuilder.group({
-      firstname: [
+      firstName: [
         '',
         Validators.compose([
           Validators.minLength(2),
@@ -30,7 +30,7 @@ export class PageRegisterPage implements OnInit {
           Validators.required
         ])
       ],
-      lastname: [
+      lastName: [
         '',
         Validators.compose([
           Validators.minLength(2),
@@ -174,7 +174,8 @@ export class PageRegisterPage implements OnInit {
   }
 
   async submitForm() {
-    const formData: RegisterForm = this.ionicForm.value;
+    const formData: RegisterForm = {...this.ionicForm.value};
+    formData.occupation = (formData.occupation as any).name;
 
     this.submitted = true;
     if (this.ionicForm.invalid) {

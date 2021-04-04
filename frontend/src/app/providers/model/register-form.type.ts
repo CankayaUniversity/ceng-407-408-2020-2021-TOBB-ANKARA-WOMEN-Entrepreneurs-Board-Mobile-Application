@@ -2,7 +2,7 @@ export interface RegisterForm {
   registerId: string;
   city: string;
   firstName: string;
-  lastname: string;
+  lastName: string;
   email: string;
   password: string;
   phone: string;
