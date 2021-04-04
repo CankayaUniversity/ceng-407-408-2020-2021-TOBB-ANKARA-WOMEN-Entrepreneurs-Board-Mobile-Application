@@ -1,3 +1,6 @@
 micronaut:
   application:
     name: tobbKgkWcoop
+  server:
+    cors:
+      enabled: true
