@@ -47,7 +47,7 @@ export class PageRegisterPage implements OnInit {
           Validators.required
         ])
       ],
-      username: [
+      city: [
         '',
         Validators.compose([
           Validators.minLength(4),
@@ -70,14 +70,14 @@ export class PageRegisterPage implements OnInit {
           Validators.required
         ])
       ],
-      registrationnum: [
+      tobbRegisterId: [
         '',
         Validators.compose([
         Validators.pattern('^[0-9]+$'),
         Validators.required
         ])
       ],
-      mobile: [
+      phone: [
         '',
         Validators.compose([
           Validators.pattern('^[0-9]+$'),

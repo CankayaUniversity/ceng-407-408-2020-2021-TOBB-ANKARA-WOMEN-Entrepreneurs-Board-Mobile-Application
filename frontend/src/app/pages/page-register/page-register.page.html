@@ -33,13 +33,10 @@
     </span>
     <ion-item color = "whitesmoke">
       <ion-icon name="person-sharp"></ion-icon>
-      <ion-input formControlName="username" required="true" placeholder="Username"></ion-input>
+      <ion-input formControlName="city" required="true" placeholder="City"></ion-input>
     </ion-item>
-    <span class="error ion-padding" *ngIf="submitted && errorCtr.username.errors?.required">
-      Username is required.
-    </span>
-    <span class="error ion-padding" *ngIf="submitted && errorCtr.username.errors?.minlength">
-      Min 4 chars long.
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.city.errors?.required">
+      City is required.
     </span>
     <ion-item color = "whitesmoke">
       <ion-icon name="lock-closed-sharp"></ion-icon>
@@ -62,22 +59,22 @@
     </span>
     <ion-item color = "whitesmoke">
       <ion-icon name="document"></ion-icon>
-      <ion-input formControlName="registrationnum" required="true" type="number" placeholder="Registration Number"></ion-input>
+      <ion-input formControlName="tobbRegisterId" required="true" type="number" placeholder="Registration Number"></ion-input>
     </ion-item>
-    <span class="error ion-padding" *ngIf="submitted && errorCtr.registrationnum.errors?.required">
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.tobbRegisterId.errors?.required">
       Registration number is required.
     </span>
-    <span class="error ion-padding" *ngIf="submitted && errorCtr.registrationnum.errors?.pattern">
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.tobbRegisterId.errors?.pattern">
       Number values allowed.
     </span>
     <ion-item color = "whitesmoke">
       <ion-icon name="call"></ion-icon>
-      <ion-input formControlName="mobile" required="true" type="number" placeholder="Mobile Phone"></ion-input>
+      <ion-input formControlName="phone" required="true" type="number" placeholder="Mobile Phone"></ion-input>
     </ion-item>
-    <span class="error ion-padding" *ngIf="submitted && errorCtr.mobile.errors?.required">
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.phone.errors?.required">
       Phone number is required.
     </span>
-    <span class="error ion-padding" *ngIf="submitted && errorCtr.mobile.errors?.pattern">
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.phone.errors?.pattern">
       Number values allowed.
     </span>
 
