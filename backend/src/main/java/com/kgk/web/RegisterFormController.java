@@ -18,7 +18,7 @@ public class RegisterFormController {
     }
 
     @Post
-    public void save(@Valid @Body RegisterForm registerForm) {
-        registerFormRepository.saveRegisterForm(registerForm);
+    public RegisterForm save(@Valid @Body RegisterForm registerForm) {
+        return registerFormRepository.saveRegisterForm(registerForm);
     }
 }
