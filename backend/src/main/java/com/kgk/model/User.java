@@ -61,9 +61,6 @@ public class User {
 
     private Long birthDate;
 
-    private String sector;
-
-
     private String description;
 
     private List<Catalog> catalogList = new ArrayList<>();
@@ -197,15 +194,6 @@ public class User {
         this.tobbRegisterId = tobbRegisterId;
     }
 
-    @DynamoDBAttribute(attributeName = "sector")
-    public String getSector() {
-        return sector;
-    }
-
-    public void setSector(String sector) {
-        this.sector = sector;
-    }
-
     public List<Catalog> getCatalogList() {
         return catalogList;
     }
@@ -231,9 +219,6 @@ public class User {
 
         if (user.getBirthDate() != null)
             this.setBirthDate(user.getBirthDate());
-
-        if (StringUtils.isNotEmpty(user.getSector()))
-            this.setSector(user.getSector());
 
         if (StringUtils.isNotEmpty(user.getDescription()))
             this.setDescription(user.getDescription());
