@@ -29,8 +29,26 @@ functions:
     environment:
       MICRONAUT_ENVIRONMENTS: ${opt:stage, 'dev'}
     events:
-      - http: ANY {proxy+}
-        cors: true
+      - http:
+          path: /{proxy+}
+          method: get
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: post
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: put
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: delete
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: patch
+          cors: true
 
 resources:
   Resources:
