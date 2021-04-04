@@ -23,7 +23,7 @@ public class RegisterFormRepositoryImpl implements RegisterFormRepository {
     public RegisterForm saveRegisterForm(RegisterForm registerForm) {
         registerForm.setApproved(false);
         registerForm.setRegisterDate(System.currentTimeMillis());
-        registerForm.setRoleId("102");
+        registerForm.setRoleId("103");
         mapper.save(registerForm);
         System.out.println("[REGISTER FORM REPO] Register form is saved");
         return registerForm;

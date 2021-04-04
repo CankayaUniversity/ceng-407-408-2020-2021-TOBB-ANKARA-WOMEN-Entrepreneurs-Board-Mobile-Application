@@ -224,20 +224,34 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-    deletedRegisterForms:
+    deletedItems:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: DeletedRegisterForms
+        TableName: DeletedItems
         AttributeDefinitions:
-          - AttributeName: deletedRegisterId
+          - AttributeName: deletedItemId
             AttributeType: S
-          - AttributeName: city
+          - AttributeName: deletedTime
+            AttributeType: N
+          - AttributeName: originalId
             AttributeType: S
         KeySchema:
-          - AttributeName: deletedRegisterId
+          - AttributeName: deletedItemId
             KeyType: HASH
-          - AttributeName: city
+          - AttributeName: deletedTime
             KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: itemsByOriginalId
+            KeySchema:
+              - AttributeName: deletedItemId
+                KeyType: HASH
+              - AttributeName: originalId
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5

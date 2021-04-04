@@ -56,7 +56,7 @@ public class RegisterForm {
     @NonNull
     private boolean approved = false;
 
-    private String roleId; //kaldırılabilir, membership admin erişmeli sadece
+    private String roleId;
 
     // Partition key
     @DynamoDBHashKey(attributeName = "registerId")
