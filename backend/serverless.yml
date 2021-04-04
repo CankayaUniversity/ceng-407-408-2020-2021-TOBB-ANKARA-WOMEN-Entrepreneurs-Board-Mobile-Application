@@ -30,6 +30,7 @@ functions:
       MICRONAUT_ENVIRONMENTS: ${opt:stage, 'dev'}
     events:
       - http: ANY {proxy+}
+        cors: true
 
 resources:
   Resources:
