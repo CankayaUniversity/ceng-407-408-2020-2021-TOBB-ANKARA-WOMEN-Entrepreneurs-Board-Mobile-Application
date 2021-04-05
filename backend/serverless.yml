@@ -224,37 +224,6 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-    deletedItems:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: DeletedItems
-        AttributeDefinitions:
-          - AttributeName: deletedItemId
-            AttributeType: S
-          - AttributeName: deletedTime
-            AttributeType: N
-          - AttributeName: originalId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: deletedItemId
-            KeyType: HASH
-          - AttributeName: deletedTime
-            KeyType: RANGE
-        GlobalSecondaryIndexes:
-          - IndexName: itemsByOriginalId
-            KeySchema:
-              - AttributeName: deletedItemId
-                KeyType: HASH
-              - AttributeName: originalId
-                KeyType: RANGE
-            Projection:
-              ProjectionType: ALL
-            ProvisionedThroughput:
-              ReadCapacityUnits: 5
-              WriteCapacityUnits: 5
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
     userRolesTable:
       Type: AWS::DynamoDB::Table
       Properties:
@@ -286,3 +255,34 @@ resources:
             ProvisionedThroughput:
               ReadCapacityUnits: 5
               WriteCapacityUnits: 5
+    deletedItems:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: DeletedItems
+        AttributeDefinitions:
+          - AttributeName: whichTable
+            AttributeType: S
+          - AttributeName: deletedTime
+            AttributeType: N
+          - AttributeName: originalId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: whichTable
+            KeyType: HASH
+          - AttributeName: deletedTime
+            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: itemsByOriginalId
+            KeySchema:
+              - AttributeName: whichTable
+                KeyType: HASH
+              - AttributeName: originalId
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
