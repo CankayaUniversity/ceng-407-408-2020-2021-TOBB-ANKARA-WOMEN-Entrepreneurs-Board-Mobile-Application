@@ -34,25 +34,33 @@ public class MembershipRepositoryImpl implements MembershipRepository {
     public List<RegisterForm> listAllUnapprovedRegisterForms() {
         //TODO: CurrentUser's city info must pulled
         Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":approved", new AttributeValue().withBOOL(false));
+        eav.put(":approved", new AttributeValue().withS("false"));
         //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
         eav.put(":city", new AttributeValue().withS("Ankara"));
 
         DynamoDBQueryExpression<RegisterForm> queryExpression = new DynamoDBQueryExpression<RegisterForm>()
                 .withKeyConditionExpression("approved = :approved and city = :city")
-                .withExpressionAttributeValues(eav);
+                .withIndexName("registerFormsByCity")
+                .withExpressionAttributeValues(eav)
+                .withConsistentRead(false);
 
         return mapper.query(RegisterForm.class, queryExpression);
     }
 
     @Override
-    public void approveRegisterForm(String registerId, RegisterForm registerForm) {
+    public RegisterForm findRegisterFormById(String registerFormId) {
+        RegisterForm registerForm = mapper.load(RegisterForm.class, registerFormId, config);
+        return registerForm;
+    }
+
+    @Override
+    public RegisterForm approveRegisterForm(String registerId, RegisterForm registerForm) {
         User user = new User();
         UserRole userRole = new UserRole();
-        RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, registerForm.getCity(), config);
+        RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, config);
 
-        retrievedForm.setApproved(true);
-        Role role = mapper.load(Role.class, RoleType.MEMBER.toString(), config);
+        retrievedForm.setApproved("true");
+        Role role = mapper.load(Role.class, RoleType.MEMBER.toString(), "101", config);
         user.setRoleId(role.getRoleId());
         user.setFirstName(retrievedForm.getFirstName());
         user.setLastName(retrievedForm.getLastName());
@@ -72,6 +80,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
         System.out.println("[MEMBERSHIP REPO] Register form is updated");
         mapper.save(user);
         System.out.println("[MEMBERSHIP REPO] User is saved");
+        return retrievedForm;
     }
 
     @Override

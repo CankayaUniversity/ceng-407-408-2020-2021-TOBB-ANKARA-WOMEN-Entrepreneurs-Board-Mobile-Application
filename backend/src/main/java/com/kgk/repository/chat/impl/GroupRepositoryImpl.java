@@ -4,6 +4,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kgk.model.DeletedItem;
 import com.kgk.model.chat.Group;
 import com.kgk.model.chat.GroupMember;
 import com.kgk.model.chat.GroupMessage;
@@ -54,7 +56,7 @@ public class GroupRepositoryImpl implements GroupRepository {
         group.setCreatedAt(System.currentTimeMillis());
         //group.setCreatedBy(currentUser.getUserId());
         //group.setCity(currentUser.getCity());
-        group.setCreatedBy("9c9f4880-c0e6-4afa-9040-b8f5facf35ef");
+        group.setCreatedBy("d6082f95-1901-4138-8398-6ed7b2939cbe");
         group.setCity("Ankara");
         mapper.save(group);
 
@@ -72,15 +74,68 @@ public class GroupRepositoryImpl implements GroupRepository {
 
     public void deleteGroup(String groupId, String city) {
         Group group = mapper.load(Group.class, groupId, city, config);
+
         List<GroupMember> groupMembers = groupMemberRepository.listAllUsersByGroupId(groupId);
         groupMembers.forEach(
-                groupMember -> mapper.delete(groupMember)
+                groupMember -> {
+                    DeletedItem deletedMember = new DeletedItem();
+                    deletedMember.setDeletedTime(System.currentTimeMillis());
+                    deletedMember.setWhichTable("GroupMembers");
+                    deletedMember.setOriginalId(groupMember.getUserId());
+
+                    try {
+                        //Creating the ObjectMapper object
+                        ObjectMapper om = new ObjectMapper();
+                        //Converting the Object to JSONString
+                        String json = om.writeValueAsString(groupMember);
+                        deletedMember.setJson(json);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    mapper.save(deletedMember);
+
+                    mapper.delete(groupMember);
+                }
         );
 
         List<GroupMessage> groupMessages = groupMessageRepository.listAllMessagesByGroupId(groupId);
         groupMessages.forEach(
-                groupMessage -> mapper.delete(groupMessage)
+                groupMessage -> {
+                    DeletedItem deletedMessage = new DeletedItem();
+                    deletedMessage.setDeletedTime(System.currentTimeMillis());
+                    deletedMessage.setWhichTable("GroupMessages");
+                    deletedMessage.setOriginalId(groupMessage.getMessageId());
+
+                    try {
+                        //Creating the ObjectMapper object
+                        ObjectMapper om = new ObjectMapper();
+                        //Converting the Object to JSONString
+                        String json = om.writeValueAsString(groupMessage);
+                        deletedMessage.setJson(json);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    mapper.save(deletedMessage);
+
+                    mapper.delete(groupMessage);
+                }
         );
+
+        DeletedItem deletedGroup = new DeletedItem();
+        deletedGroup.setDeletedTime(System.currentTimeMillis());
+        deletedGroup.setWhichTable("Groups");
+        deletedGroup.setOriginalId(group.getGroupId());
+
+        try {
+            //Creating the ObjectMapper object
+            ObjectMapper om = new ObjectMapper();
+            //Converting the Object to JSONString
+            String json = om.writeValueAsString(group);
+            deletedGroup.setJson(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mapper.save(deletedGroup);
 
         mapper.delete(group);
     }

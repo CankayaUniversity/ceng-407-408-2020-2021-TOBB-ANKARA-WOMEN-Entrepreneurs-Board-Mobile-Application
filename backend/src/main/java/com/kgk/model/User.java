@@ -205,7 +205,6 @@ public class User {
     public void copyFrom(User user) {
         //this.setUserId(user.getUserId());
         this.setCity(user.city);
-        this.setRoleId(user.getRoleId());
         this.setFirstName(user.getFirstName());
         this.setLastName(user.getLastName());
         this.setEmail(user.getEmail());
@@ -213,6 +212,9 @@ public class User {
         this.setTobbRegisterId(user.getTobbRegisterId());
         this.setOccupation(user.getOccupation());
         this.setPhone(user.getPhone());
+
+        if (StringUtils.isNotEmpty(user.getRoleId()))
+            this.setRoleId(user.getRoleId());
 
         if (StringUtils.isNotEmpty(user.getPhoto()))
             this.setPhone(user.getPhone());

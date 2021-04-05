@@ -5,7 +5,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgk.model.Catalog;
+import com.kgk.model.DeletedItem;
 import com.kgk.model.User;
 import com.kgk.repository.CatalogRepository;
 import com.kgk.repository.UserRepository;
@@ -90,7 +92,7 @@ public class UserRepositoryImpl implements UserRepository {
                         );
             }
 
-            user.setCatalogList(
+            userRetrieved.setCatalogList(
                     user.getCatalogList()
                             .stream()
                             .map(catalog -> catalogRepository.addCatalog(userId, catalog))
@@ -98,10 +100,10 @@ public class UserRepositoryImpl implements UserRepository {
             );
         }
 
-        mapper.save(user);
+        mapper.save(userRetrieved);
         System.out.println("[USER REPO] User is updated");
 
-        return user;
+        return userRetrieved;
     }
 
     public User changePassword(String userId, String oldPassword, String newPassword) {
@@ -126,12 +128,49 @@ public class UserRepositoryImpl implements UserRepository {
         if (CollectionUtils.isNotEmpty(catalogs)) {
             catalogs.stream()
                     .forEach(
-                            catalog -> mapper.delete(catalog)
+                            catalog -> {
+                                DeletedItem deletedCatalog = new DeletedItem();
+                                deletedCatalog.setDeletedTime(System.currentTimeMillis());
+                                deletedCatalog.setWhichTable("Catalogs");
+                                deletedCatalog.setOriginalId(catalog.getCatalogId());
+
+                                try {
+                                    //Creating the ObjectMapper object
+                                    ObjectMapper om = new ObjectMapper();
+                                    //Converting the Object to JSONString
+                                    String json = om.writeValueAsString(catalog);
+                                    deletedCatalog.setJson(json);
+                                } catch (Exception e) {
+                                    e.printStackTrace();
+                                }
+                                mapper.save(deletedCatalog);
+                                System.out.println("[USER REPO] Deleted catalog is saved to DeletedItems table");
+
+                                mapper.delete(catalog);
+                                System.out.println("[USER REPO] Catalog is deleted");
+                            }
                     );
         }
 
-        System.out.println("[USER REPO] User is deleted");
+        DeletedItem deletedUser = new DeletedItem();
+        deletedUser.setDeletedTime(System.currentTimeMillis());
+        deletedUser.setWhichTable("Users");
+        deletedUser.setOriginalId(user.getUserId());
+
+        try {
+            //Creating the ObjectMapper object
+            ObjectMapper om = new ObjectMapper();
+            //Converting the Object to JSONString
+            String json = om.writeValueAsString(user);
+            deletedUser.setJson(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mapper.save(deletedUser);
+        System.out.println("[USER REPO] Deleted user is saved to DeletedItems table");
+
         mapper.delete(user);
+        System.out.println("[USER REPO] User is deleted");
     }
 
 }

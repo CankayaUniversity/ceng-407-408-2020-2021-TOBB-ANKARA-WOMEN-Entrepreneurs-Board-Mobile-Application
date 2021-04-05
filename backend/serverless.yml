@@ -199,8 +199,8 @@ resources:
             AttributeType: S
           - AttributeName: city
             AttributeType: S
-          - AttributeName: registerDate
-            AttributeType: N
+          - AttributeName: approved
+            AttributeType: S
         KeySchema:
           - AttributeName: registerId
             KeyType: HASH
@@ -209,7 +209,7 @@ resources:
             KeySchema:
               - AttributeName: city
                 KeyType: HASH
-              - AttributeName: registerDate
+              - AttributeName: approved
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL

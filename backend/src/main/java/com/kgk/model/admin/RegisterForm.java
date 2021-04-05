@@ -55,8 +55,9 @@ public class RegisterForm {
     private Long registerDate; //gsi range key
 
     @NonNull
-    private boolean approved = false;
+    private String approved;
 
+    @NonNull
     private String roleId;
 
     // Partition key
@@ -151,7 +152,7 @@ public class RegisterForm {
         this.occupation = occupation;
     }
 
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "registerFormsByCity", attributeName = "registerDate")
+    @DynamoDBAttribute(attributeName = "registerDate")
     @NonNull
     public Long getRegisterDate() {
         return registerDate;
@@ -161,12 +162,13 @@ public class RegisterForm {
         this.registerDate = registerDate;
     }
 
-    @DynamoDBAttribute(attributeName = "approved")
-    public boolean isApproved() {
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "registerFormsByCity", attributeName = "approved")
+    @NonNull
+    public String isApproved() {
         return approved;
     }
 
-    public void setApproved(boolean approved) {
+    public void setApproved(@NonNull String approved) {
         this.approved = approved;
     }
 

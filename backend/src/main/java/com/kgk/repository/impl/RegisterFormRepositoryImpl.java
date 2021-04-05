@@ -21,7 +21,7 @@ public class RegisterFormRepositoryImpl implements RegisterFormRepository {
 
     @Override
     public RegisterForm saveRegisterForm(RegisterForm registerForm) {
-        registerForm.setApproved(false);
+        registerForm.setApproved("false");
         registerForm.setRegisterDate(System.currentTimeMillis());
         registerForm.setRoleId("103");
         mapper.save(registerForm);
