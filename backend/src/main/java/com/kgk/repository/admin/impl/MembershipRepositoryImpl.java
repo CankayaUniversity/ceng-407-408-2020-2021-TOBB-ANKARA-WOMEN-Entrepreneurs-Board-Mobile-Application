@@ -79,6 +79,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
         RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, city, config);
         DeletedItem deletedItem = new DeletedItem();
         deletedItem.setDeletedTime(System.currentTimeMillis());
+        deletedItem.setWhichTable("RegisterForms");
         deletedItem.setOriginalId(retrievedForm.getRegisterId());
 
         try {

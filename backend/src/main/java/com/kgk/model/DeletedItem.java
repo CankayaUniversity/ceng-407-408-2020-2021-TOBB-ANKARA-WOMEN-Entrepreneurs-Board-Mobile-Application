@@ -15,6 +15,9 @@ public class DeletedItem {
     private String deletedItemId; //hash key
 
     @NonNull
+    private String whichTable;
+
+    @NonNull
     private Long deletedTime; //range key
 
     @NonNull
@@ -33,6 +36,16 @@ public class DeletedItem {
 
     public void setDeletedItemId(@NonNull String deletedItemId) {
         this.deletedItemId = deletedItemId;
+    }
+
+    @DynamoDBAttribute(attributeName = "whichTable")
+    @NonNull
+    public String getWhichTable() {
+        return whichTable;
+    }
+
+    public void setWhichTable(@NonNull String whichTable) {
+        this.whichTable = whichTable;
     }
 
     @DynamoDBRangeKey(attributeName = "deletedTime")
@@ -64,4 +77,5 @@ public class DeletedItem {
     public void setJson(@NonNull String json) {
         this.json = json;
     }
+
 }
