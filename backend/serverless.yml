@@ -199,11 +199,23 @@ resources:
             AttributeType: S
           - AttributeName: city
             AttributeType: S
+          - AttributeName: registerDate
+            AttributeType: N
         KeySchema:
           - AttributeName: registerId
             KeyType: HASH
-          - AttributeName: city
-            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: registerFormsByCity
+            KeySchema:
+              - AttributeName: city
+                KeyType: HASH
+              - AttributeName: registerDate
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
@@ -231,30 +243,16 @@ resources:
         AttributeDefinitions:
           - AttributeName: roleId
             AttributeType: S
-          - AttributeName: userId
-            AttributeType: S
           - AttributeName: city
             AttributeType: S
         KeySchema:
           - AttributeName: roleId
             KeyType: HASH
-          - AttributeName: userId
+          - AttributeName: city
             KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-        GlobalSecondaryIndexes:
-          - IndexName: rolesByCity
-            KeySchema:
-              - AttributeName: city
-                KeyType: HASH
-              - AttributeName: roleId
-                KeyType: RANGE
-            Projection:
-              ProjectionType: ALL
-            ProvisionedThroughput:
-              ReadCapacityUnits: 5
-              WriteCapacityUnits: 5
     deletedItems:
       Type: AWS::DynamoDB::Table
       Properties:

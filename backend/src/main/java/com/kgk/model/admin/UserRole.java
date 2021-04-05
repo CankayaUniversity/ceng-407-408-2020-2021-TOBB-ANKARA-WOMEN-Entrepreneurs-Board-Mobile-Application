@@ -1,8 +1,8 @@
 package com.kgk.model.admin;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.annotation.Introspected;
@@ -15,10 +15,10 @@ public class UserRole {
     private String roleId; //hash key
 
     @NonNull
-    private String userId; //range key
+    private String userId;
 
     @NonNull
-    private String city;
+    private String city; //range key
 
     // Partition key
     @DynamoDBHashKey(attributeName = "roleId")
@@ -31,7 +31,7 @@ public class UserRole {
         this.roleId = roleId;
     }
 
-    @DynamoDBRangeKey(attributeName = "userId")
+    @DynamoDBAttribute(attributeName = "userId")
     @NonNull
     public String getUserId() {
         return userId;
@@ -41,7 +41,7 @@ public class UserRole {
         this.userId = userId;
     }
 
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "rolesByCity", attributeName = "city")
+    @DynamoDBRangeKey(attributeName = "city")
     @NonNull
     public String getCity() {
         return city;

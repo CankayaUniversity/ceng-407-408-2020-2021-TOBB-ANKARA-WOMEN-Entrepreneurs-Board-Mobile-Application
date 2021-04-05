@@ -25,6 +25,7 @@ public class DeletedItem {
 
     // Partition key
     @DynamoDBHashKey(attributeName = "whichTable")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "itemsByOriginalId", attributeName = "whichTable")
     @NonNull
     public String getWhichTable() {
         return whichTable;
