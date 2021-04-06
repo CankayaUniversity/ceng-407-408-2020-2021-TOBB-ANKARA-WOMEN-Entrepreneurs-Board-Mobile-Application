@@ -17,6 +17,7 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Singleton
 public class MembershipRepositoryImpl implements MembershipRepository {
@@ -61,6 +62,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
 
         retrievedForm.setApproved("true");
         Role role = mapper.load(Role.class, RoleType.MEMBER.toString(), "101", config);
+        user.setUserId(UUID.randomUUID().toString());
         user.setRoleId(role.getRoleId());
         user.setFirstName(retrievedForm.getFirstName());
         user.setLastName(retrievedForm.getLastName());

@@ -25,9 +25,9 @@ public class UserRoleController {
         return userRolesRepository.listAllUserRoles();
     }
 
-    @Get("/{roleId}")
-    public List<UserRole> findUserRolesWithUserId(@PathVariable("roleId") String roleId) {
-        return userRolesRepository.findAllUsersWithRoleId(roleId);
+    @Get("/{roleId}/{city}")
+    public List<UserRole> findUserRolesWithUserId(@PathVariable("roleId") String roleId, @PathVariable("city") String city) {
+        return userRolesRepository.findAllUsersWithRoleId(roleId, city);
     }
 
     @Put

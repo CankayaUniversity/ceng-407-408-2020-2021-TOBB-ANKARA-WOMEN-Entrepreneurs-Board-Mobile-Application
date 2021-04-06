@@ -26,6 +26,8 @@ public class UserRepositoryImpl implements UserRepository {
 
     private static final String TABLE_NAME = "Users";
 
+    private static final String GSI_NAME = "usersByRoleId";
+
     private final DynamoDBMapper mapper;
 
     private final DynamoDBMapperConfig config;
@@ -48,25 +50,24 @@ public class UserRepositoryImpl implements UserRepository {
         return users;
     }
 
-    public List<User> findUsersByRoleId(String roleId) {
+    public List<User> findUsersByRoleId(String roleId, String city) {
+        //TODO: check if it works
         Map<String, AttributeValue> eav = new HashMap<>();
+        eav.put(":city", new AttributeValue().withS(city));
         eav.put(":roleId", new AttributeValue().withS(roleId));
 
         DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
-                .withKeyConditionExpression("roleId = :roleId")
-                .withExpressionAttributeValues(eav);
+                .withIndexName(GSI_NAME)
+                .withKeyConditionExpression("city = :city and roleId = :roleId")
+                .withExpressionAttributeValues(eav)
+                .withConsistentRead(false);
 
-        List<User> users = mapper.query(User.class, queryExpression);
-        users.forEach(
-                user -> user.setCatalogList(catalogRepository.listCatalogsByUserId(user.getUserId()))
-        );
-
-        return users;
+        return mapper.query(User.class, queryExpression);
     }
 
     @Override
-    public User findUserById(String userId) {
-        User user = mapper.load(User.class, userId, config);
+    public User findUserById(String userId, String city) {
+        User user = mapper.load(User.class, userId, city, config);
         user.setCatalogList(catalogRepository.listCatalogsByUserId(userId));
 
         return user;
@@ -109,8 +110,8 @@ public class UserRepositoryImpl implements UserRepository {
         return userRetrieved;
     }
 
-    public User changePassword(String userId, Password changedPassword) {
-        User user = findUserById(userId);
+    public User changePassword(String userId, String city, Password changedPassword) {
+        User user = findUserById(userId, city);
 
         if (StringUtils.isNotEmpty(changedPassword.getOldPassword())) {
             if (changedPassword.getOldPassword().equals(user.getPassword())) {

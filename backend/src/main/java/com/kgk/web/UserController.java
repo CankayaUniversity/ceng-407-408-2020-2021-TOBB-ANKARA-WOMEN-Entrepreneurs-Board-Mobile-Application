@@ -32,9 +32,9 @@ public class UserController {
         return userRepository.listAllUsers();
     }
 
-    @Get("/{userId}")
-    public User showUserProfile(@PathVariable("userId") String userId) {
-        return userRepository.findUserById(userId);
+    @Get("/{userId}/{city}")
+    public User showUserProfile(@PathVariable("userId") String userId, @PathVariable("city") String city) {
+        return userRepository.findUserById(userId, city);
     }
 
     @Get("/{userId}/{catalogId}")
@@ -52,9 +52,10 @@ public class UserController {
       return userRepository.updateUser(userId, user);
     }
 
-    @Put("/change-password/{userId}")
-    public User changePassword(@PathVariable("userId") String userId, @Valid @Body Password changedPassword) {
-        return userRepository.changePassword(userId, changedPassword);
+    @Put("/change-password/{userId}/{city}")
+    public User changePassword(@PathVariable("userId") String userId, @PathVariable("city") String city,
+                               @Valid @Body Password changedPassword) {
+        return userRepository.changePassword(userId, city, changedPassword);
     }
 
     @Delete("/{userId}")
@@ -63,15 +64,6 @@ public class UserController {
     /*@Delete("/{userId}/{catalogId}")
     public void deleteCatalog(@PathVariable("userId") String userId, @PathVariable("catalogId") String catalogId) {
         catalogRepository.deleteCatalog(userId, catalogId);
-    }*/
-
-    //Authorize for Permission Admin
-    /*@Put("/{userId}")
-    public User assignRole(@PathVariable("userId") String userId, @Valid @Body String roleId) {
-      User user = userRepository.findUserById(userId);
-      user.setRoleId(roleId);
-
-      return userRepository.updateUser(userId, user);
     }*/
 
 }

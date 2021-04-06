@@ -3,6 +3,7 @@ package com.kgk.repository.admin.impl;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kgk.model.user.User;
 import com.kgk.model.admin.UserRole;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @Singleton
 public class UserRoleRepositoryImpl implements UserRoleRepository {
@@ -33,67 +35,31 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 
     @Override
     public List<UserRole> listAllUserRoles() {
-        //TODO: CurrenUser's city info must pulled
-        Map<String, AttributeValue> eav = new HashMap<>();
-        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        eav.put(":city", new AttributeValue().withS("Ankara"));
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
 
-        DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
-                .withKeyConditionExpression("city = :city")
-                .withExpressionAttributeValues(eav);
-
-        List<User> users = mapper.query(User.class, queryExpression);
-
-        if (CollectionUtils.isNotEmpty(users)) {
-            List<UserRole> userRoles = new ArrayList<>();
-            users.forEach(
-                    user -> {
-                        UserRole userRole = new UserRole();
-                        userRole.setUserId(user.getUserId());
-                        userRole.setRoleId(user.getRoleId());
-                        userRoles.add(userRole);
-                    }
-            );
-            return userRoles;
-        }
-        return null;
+        return mapper.scan(UserRole.class, scanExpression).stream().collect(Collectors.toList());
     }
 
     @Override
-    public List<UserRole> findAllUsersWithRoleId(String roleId) {
-        //TODO: CurrenUser's city info must pulled
+    public List<UserRole> findAllUsersWithRoleId(String roleId, String city) {
         Map<String, AttributeValue> eav = new HashMap<>();
-        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        eav.put(":city", new AttributeValue().withS("Ankara"));
+        eav.put(":city", new AttributeValue().withS(city));
         eav.put(":roleId", new AttributeValue().withS(roleId));
 
-        DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
-                .withKeyConditionExpression("city = :city and roleId = :roleId") //TODO: add city to key expression
+        DynamoDBQueryExpression<UserRole> queryExpression = new DynamoDBQueryExpression<UserRole>()
+                .withKeyConditionExpression("city = :city and roleId = :roleId")
                 .withExpressionAttributeValues(eav);
 
-        List<User> users = mapper.query(User.class, queryExpression);
-
-        if (CollectionUtils.isNotEmpty(users)) {
-            List<UserRole> userRoles = new ArrayList<>();
-            users.forEach(
-                    user -> {
-                        UserRole userRole = new UserRole();
-                        userRole.setUserId(user.getUserId());
-                        userRole.setRoleId(user.getRoleId());
-                        userRoles.add(userRole);
-                    }
-            );
-            return userRoles;
-        }
-        return null;
-
+        return mapper.query(UserRole.class, queryExpression);
     }
 
     @Override
     public UserRole changeRole(UserRole userRole) {
-        User user = userRepository.findUserById(userRole.getUserId());
-        user.setRoleId(userRole.getRoleId());
+        //User user = userRepository.findUserById(userRole.getUserId(), );
+        //user.setRoleId(userRole.getRoleId());
+        //mapper.save(user);
 
+        mapper.save(userRole);
         return userRole;
     }
 
