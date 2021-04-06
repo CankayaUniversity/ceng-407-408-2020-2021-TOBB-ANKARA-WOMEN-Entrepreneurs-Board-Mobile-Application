@@ -9,6 +9,6 @@ export interface RegisterForm {
   tobbRegisterId: string;
   occupation: string;
   registerDate: number;
-  approved: boolean;
+  approved: string;
   roleId: string;
 }
