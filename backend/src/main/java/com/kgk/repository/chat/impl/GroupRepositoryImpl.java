@@ -22,6 +22,10 @@ import java.util.UUID;
 @Singleton
 public class GroupRepositoryImpl implements GroupRepository {
 
+    private static final String TABLE_NAME = "Groups";
+
+    private static final String GSI_NAME = "groupsByCreatedBy";
+
     private final DynamoDBMapper mapper;
 
     private final DynamoDBMapperConfig config;
@@ -43,7 +47,7 @@ public class GroupRepositoryImpl implements GroupRepository {
         eav.put(":city", new AttributeValue().withS(city));
 
         DynamoDBQueryExpression<Group> queryExpression = new DynamoDBQueryExpression<Group>()
-                .withIndexName("groupsByCreatedBy")
+                .withIndexName(GSI_NAME)
                 .withKeyConditionExpression("createdBy = :createdBy and city = :city")
                 .withExpressionAttributeValues(eav)
                 .withConsistentRead(false);
@@ -77,53 +81,17 @@ public class GroupRepositoryImpl implements GroupRepository {
 
         List<GroupMember> groupMembers = groupMemberRepository.listAllUsersByGroupId(groupId);
         groupMembers.forEach(
-                groupMember -> {
-                    DeletedItem deletedMember = new DeletedItem();
-                    deletedMember.setDeletedTime(System.currentTimeMillis());
-                    deletedMember.setWhichTable("GroupMembers");
-                    deletedMember.setOriginalId(groupMember.getUserId());
-
-                    try {
-                        //Creating the ObjectMapper object
-                        ObjectMapper om = new ObjectMapper();
-                        //Converting the Object to JSONString
-                        String json = om.writeValueAsString(groupMember);
-                        deletedMember.setJson(json);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    mapper.save(deletedMember);
-
-                    mapper.delete(groupMember);
-                }
+                groupMember -> groupMemberRepository.removeUser(groupMember.getUserId())
         );
 
         List<GroupMessage> groupMessages = groupMessageRepository.listAllMessagesByGroupId(groupId);
         groupMessages.forEach(
-                groupMessage -> {
-                    DeletedItem deletedMessage = new DeletedItem();
-                    deletedMessage.setDeletedTime(System.currentTimeMillis());
-                    deletedMessage.setWhichTable("GroupMessages");
-                    deletedMessage.setOriginalId(groupMessage.getMessageId());
-
-                    try {
-                        //Creating the ObjectMapper object
-                        ObjectMapper om = new ObjectMapper();
-                        //Converting the Object to JSONString
-                        String json = om.writeValueAsString(groupMessage);
-                        deletedMessage.setJson(json);
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                    mapper.save(deletedMessage);
-
-                    mapper.delete(groupMessage);
-                }
+                groupMessage -> groupMessageRepository.deleteMessage(groupId, groupMessage.getMessageId())
         );
 
         DeletedItem deletedGroup = new DeletedItem();
         deletedGroup.setDeletedTime(System.currentTimeMillis());
-        deletedGroup.setWhichTable("Groups");
+        deletedGroup.setWhichTable(TABLE_NAME);
         deletedGroup.setOriginalId(group.getGroupId());
 
         try {
@@ -136,8 +104,10 @@ public class GroupRepositoryImpl implements GroupRepository {
             e.printStackTrace();
         }
         mapper.save(deletedGroup);
+        System.out.println("[GROUP REPO] Deleted group is saved to DeletedItems table");
 
         mapper.delete(group);
+        System.out.println("[GROUP REPO] Group is deleted");
     }
 
 }

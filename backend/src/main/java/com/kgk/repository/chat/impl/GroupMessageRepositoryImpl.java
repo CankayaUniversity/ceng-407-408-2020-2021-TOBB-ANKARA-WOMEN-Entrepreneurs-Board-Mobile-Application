@@ -4,6 +4,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kgk.model.DeletedItem;
 import com.kgk.model.chat.GroupMessage;
 import com.kgk.repository.chat.GroupMessageRepository;
 
@@ -14,6 +16,8 @@ import java.util.Map;
 
 @Singleton
 public class GroupMessageRepositoryImpl implements GroupMessageRepository {
+
+    private static final String TABLE_NAME = "GroupMessages";
 
     private final DynamoDBMapper mapper;
 
@@ -40,14 +44,35 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
         groupMessage.setGroupId(groupId);
         groupMessage.setMessage(message);
         groupMessage.setSendAt(System.currentTimeMillis());
+
         mapper.save(groupMessage);
+        System.out.println("[GROUP MESSAGE REPO] Message is saved");
 
         return groupMessage;
     }
 
     public void deleteMessage(String groupId, String messageId) {
         GroupMessage groupMessage = mapper.load(GroupMessage.class, messageId, config);
+
+        DeletedItem deletedMessage = new DeletedItem();
+        deletedMessage.setDeletedTime(System.currentTimeMillis());
+        deletedMessage.setWhichTable(TABLE_NAME);
+        deletedMessage.setOriginalId(groupMessage.getMessageId());
+
+        try {
+            //Creating the ObjectMapper object
+            ObjectMapper om = new ObjectMapper();
+            //Converting the Object to JSONString
+            String json = om.writeValueAsString(groupMessage);
+            deletedMessage.setJson(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mapper.save(deletedMessage);
+        System.out.println("[GROUP MESSAGE REPO] Deleted message is saved to DeletedItems table");
+
         mapper.delete(groupMessage);
+        System.out.println("[GROUP MESSAGE REPO] Message is deleted");
     }
 
 }

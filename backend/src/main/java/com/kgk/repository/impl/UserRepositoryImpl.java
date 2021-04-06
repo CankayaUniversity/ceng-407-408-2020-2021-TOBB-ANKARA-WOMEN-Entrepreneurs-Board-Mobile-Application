@@ -22,7 +22,9 @@ import java.util.stream.Collectors;
 
 @Singleton
 public class UserRepositoryImpl implements UserRepository {
-    
+
+    private static final String TABLE_NAME = "Users";
+
     private final DynamoDBMapper mapper;
 
     private final DynamoDBMapperConfig config;
@@ -88,7 +90,7 @@ public class UserRepositoryImpl implements UserRepository {
             if (CollectionUtils.isNotEmpty(oldCatalogs)) {
                 oldCatalogs.stream()
                         .forEach(
-                                oldCatalog -> mapper.delete(oldCatalog)
+                                oldCatalog -> catalogRepository.deleteCatalog(userId, oldCatalog.getCatalogId())
                         );
             }
 
@@ -128,33 +130,13 @@ public class UserRepositoryImpl implements UserRepository {
         if (CollectionUtils.isNotEmpty(catalogs)) {
             catalogs.stream()
                     .forEach(
-                            catalog -> {
-                                DeletedItem deletedCatalog = new DeletedItem();
-                                deletedCatalog.setDeletedTime(System.currentTimeMillis());
-                                deletedCatalog.setWhichTable("Catalogs");
-                                deletedCatalog.setOriginalId(catalog.getCatalogId());
-
-                                try {
-                                    //Creating the ObjectMapper object
-                                    ObjectMapper om = new ObjectMapper();
-                                    //Converting the Object to JSONString
-                                    String json = om.writeValueAsString(catalog);
-                                    deletedCatalog.setJson(json);
-                                } catch (Exception e) {
-                                    e.printStackTrace();
-                                }
-                                mapper.save(deletedCatalog);
-                                System.out.println("[USER REPO] Deleted catalog is saved to DeletedItems table");
-
-                                mapper.delete(catalog);
-                                System.out.println("[USER REPO] Catalog is deleted");
-                            }
+                            catalog -> catalogRepository.deleteCatalog(userId, catalog.getCatalogId())
                     );
         }
 
         DeletedItem deletedUser = new DeletedItem();
         deletedUser.setDeletedTime(System.currentTimeMillis());
-        deletedUser.setWhichTable("Users");
+        deletedUser.setWhichTable(TABLE_NAME);
         deletedUser.setOriginalId(user.getUserId());
 
         try {

@@ -4,7 +4,9 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgk.model.Catalog;
+import com.kgk.model.DeletedItem;
 import com.kgk.repository.CatalogRepository;
 
 import javax.inject.Singleton;
@@ -15,6 +17,8 @@ import java.util.UUID;
 
 @Singleton
 public class CatalogRepositoryImpl implements CatalogRepository {
+
+    private static final String TABLE_NAME = "Catalogs";
 
     private final DynamoDBMapper mapper;
 
@@ -62,6 +66,24 @@ public class CatalogRepositoryImpl implements CatalogRepository {
     @Override
     public void deleteCatalog(String userId, String catalogId) {
         Catalog catalog = mapper.load(Catalog.class, userId, catalogId, config);
+
+        DeletedItem deletedCatalog = new DeletedItem();
+        deletedCatalog.setDeletedTime(System.currentTimeMillis());
+        deletedCatalog.setWhichTable(TABLE_NAME);
+        deletedCatalog.setOriginalId(catalog.getCatalogId());
+
+        try {
+            //Creating the ObjectMapper object
+            ObjectMapper om = new ObjectMapper();
+            //Converting the Object to JSONString
+            String json = om.writeValueAsString(catalog);
+            deletedCatalog.setJson(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        mapper.save(deletedCatalog);
+        System.out.println("[CATALOG REPO] Deleted catalog is saved to DeletedItems table");
+
         mapper.delete(catalog);
         System.out.println("[CATALOG REPO] Catalog is deleted");
     }
