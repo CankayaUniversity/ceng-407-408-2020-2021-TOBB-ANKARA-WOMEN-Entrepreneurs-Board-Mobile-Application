@@ -111,6 +111,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     public User changePassword(String userId, Password changedPassword) {
         User user = findUserById(userId);
+
         if (StringUtils.isNotEmpty(changedPassword.getOldPassword())) {
             if (changedPassword.getOldPassword().equals(user.getPassword())) {
                 user.setPassword(changedPassword.getNewPassword());
@@ -122,6 +123,7 @@ public class UserRepositoryImpl implements UserRepository {
             }
         }
         System.out.println("[USER REPO] Either old password is null, or it does not match");
+
         return null;
     }
 

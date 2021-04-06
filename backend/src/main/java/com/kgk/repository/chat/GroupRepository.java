@@ -8,6 +8,8 @@ public interface GroupRepository {
 
     List<Group> listAllGroupsByUserId(String createdBy, String city); //lists all the groups that the user belongs
 
+    Group findGroupByGroupId(String groupId);
+
     Group createGroup(Group group); //saves the created group to database
 
     Group updateGroup(String groupId, String city, Group group); //update group info on database

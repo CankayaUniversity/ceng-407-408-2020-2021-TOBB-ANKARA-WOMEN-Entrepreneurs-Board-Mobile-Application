@@ -2,7 +2,7 @@ package com.kgk.model.chat;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import edu.umd.cs.findbugs.annotations.NonNull;
 import io.micronaut.core.annotation.Introspected;
@@ -12,10 +12,10 @@ import io.micronaut.core.annotation.Introspected;
 public class GroupMember {
 
     @NonNull
-    private String userId; //hash key
+    private String groupId; //hash key
 
     @NonNull
-    private String groupId; //range key
+    private String userId; //gsi - hash key
 
     @NonNull
     private Long joinedAt;
@@ -23,17 +23,17 @@ public class GroupMember {
     public GroupMember() {}
 
     // Partition key
-    @DynamoDBHashKey(attributeName = "userId")
-    @NonNull
-    public String getUserId() { return userId; }
-
-    public void setUserId(@NonNull String userId) { this.userId = userId; }
-
-    @DynamoDBRangeKey(attributeName = "groupId")
+    @DynamoDBHashKey(attributeName = "groupId")
     @NonNull
     public String getGroupId() { return groupId; }
 
     public void setGroupId(@NonNull String groupId) { this.groupId = groupId; }
+
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "groupMembersByUserId", attributeName = "userId")
+    @NonNull
+    public String getUserId() { return userId; }
+
+    public void setUserId(@NonNull String userId) { this.userId = userId; }
 
     @DynamoDBAttribute(attributeName = "joinedAt")
     @NonNull

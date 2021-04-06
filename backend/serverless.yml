@@ -128,8 +128,6 @@ resources:
         KeySchema:
           - AttributeName: groupId
             KeyType: HASH
-          - AttributeName: city
-            KeyType: RANGE
         GlobalSecondaryIndexes:
           - IndexName: groupsByCreatedBy
             KeySchema:
@@ -150,15 +148,23 @@ resources:
       Properties:
         TableName: GroupMembers
         AttributeDefinitions:
-          - AttributeName: userId
-            AttributeType: S
-          - AttributeName: groupId
-            AttributeType: S
+        - AttributeName: groupId
+          AttributeType: S
+        - AttributeName: userId
+          AttributeType: S
         KeySchema:
-          - AttributeName: userId
-            KeyType: HASH
           - AttributeName: groupId
-            KeyType: RANGE
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: groupMembersByUserId
+            KeySchema:
+              - AttributeName: userId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
@@ -167,23 +173,23 @@ resources:
       Properties:
         TableName: GroupMessages
         AttributeDefinitions:
+          - AttributeName: groupId
+            AttributeType: S
           - AttributeName: messageId
             AttributeType: S
           - AttributeName: sendAt
             AttributeType: N
-          - AttributeName: groupId
-            AttributeType: S
         KeySchema:
-          - AttributeName: messageId
+          - AttributeName: groupId
             KeyType: HASH
-          - AttributeName: sendAt
+          - AttributeName: messageId
             KeyType: RANGE
         LocalSecondaryIndexes:
           - IndexName: messagesByGroupId
             KeySchema:
-              - AttributeName: messageId
-                KeyType: HASH
               - AttributeName: groupId
+                KeyType: HASH
+              - AttributeName: sendAt
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL

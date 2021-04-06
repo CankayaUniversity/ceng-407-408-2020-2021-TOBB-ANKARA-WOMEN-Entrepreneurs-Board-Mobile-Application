@@ -19,6 +19,8 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
 
     private static final String TABLE_NAME = "GroupMessages";
 
+    private static final String LSI_NAME = "groupsByCreatedBy";
+
     private final DynamoDBMapper mapper;
 
     private final DynamoDBMapperConfig config;
@@ -28,17 +30,21 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
         this.config = config;
     }
 
+    @Override
     public List<GroupMessage> listAllMessagesByGroupId(String groupId) {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":groupId", new AttributeValue().withS(groupId));
+        eav.put(":sendAt", new AttributeValue().withN(String.valueOf(System.currentTimeMillis())));
 
         DynamoDBQueryExpression<GroupMessage> queryExpression = new DynamoDBQueryExpression<GroupMessage>()
-                .withKeyConditionExpression("groupId = :groupId")
+                .withIndexName(LSI_NAME)
+                .withKeyConditionExpression("groupId = :groupId and sendAt > :sendAt")
                 .withExpressionAttributeValues(eav);
 
         return mapper.query(GroupMessage.class, queryExpression);
     }
 
+    @Override
     public GroupMessage saveMessage(String groupId, String message) {
         GroupMessage groupMessage = new GroupMessage();
         groupMessage.setGroupId(groupId);
@@ -51,8 +57,9 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
         return groupMessage;
     }
 
+    @Override
     public void deleteMessage(String groupId, String messageId) {
-        GroupMessage groupMessage = mapper.load(GroupMessage.class, messageId, config);
+        GroupMessage groupMessage = mapper.load(GroupMessage.class, groupId, messageId, config);
 
         DeletedItem deletedMessage = new DeletedItem();
         deletedMessage.setDeletedTime(System.currentTimeMillis());

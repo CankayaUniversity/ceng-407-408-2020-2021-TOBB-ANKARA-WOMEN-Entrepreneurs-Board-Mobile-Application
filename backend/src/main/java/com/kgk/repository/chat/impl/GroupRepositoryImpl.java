@@ -9,6 +9,7 @@ import com.kgk.model.DeletedItem;
 import com.kgk.model.chat.Group;
 import com.kgk.model.chat.GroupMember;
 import com.kgk.model.chat.GroupMessage;
+import com.kgk.model.user.User;
 import com.kgk.repository.chat.GroupMemberRepository;
 import com.kgk.repository.chat.GroupMessageRepository;
 import com.kgk.repository.chat.GroupRepository;
@@ -41,6 +42,13 @@ public class GroupRepositoryImpl implements GroupRepository {
         this.groupMemberRepository = groupMemberRepository;
     }
 
+    @Override
+    public Group findGroupByGroupId(String groupId) {
+        Group group = mapper.load(Group.class, groupId, config);
+        return group;
+    }
+
+    @Override
     public List<Group> listAllGroupsByUserId(String createdBy, String city) {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":createdBy", new AttributeValue().withS(createdBy));
@@ -55,6 +63,7 @@ public class GroupRepositoryImpl implements GroupRepository {
         return mapper.query(Group.class, queryExpression);
     }
 
+    @Override
     public Group createGroup(Group group) {
         group.setGroupId(UUID.randomUUID().toString());
         group.setCreatedAt(System.currentTimeMillis());
@@ -67,6 +76,7 @@ public class GroupRepositoryImpl implements GroupRepository {
         return mapper.load(Group.class, group.getGroupId(), group.getCity(), config);
     }
 
+    @Override
     public Group updateGroup(String groupId, String city, Group group) {
         Group groupRetrieved = mapper.load(Group.class, groupId, city, config);
         groupRetrieved.setGroupName(group.getGroupName());
@@ -76,6 +86,7 @@ public class GroupRepositoryImpl implements GroupRepository {
         return groupRetrieved;
     }
 
+    @Override
     public void deleteGroup(String groupId, String city) {
         Group group = mapper.load(Group.class, groupId, city, config);
 

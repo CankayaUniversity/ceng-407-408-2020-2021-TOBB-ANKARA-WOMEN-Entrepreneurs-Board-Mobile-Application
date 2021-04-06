@@ -34,6 +34,11 @@ public class GroupController {
         return groupRepository.listAllGroupsByUserId(createdBy, city);
     }
 
+    @Get("/{groupId}")
+    public Group showGroup(@PathVariable("groupId") String groupId) {
+        return groupRepository.findGroupByGroupId(groupId);
+    }
+
     @Post
     public Group createGroup(@Valid @Body Group group) {
         return groupRepository.createGroup(group);
@@ -56,6 +61,11 @@ public class GroupController {
         return groupMemberRepository.listAllUsersByGroupId(groupId);
     }
 
+    @Get("/{userId}")
+    public List<Group> listAllGroupsThatUserIsIn(@PathVariable("userId") String userId) {
+        return groupMemberRepository.listAllGroupsByUserId(userId);
+    }
+
     @Post("/{userId}/{groupId}")
     public GroupMember addUser(@PathVariable("userId") String userId, @PathVariable("groupId") String groupId) {
         return groupMemberRepository.addUser(userId, groupId);
@@ -73,7 +83,7 @@ public class GroupController {
     }
 
     @Post("/messages/{groupId}")
-    public GroupMessage saveMessage(@PathVariable("groupId") String groupId, String message) {
+    public GroupMessage sendMessage(@PathVariable("groupId") String groupId, String message) {
         return groupMessageRepository.saveMessage(groupId, message);
     }
 

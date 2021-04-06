@@ -20,7 +20,7 @@ public class Group {
     private String groupId; //hash key
 
     @NonNull
-    private String city; //range key - gsi range key
+    private String city; //gsi range key
 
     @NonNull
     private String createdBy; //userId - gsi hash key
@@ -44,7 +44,6 @@ public class Group {
 
     public void setGroupId(String groupId) { this.groupId = groupId; }
 
-    @DynamoDBRangeKey(attributeName = "city")
     @DynamoDBIndexRangeKey(globalSecondaryIndexName = "groupsByCreatedBy", attributeName = "city")
     @NonNull
     public String getCity() {
