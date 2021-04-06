@@ -1,4 +1,4 @@
-package com.kgk.repository;
+package com.kgk.repository.user;
 
 import com.kgk.model.user.Password;
 import com.kgk.model.user.User;

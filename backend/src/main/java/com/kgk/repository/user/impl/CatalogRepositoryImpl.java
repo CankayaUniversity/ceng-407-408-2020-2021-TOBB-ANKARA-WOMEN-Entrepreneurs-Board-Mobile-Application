@@ -1,4 +1,4 @@
-package com.kgk.repository.impl;
+package com.kgk.repository.user.impl;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
@@ -7,7 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgk.model.user.Catalog;
 import com.kgk.model.DeletedItem;
-import com.kgk.repository.CatalogRepository;
+import com.kgk.repository.user.CatalogRepository;
 
 import javax.inject.Singleton;
 import java.util.HashMap;
