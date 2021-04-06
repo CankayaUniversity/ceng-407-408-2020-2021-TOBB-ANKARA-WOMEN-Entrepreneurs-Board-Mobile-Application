@@ -43,7 +43,7 @@ export class PageRegisterPage implements OnInit {
         '',
         Validators.compose([
           Validators.minLength(4),
-          Validators.pattern('[0-9a-z-A-Z@.]*'),
+          Validators.pattern('[A-Za-z0-9._%+-]{2,}@[a-zA-Z-_.]{2,}[.]{1}[a-zA-Z]{2,}'),
           Validators.required
         ])
       ],
