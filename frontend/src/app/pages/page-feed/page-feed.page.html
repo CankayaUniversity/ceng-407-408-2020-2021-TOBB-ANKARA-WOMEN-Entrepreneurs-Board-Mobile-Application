@@ -1,20 +1,30 @@
 <ion-content class="background" >
-  <ion-label class="feed">Feed</ion-label>
 
-  <ion-card class="card" style="background-color: indianred" *ngFor="let article of data?.articles">
-    <!-- <ion-img [src]="article.urlToImage"></ion-img> -->
 
-    <ion-card-content>
-      <ion-card-title>{{article.title}}</ion-card-title>
+  <ion-grid>
+    <ion-row class="row1" style="background-color: indianred"><ion-label class="feed">Feed</ion-label></ion-row>
 
-      <p>{{article.description}}</p>
-    </ion-card-content>
-  </ion-card>
+    <ion-row class="row2" style="background-color: #2fdf75">
 
-  <ion-infinite-scroll (ionInfinite)="loadMoreNews($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubble" loadingText="load news.."></ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+        <ion-card class="card" *ngFor="let article of data?.articles">
+          <!-- <ion-img [src]="article.urlToImage"></ion-img> -->
 
+          <ion-card-content style="background-color: #737373">
+            <ion-card-title>{{article.title}}</ion-card-title>
+
+            <p>{{article.description}}</p>
+          </ion-card-content>
+        </ion-card>
+
+        <ion-infinite-scroll  style="background-color: #ffd948" (ionInfinite)="loadMoreNews($event)">
+          <ion-infinite-scroll-content loadingSpinner="bubble" loadingText="load news.."></ion-infinite-scroll-content>
+        </ion-infinite-scroll>
+
+
+    </ion-row>
+
+    <ion-row class="row3" style="background-color: indianred"></ion-row>
+  </ion-grid>
 </ion-content>
 
 
