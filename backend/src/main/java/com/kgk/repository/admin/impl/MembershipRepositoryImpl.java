@@ -9,7 +9,7 @@ import com.kgk.model.DeletedItem;
 import com.kgk.model.admin.RegisterForm;
 import com.kgk.model.Role;
 import com.kgk.model.RoleType;
-import com.kgk.model.User;
+import com.kgk.model.user.User;
 import com.kgk.model.admin.UserRole;
 import com.kgk.repository.admin.MembershipRepository;
 

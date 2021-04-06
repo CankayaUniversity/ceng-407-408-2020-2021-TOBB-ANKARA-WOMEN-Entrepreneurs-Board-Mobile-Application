@@ -1,6 +1,6 @@
 package com.kgk.repository;
 
-import com.kgk.model.Catalog;
+import com.kgk.model.user.Catalog;
 
 import java.util.List;
 

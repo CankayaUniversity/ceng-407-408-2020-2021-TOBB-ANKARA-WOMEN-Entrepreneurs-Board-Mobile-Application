@@ -1,12 +1,12 @@
 package com.kgk.web;
 
-import com.kgk.model.Catalog;
-import com.kgk.model.User;
+import com.kgk.model.user.Catalog;
+import com.kgk.model.user.Password;
+import com.kgk.model.user.User;
 import com.kgk.repository.CatalogRepository;
 import com.kgk.repository.UserRepository;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.PathVariable;
@@ -53,10 +53,8 @@ public class UserController {
     }
 
     @Put("/change-password/{userId}")
-    //TODO: tek body gönderilmeli, direk update metoduna mı dahil olsa
-    public User changePassword(@PathVariable("userId") String userId, @Valid @Body String oldPassword,
-                               @Valid @Body String newPassword) {
-        return userRepository.changePassword(userId, oldPassword, newPassword);
+    public User changePassword(@PathVariable("userId") String userId, @Valid @Body Password changedPassword) {
+        return userRepository.changePassword(userId, changedPassword);
     }
 
     @Delete("/{userId}")

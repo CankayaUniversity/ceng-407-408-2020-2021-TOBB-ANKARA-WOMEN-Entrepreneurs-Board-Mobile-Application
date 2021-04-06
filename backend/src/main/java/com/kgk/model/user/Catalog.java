@@ -1,4 +1,4 @@
-package com.kgk.model;
+package com.kgk.model.user;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;

@@ -1,4 +1,4 @@
-package com.kgk.model;
+package com.kgk.model.user;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
@@ -27,7 +27,7 @@ public class User {
     private String city;   //range key
 
     @NonNull
-    private String roleId;
+    private String roleId; //lsi - range key
 
     @NonNull
     @NotBlank

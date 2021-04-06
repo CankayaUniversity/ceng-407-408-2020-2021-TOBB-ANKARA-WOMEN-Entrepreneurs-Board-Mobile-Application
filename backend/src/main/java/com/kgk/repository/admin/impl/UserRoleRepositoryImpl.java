@@ -4,7 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.kgk.model.User;
+import com.kgk.model.user.User;
 import com.kgk.model.admin.UserRole;
 import com.kgk.repository.UserRepository;
 import com.kgk.repository.admin.UserRoleRepository;

@@ -6,9 +6,10 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kgk.model.Catalog;
+import com.kgk.model.user.Catalog;
 import com.kgk.model.DeletedItem;
-import com.kgk.model.User;
+import com.kgk.model.user.Password;
+import com.kgk.model.user.User;
 import com.kgk.repository.CatalogRepository;
 import com.kgk.repository.UserRepository;
 import io.micronaut.core.util.CollectionUtils;
@@ -108,11 +109,12 @@ public class UserRepositoryImpl implements UserRepository {
         return userRetrieved;
     }
 
-    public User changePassword(String userId, String oldPassword, String newPassword) {
+    public User changePassword(String userId, Password changedPassword) {
         User user = findUserById(userId);
-        if (StringUtils.isNotEmpty(oldPassword)) {
-            if (oldPassword.equals(user.getPassword())) {
-                user.setPassword(newPassword);
+        if (StringUtils.isNotEmpty(changedPassword.getOldPassword())) {
+            if (changedPassword.getOldPassword().equals(user.getPassword())) {
+                user.setPassword(changedPassword.getNewPassword());
+
                 mapper.save(user);
                 System.out.println("[USER REPO] User's password is updated");
 

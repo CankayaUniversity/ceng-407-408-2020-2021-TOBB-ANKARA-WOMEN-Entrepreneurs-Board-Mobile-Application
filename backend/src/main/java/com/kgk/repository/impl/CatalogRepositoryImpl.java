@@ -5,7 +5,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kgk.model.Catalog;
+import com.kgk.model.user.Catalog;
 import com.kgk.model.DeletedItem;
 import com.kgk.repository.CatalogRepository;
 
