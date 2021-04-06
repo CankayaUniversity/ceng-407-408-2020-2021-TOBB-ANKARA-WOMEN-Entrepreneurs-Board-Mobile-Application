@@ -178,13 +178,12 @@ export class PageRegisterPage implements OnInit {
     formData.occupation = (formData.occupation as any).name;
 
     this.submitted = true;
-    if (this.ionicForm.invalid) {
+    if (this.ionicForm.invalid && this.isToggled) {
       console.log('All fields are required.');
       this.router.navigate(['/register']);
       return false;
     } else {
       console.log(formData);
-
       try {
         // For database action
         const res = await this.http.post<RegisterForm>(environment.apiUrl + '/api/register-form', formData).toPromise();
