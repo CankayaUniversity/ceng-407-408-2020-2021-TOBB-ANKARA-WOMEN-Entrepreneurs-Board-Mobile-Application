@@ -1,19 +1,18 @@
-<ion-content padding class="background">
+<ion-header>
   <div id="women">
-    <img src="../../../assets/women/NEW_minibilgisyarli_kiz080321-@2x.png" />
+    <img src="../../../assets/women/minibilgisyarli_kiz.png" />
   </div>
+</ion-header>
+<ion-content padding class="background">
   <div id="header">
-    <br><br><br><br><br><br><br><br>
-    <br><br><br><br>
     <h1>Merhaba!</h1>
-
-    <form [formGroup]="loginForm" (ngSubmit)="submitForm(loginForm.value)" id="form">
+    <form [formGroup]="loginForm" (ngSubmit)="submitForm()" id="form">
       <ion-item color = "whitesmoke"class="ion-margin-bottom">
         <ion-icon name="person-sharp"></ion-icon>
-        <ion-input formControlName="username" required="true" placeholder="Username"></ion-input>
+        <ion-input formControlName="email" required="true" placeholder="E-mail"></ion-input>
       </ion-item>
-      <span class="error ion-padding" *ngIf="submitted && errorCtr.username.errors?.required">
-        Username is required.
+      <span class="error ion-padding" *ngIf="submitted && errorCtr.email.errors?.required">
+        E-mail is required.
       </span>
       <ion-item color = "whitesmoke" class="ion-margin-bottom">
         <ion-icon name="lock-closed-sharp"></ion-icon>
