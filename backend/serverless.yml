@@ -29,7 +29,26 @@ functions:
     environment:
       MICRONAUT_ENVIRONMENTS: ${opt:stage, 'dev'}
     events:
-      - http: ANY {proxy+}
+      - http:
+          path: /{proxy+}
+          method: get
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: post
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: put
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: delete
+          cors: true
+      - http:
+          path: /{proxy+}
+          method: patch
+          cors: true
 
 resources:
   Resources:
@@ -40,97 +59,40 @@ resources:
         AttributeDefinitions:
           - AttributeName: userId
             AttributeType: S
+          - AttributeName: city
+            AttributeType: S
           - AttributeName: roleId
             AttributeType: S
         KeySchema:
           - AttributeName: userId
             KeyType: HASH
-          - AttributeName: roleId
+          - AttributeName: city
             KeyType: RANGE
+        LocalSecondaryIndexes:
+          - IndexName: usersByRoleId
+            KeySchema:
+              - AttributeName: userId
+                KeyType: HASH
+              - AttributeName: roleId
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-    hobbiesTable:
+    catalogsTable:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: Hobbies
+        TableName: Catalogs
         AttributeDefinitions:
-          - AttributeName: hobbyId
-            AttributeType: S
           - AttributeName: userId
+            AttributeType: S
+          - AttributeName: catalogId
             AttributeType: S
         KeySchema:
-          - AttributeName: hobbyId
+          - AttributeName: userId
             KeyType: HASH
-          - AttributeName: userId
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-    competencesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: Competences
-        AttributeDefinitions:
-          - AttributeName: compId
-            AttributeType: S
-          - AttributeName: userId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: compId
-            KeyType: HASH
-          - AttributeName: userId
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-    languagesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: Languages
-        AttributeDefinitions:
-          - AttributeName: langId
-            AttributeType: S
-          - AttributeName: userId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: langId
-            KeyType: HASH
-          - AttributeName: userId
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-    projectsTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: Projects
-        AttributeDefinitions:
-          - AttributeName: projectId
-            AttributeType: S
-          - AttributeName: userId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: projectId
-            KeyType: HASH
-          - AttributeName: userId
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-    certificatesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: Certificates
-        AttributeDefinitions:
-          - AttributeName: certId
-            AttributeType: S
-          - AttributeName: userId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: certId
-            KeyType: HASH
-          - AttributeName: userId
+          - AttributeName: catalogId
             KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5
@@ -142,128 +104,171 @@ resources:
         AttributeDefinitions:
           - AttributeName: newsId
             AttributeType: S
-          - AttributeName: userId
-            AttributeType: S
+          - AttributeName: publishDate
+            AttributeType: N
         KeySchema:
           - AttributeName: newsId
+            KeyType: HASH
+          - AttributeName: publishDate
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    groupsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Groups
+        AttributeDefinitions:
+          - AttributeName: groupId
+            AttributeType: S
+          - AttributeName: city
+            AttributeType: S
+          - AttributeName: createdBy
+            AttributeType: S
+        KeySchema:
+          - AttributeName: groupId
+            KeyType: HASH
+          - AttributeName: city
+            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: groupsByCreatedBy
+            KeySchema:
+              - AttributeName: createdBy
+                KeyType: HASH
+              - AttributeName: city
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    groupMembersTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: GroupMembers
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: groupId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: groupId
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    groupMessagesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: GroupMessages
+        AttributeDefinitions:
+          - AttributeName: messageId
+            AttributeType: S
+          - AttributeName: sendAt
+            AttributeType: N
+          - AttributeName: groupId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: messageId
+            KeyType: HASH
+          - AttributeName: sendAt
+            KeyType: RANGE
+        LocalSecondaryIndexes:
+          - IndexName: messagesByGroupId
+            KeySchema:
+              - AttributeName: messageId
+                KeyType: HASH
+              - AttributeName: groupId
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    registerFormsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: RegisterForms
+        AttributeDefinitions:
+          - AttributeName: registerId
+            AttributeType: S
+          - AttributeName: city
+            AttributeType: S
+        KeySchema:
+          - AttributeName: registerId
+            KeyType: HASH
+          - AttributeName: city
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    rolesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Roles
+        AttributeDefinitions:
+          - AttributeName: roleName
+            AttributeType: S
+          - AttributeName: roleId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: roleName
+            KeyType: HASH
+          - AttributeName: roleId
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    deletedRegisterForms:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: DeletedRegisterForms
+        AttributeDefinitions:
+          - AttributeName: deletedRegisterId
+            AttributeType: S
+          - AttributeName: city
+            AttributeType: S
+        KeySchema:
+          - AttributeName: deletedRegisterId
+            KeyType: HASH
+          - AttributeName: city
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    userRolesTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: UserRoles
+        AttributeDefinitions:
+          - AttributeName: roleId
+            AttributeType: S
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: city
+            AttributeType: S
+        KeySchema:
+          - AttributeName: roleId
             KeyType: HASH
           - AttributeName: userId
             KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-      groupsTable:
-        Type: AWS::DynamoDB::Table
-        Properties:
-          TableName: Groups
-          AttributeDefinitions:
-            - AttributeName: GroupId
-              AttributeType: S
-            - AttributeName: createdBy
-              AttributeType: S
-          KeySchema:
-            - AttributeName: groupId
-              KeyType: HASH
-            - AttributeName: createdBy
-              KeyType: RANGE
-          ProvisionedThroughput:
-            ReadCapacityUnits: 5
-            WriteCapacityUnits: 5
-      groupMembersTable:
-        Type: AWS::DynamoDB::Table
-        Properties:
-          TableName: GroupMembers
-          AttributeDefinitions:
-            - AttributeName: userId
-              AttributeType: S
-            - AttributeName: groupId
-              AttributeType: S
-          KeySchema:
-            - AttributeName: userId
-              KeyType: HASH
-            - AttributeName: groupId
-              KeyType: RANGE
-          ProvisionedThroughput:
-            ReadCapacityUnits: 5
-            WriteCapacityUnits: 5
-      groupMessagesTable:
-        Type: AWS::DynamoDB::Table
-        Properties:
-          TableName: GroupMessages
-          AttributeDefinitions:
-            - AttributeName: messageId
-              AttributeType: S
-            - AttributeName: groupId
-              AttributeType: S
-          KeySchema:
-            - AttributeName: messageId
-              KeyType: HASH
-            - AttributeName: groupId
-              KeyType: RANGE
-          ProvisionedThroughput:
-            ReadCapacityUnits: 5
-            WriteCapacityUnits: 5
-      registerFormsTable:
-        Type: AWS::DynamoDB::Table
-        Properties:
-          TableName: RegisterForms
-          AttributeDefinitions:
-            - AttributeName: registerId
-              AttributeType: S
-          KeySchema:
-            - AttributeName: registerId
-              KeyType: HASH
-          ProvisionedThroughput:
-            ReadCapacityUnits: 5
-            WriteCapacityUnits: 5
-      cvsTable:
-        Type: AWS::DynamoDB::Table
-        Properties:
-          TableName: CVs
-          AttributeDefinitions:
-            - AttributeName: cvId
-              AttributeType: S
-            - AttributeName: uploadedBy
-              AttributeType: S
-          KeySchema:
-            - AttributeName: cvId
-              KeyType: HASH
-            - AttributeName: uploadedBy
-              KeyType: RANGE
-          ProvisionedThroughput:
-            ReadCapacityUnits: 5
-            WriteCapacityUnits: 5
-      advertisementRequestsTable:
-        Type: AWS::DynamoDB::Table
-        Properties:
-          TableName: AdvertisementRequests
-          AttributeDefinitions:
-            - AttributeName: advId
-              AttributeType: S
-            - AttributeName: requestBy
-              AttributeType: S
-          KeySchema:
-            - AttributeName: advId
-              KeyType: HASH
-            - AttributeName: requestBy
-              KeyType: RANGE
-          ProvisionedThroughput:
-            ReadCapacityUnits: 5
-            WriteCapacityUnits: 5
-      userRolesTable:
-        Type: AWS::DynamoDB::Table
-        Properties:
-          TableName: UserRoles
-          AttributeDefinitions:
-            - AttributeName: userId
-              AttributeType: S
-            - AttributeName: roleId
-              AttributeType: S
-          KeySchema:
-            - AttributeName: userId
-              KeyType: HASH
-            - AttributeName: roleId
-              KeyType: RANGE
-          ProvisionedThroughput:
-            ReadCapacityUnits: 5
-            WriteCapacityUnits: 5
+        GlobalSecondaryIndexes:
+          - IndexName: rolesByCity
+            KeySchema:
+              - AttributeName: city
+                KeyType: HASH
+              - AttributeName: roleId
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5

@@ -1,8 +1,9 @@
 import {HttpClient} from '@angular/common/http';
 import {Observable} from 'rxjs';
+import {environment} from '../../../environments/environment';
 
 export abstract class BaseApi<T> {
-  protected readonly appUrl: string = '/api';
+  protected readonly appUrl: string = environment.apiUrl + '/api';
   protected abstract readonly apiUrl: string = '';
 
   protected getApiUrl(id?: number | string): string {

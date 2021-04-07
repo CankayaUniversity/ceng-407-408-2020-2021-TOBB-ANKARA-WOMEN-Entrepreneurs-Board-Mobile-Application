@@ -2,11 +2,11 @@ package com.kgk.repository.chat;
 
 import com.kgk.model.chat.GroupMessage;
 
-import java.util.Collection;
+import java.util.List;
 
 public interface GroupMessageRepository {
 
-    Collection<GroupMessage> listAllMessagesByGroupId(String groupId); //shows all messages of a group chat
+    List<GroupMessage> listAllMessagesByGroupId(String groupId); //shows all messages of a group chat
 
     GroupMessage saveMessage(String groupId, String message); //saves the sent message to database
 

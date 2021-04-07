@@ -1,0 +1,19 @@
+ion-item {
+  border-radius: 50px;
+  height: 55px;
+  --highlight-height: 0px;
+  color: #717171;
+
+  ion-input {
+    font-size: 18px;
+    --padding-top: 20px;
+    --padding-bottom: 15px;
+    --padding-start: 5px;
+  }
+
+  a {
+    font-size: 17px;
+    letter-spacing: 0.5px;
+    text-decoration: none;
+  }
+}

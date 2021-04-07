@@ -9,7 +9,7 @@ import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.PathVariable;
 
 import javax.validation.Valid;
-import java.util.Collection;
+import java.util.List;
 
 @Controller("/api/user-role")
 public class UserRoleController {
@@ -21,12 +21,12 @@ public class UserRoleController {
     }
 
     @Get
-    public Collection<UserRole> listAll(){
+    public List<UserRole> listAll(){
         return userRolesRepository.listAllUserRoles();
     }
 
     @Get("/{roleId}")
-    public Collection<UserRole> findUserRolesWithUserId(@PathVariable("roleId") String roleId) {
+    public List<UserRole> findUserRolesWithUserId(@PathVariable("roleId") String roleId) {
         return userRolesRepository.findAllUsersWithRoleId(roleId);
     }
 

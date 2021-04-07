@@ -1,26 +1,26 @@
 package com.kgk.web;
 
-
-import com.kgk.model.News;
-import com.kgk.repository.NewsRepository;
+import com.kgk.model.admin.News;
+import com.kgk.repository.admin.NewsRepository;
 import io.micronaut.http.annotation.*;
 
 import javax.validation.Valid;
 import java.util.Collection;
 
 @Controller("/api/feed")
-public class NewsController {
+public class FeedController {
     private final NewsRepository newsRepository;
 
-    public NewsController(NewsRepository NewsRepository, NewsRepository newsRepository) {
+    public FeedController(NewsRepository NewsRepository, NewsRepository newsRepository) {
         this.newsRepository = newsRepository;
     }
 
+    //FIXME: diğer controllerlara bakarak aşağıdaki requestleri düzenle
     @Post
     public void save(@Valid @Body News news) { }
 
-    @Delete
-    public void delete(@Valid @Body News news){ newsRepository.deleteNews(news); }
+    @Delete("/{newsId}")
+    public void delete(@PathVariable("newsId") String newsId){ newsRepository.deleteNews(newsId); }
 
     @Get
     public Collection<News> listAll() {
