@@ -20,10 +20,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/page-login/page-login.module').then(m => m.PageLoginPageModule)
   },
   {
-    path: 'feed',
-    loadChildren: () => import('./pages/page-feed/page-feed.module').then( m => m.PageFeedPageModule)
-  },
-  {
     path: 'register',
     loadChildren: () => import('./pages/page-register/page-register.module').then( m => m.PageRegisterPageModule)
   },
@@ -31,6 +27,7 @@ const routes: Routes = [
     path: 'tabs',
     loadChildren: () => import('./pages/page-tabs/page-tabs.module').then( m => m.PageTabsPageModule)
   },
+
   /* For educational purposes, will be enhanced later{
     path: 'product/:id',
     loadChildren: () => import('./pages/page-register/page-register.module').then( m => m.PageRegisterPageModule)
