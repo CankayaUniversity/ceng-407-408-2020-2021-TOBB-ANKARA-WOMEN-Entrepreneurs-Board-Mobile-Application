@@ -14,14 +14,32 @@ ion-header{
 }
 
 ion-content{
-  --background: url(../../../assets/backgroundBubble.png) 0 0/100% 100% no-repeat;
+  --background: url(../../../assets/backgrounds/bigger-right-bubble.png) 0 0/100% 100% no-repeat;
 
+  ion-grid {
+    height: 100%;
+
+  }
+
+  .row1{
+    height: 12%;
+  }
+  .row2{
+    height: 87%;
+
+  }
+  .row3{
+    height: 1%;
+  }
   img{
     width: 50px;
     height: 50px;
   }
   #form{
-    margin-top: 160px;
+    margin-top: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    display:inline-block;
     padding-left: 50px;
     padding-right: 30px;
 
@@ -88,7 +106,7 @@ ion-content{
       font-weight: 600;
       font-size: 14px;
       text-align: center;
-      margin-left: 15px;
+      margin-left: 5px;
     }
 
     ion-button {

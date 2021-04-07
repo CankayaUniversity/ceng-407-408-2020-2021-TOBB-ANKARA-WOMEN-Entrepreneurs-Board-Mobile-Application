@@ -1,18 +1,21 @@
 ion-header{
   height: 0px;
-  #women{
-    img{
-      width: 50%;
-      height: 240px;
-      float: right;
-      display: block;
-      margin-left: auto;
-      margin-top: 15px;
-    }
-  }
 }
 ion-content {
-  --background: url(../../../assets/backgroundBubble.png) 0 0/100% 100% no-repeat;
+  --background: url(../../../assets/backgrounds/loginbackground_withwoman.png) 0 0/100% 100% no-repeat;
+  ion-grid {
+    height: 100%;
+  }
+
+  .row1{
+    height: 12%;
+  }
+  .row2{
+    height: 87%;
+  }
+  .row3{
+    height: 1%;
+  }
 
   p{
     color: #717171;
@@ -24,7 +27,10 @@ ion-content {
 
 
   #header {
-    margin-top:300px;
+    margin-top: 30px;
+    display:inline-block;
+    margin-left: auto;
+    margin-right: auto;
     h1 {
       font-weight: 700;
       font-size: 30px;
