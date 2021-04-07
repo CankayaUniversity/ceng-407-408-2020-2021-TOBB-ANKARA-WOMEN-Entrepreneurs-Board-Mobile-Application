@@ -13,7 +13,7 @@ export class PageFeedPage implements OnInit {
   constructor(private feedService: FeedService, private router: Router) {}
 
   ngOnInit() {
-    this.feedService
+    /*this.feedService
       .getData(
         `everything?q=tesla&from=2021-03-03&sortBy=publishedAt&pageSize=5&page=${
           this.page
@@ -22,10 +22,10 @@ export class PageFeedPage implements OnInit {
       .subscribe(data => {
         console.log(data);
         this.data = data;
-      });
+      });*/
   }
 
-  loadMoreNews(event) {
+  /*loadMoreNews(event) {
     this.page++;
     console.log(event);
     this.feedService
@@ -43,5 +43,5 @@ export class PageFeedPage implements OnInit {
         event.target.complete();
         console.log(this.data);
       });
-  }
+  }*/
 }

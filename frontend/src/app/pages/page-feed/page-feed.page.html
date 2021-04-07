@@ -1,26 +1,31 @@
 <ion-content class="background" >
-
-
   <ion-grid>
-    <ion-row class="row1" style="background-color: indianred"><ion-label class="feed">Feed</ion-label></ion-row>
+    <ion-row class="row1"><ion-label class="feed">Feed</ion-label></ion-row>
 
-    <ion-row class="row2" style="background-color: #2fdf75">
-        <ion-card class="card" *ngFor="let article of data?.articles">
-          <!-- <ion-img [src]="article.urlToImage"></ion-img> -->
+    <ion-row class="row2">
+        <ion-content class="card-inside" style="background-color: transparent">
+          <div slot="">
+            <ion-card class="card" *ngFor="let article of data?.articles">
+              <!-- <ion-img [src]="article.urlToImage"></ion-img> -->
 
-          <ion-card-content style="background-color: #737373">
-            <ion-card-title>{{article.title}}</ion-card-title>
+              <ion-card-content>
 
-            <p>{{article.description}}</p>
-          </ion-card-content>
-        </ion-card>
+                <ion-card-header style="background-color: mediumvioletred">
+                  <ion-card-title>{{article.title}}</ion-card-title>
+                  <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+                </ion-card-header>
+                <p>{{article.description}}</p>
+              </ion-card-content>
+            </ion-card>
 
-        <ion-infinite-scroll  style="background-color: #ffd948" (ionInfinite)="loadMoreNews($event)">
-          <ion-infinite-scroll-content loadingSpinner="bubble" loadingText="load news.."></ion-infinite-scroll-content>
-        </ion-infinite-scroll>
+            <ion-infinite-scroll  style="background-color: #ffd948"> // (ionInfinite)="loadMoreNews($event)">
+              <ion-infinite-scroll-content loadingSpinner="bubble" style="color: #0d0d0d" loadingText="load news.."></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+          </div>
+        </ion-content>
     </ion-row>
 
-    <ion-row class="row3" style="background-color: indianred"></ion-row>
+    <ion-row class="row3"></ion-row>
   </ion-grid>
 </ion-content>
 
