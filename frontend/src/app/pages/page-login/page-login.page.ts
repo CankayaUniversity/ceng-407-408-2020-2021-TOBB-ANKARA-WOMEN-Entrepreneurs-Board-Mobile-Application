@@ -5,7 +5,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import {environment} from '../../../environments/environment';
 import {HttpClient} from '@angular/common/http';
 import {LoginForm} from '../../providers/model/login-form.type';
-import {RegisterForm} from "../../providers/model/register-form.type";
 
 @Component({
   selector: 'app-page-login',
