@@ -23,6 +23,11 @@ const routes: Routes = [
     path: 'register',
     loadChildren: () => import('./pages/page-register/page-register.module').then( m => m.PageRegisterPageModule)
   },
+  {
+    path: 'profile',
+    loadChildren: () => import('./pages/page-profile/page-profile.module').then( m => m.PageProfilePageModule)
+  },
+
   /* For educational purposes, will be enhanced later{
     path: 'product/:id',
     loadChildren: () => import('./pages/page-register/page-register.module').then( m => m.PageRegisterPageModule)
