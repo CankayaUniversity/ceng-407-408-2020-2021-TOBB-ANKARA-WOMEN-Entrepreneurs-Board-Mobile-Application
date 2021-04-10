@@ -24,7 +24,7 @@ public class User {
 
     @NonNull
     @NotBlank
-    private String city;   //range key - gsi hash key
+    private String city;   //gsi hash key
 
     @NonNull
     private String roleId; //gsi - range key
@@ -78,7 +78,6 @@ public class User {
       this.userId = userId;
     }
 
-    @DynamoDBRangeKey(attributeName = "city")
     @DynamoDBIndexHashKey(globalSecondaryIndexName = "usersByRoleId", attributeName = "city")
     @NonNull
     public String getCity() {

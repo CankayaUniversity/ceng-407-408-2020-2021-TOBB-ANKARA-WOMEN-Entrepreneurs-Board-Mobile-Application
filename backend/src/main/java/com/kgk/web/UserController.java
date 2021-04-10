@@ -32,9 +32,9 @@ public class UserController {
         return userRepository.listAllUsers();
     }
 
-    @Get("/{userId}/{city}")
-    public User showUserProfile(@PathVariable("userId") String userId, @PathVariable("city") String city) {
-        return userRepository.findUserById(userId, city);
+    @Get("/{userId}")
+    public User showUserProfile(@PathVariable("userId") String userId) {
+        return userRepository.findUserById(userId);
     }
 
     @Get("/{userId}/{catalogId}")
@@ -42,20 +42,15 @@ public class UserController {
         return catalogRepository.findCatalogByCatalogId(userId, catalogId);
     }
 
-    /*@Post
-    public User save(@Valid @Body User user) {
-      return userRepository.saveUser(user);
-    }*/
-
     @Put("/{userId}")
     public User update(@PathVariable("userId") String userId, @Valid @Body User user) {
       return userRepository.updateUser(userId, user);
     }
 
-    @Put("/change-password/{userId}/{city}")
-    public User changePassword(@PathVariable("userId") String userId, @PathVariable("city") String city,
+    @Put("/change-password/{userId}")
+    public User changePassword(@PathVariable("userId") String userId,
                                @Valid @Body Password changedPassword) {
-        return userRepository.changePassword(userId, city, changedPassword);
+        return userRepository.changePassword(userId, changedPassword);
     }
 
     @Delete("/{userId}")

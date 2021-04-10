@@ -66,24 +66,15 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     @Override
-    public User findUserById(String userId, String city) {
-        User user = mapper.load(User.class, userId, city, config);
+    public User findUserById(String userId) {
+        User user = mapper.load(User.class, userId, config);
         user.setCatalogList(catalogRepository.listCatalogsByUserId(userId));
 
         return user;
     }
 
-    /*@Override
-    public User saveUser(User user) {
-        user.setRoleId("101"); //roleId'ler Roles table'ından çekilsin
-        mapper.save(user);
-        System.out.println("[USER REPO] User is saved");
-        return user;
-        //return mapper.load(User.class, user.getUserId());
-    }*/
-
     public User updateUser(String userId, User user) {
-        User userRetrieved = mapper.load(User.class, userId, user.getCity(), config);
+        User userRetrieved = mapper.load(User.class, userId, config);
         userRetrieved.copyFrom(user);
 
         if (CollectionUtils.isNotEmpty(user.getCatalogList())) {
@@ -110,8 +101,8 @@ public class UserRepositoryImpl implements UserRepository {
         return userRetrieved;
     }
 
-    public User changePassword(String userId, String city, Password changedPassword) {
-        User user = findUserById(userId, city);
+    public User changePassword(String userId, Password changedPassword) {
+        User user = findUserById(userId);
 
         if (StringUtils.isNotEmpty(changedPassword.getOldPassword())) {
             if (changedPassword.getOldPassword().equals(user.getPassword())) {

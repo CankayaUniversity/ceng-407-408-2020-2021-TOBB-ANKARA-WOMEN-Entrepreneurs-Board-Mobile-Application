@@ -66,8 +66,6 @@ resources:
         KeySchema:
           - AttributeName: userId
             KeyType: HASH
-          - AttributeName: city
-            KeyType: RANGE
         GlobalSecondaryIndexes:
           - IndexName: usersByRoleId
             KeySchema:
