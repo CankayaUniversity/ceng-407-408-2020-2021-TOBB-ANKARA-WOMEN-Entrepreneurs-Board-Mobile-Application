@@ -107,15 +107,44 @@ resources:
             AttributeType: S
           - AttributeName: updatedAt
             AttributeType: N
-          - AttributeName: meeting
+          - AttributeName: city
             AttributeType: S
         KeySchema:
           - AttributeName: newsId
             KeyType: HASH
         GlobalSecondaryIndexes:
-          - IndexName: newsByPublishDate
+          - IndexName: newsByCity
             KeySchema:
-              - AttributeName: meeting
+              - AttributeName: city
+                KeyType: HASH
+              - AttributeName: updatedAt
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    meetingsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Meetings
+        AttributeDefinitions:
+          - AttributeName: meetingId
+            AttributeType: S
+          - AttributeName: updatedAt
+            AttributeType: N
+          - AttributeName: city
+            AttributeType: S
+        KeySchema:
+          - AttributeName: meetingId
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: meetingsByCity
+            KeySchema:
+              - AttributeName: city
                 KeyType: HASH
               - AttributeName: updatedAt
                 KeyType: RANGE

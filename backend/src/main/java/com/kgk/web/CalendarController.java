@@ -1,6 +1,8 @@
 package com.kgk.web;
 
+import com.kgk.model.admin.Meeting;
 import com.kgk.model.admin.News;
+import com.kgk.repository.admin.MeetingRepository;
 import com.kgk.repository.admin.NewsRepository;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
@@ -12,34 +14,38 @@ import io.micronaut.http.annotation.PathVariable;
 import javax.validation.Valid;
 import java.util.List;
 
-@Controller("/api/calender")
+@Controller("/api/calendar")
 public class CalendarController {
 
-    private final NewsRepository newsRepository;
+    private final MeetingRepository meetingRepository;
 
-    public CalendarController(NewsRepository newsRepository) {
-        this.newsRepository = newsRepository;
+    public CalendarController(MeetingRepository meetingRepository) {
+        this.meetingRepository = meetingRepository;
     }
 
     @Get
-    public List<News> listAllMeetings() {
-        return newsRepository.listAllMeetings();
+    public List<Meeting> listAllMeetings() {
+        return meetingRepository.listAllMeetings();
     }
 
     @Get("/{meetingId}")
-    public News findNewsByMeetingId(@PathVariable("meetingId") String meetingId) {
-        return newsRepository.findNewsByNewsId(meetingId);
+    public Meeting findMeetingByMeetingId(@PathVariable("meetingId") String meetingId) {
+        return meetingRepository.findMeetingByMeetingId(meetingId);
     }
 
     @Post
-    public News saveMeeting(@Valid @Body News meeting) {return newsRepository.saveMeeting(meeting); }
+    public Meeting saveMeeting(@Valid @Body Meeting meeting) {
+        return meetingRepository.saveMeeting(meeting);
+    }
 
     @Put("/{meetingId}")
-    public News updateMeeting(@PathVariable("meetingId") String meetingId, @Valid @Body News meeting){
-        return newsRepository.updateMeeting(meetingId, meeting);
+    public Meeting updateMeeting(@PathVariable("meetingId") String meetingId, @Valid @Body Meeting meeting) {
+        return meetingRepository.updateMeeting(meetingId, meeting);
     }
 
     @Delete("/{meetingId}")
-    public void deleteMeeting(@PathVariable("meetingId") String meetingId){ newsRepository.deleteMeeting(meetingId); }
+    public void deleteMeeting(@PathVariable("meetingId") String meetingId){
+        meetingRepository.deleteMeeting(meetingId);
+    }
 
 }

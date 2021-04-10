@@ -15,26 +15,20 @@ public class News {
     @NonNull
     private String newsId; //hash key
 
-    private String newsTitle;
-
-    private String newsBody;
-
     @NonNull
-    private String meeting; //gsi - hash key
-
-    private Long startTime;
-
-    private Long endTime;
-
-    private String meetingPlace;
-
-    private String meetingUrl;
-
-    @NonNull
-    private Long publishDate;
+    private String city; //gsi - hash key
 
     @NonNull
     private Long updatedAt;  //gsi - range key
+
+    @NonNull
+    private String newsTitle;
+
+    @NonNull
+    private String newsBody;
+
+    @NonNull
+    private Long publishDate;
 
     public News() {}
 
@@ -49,68 +43,44 @@ public class News {
         this.newsId= newsId;
     }
 
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "newsByCity", attributeName = "city")
+    @NonNull
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(@NonNull String city) {
+        this.city = city;
+    }
+
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "newsByCity", attributeName = "updatedAt")
+    @NonNull
+    public Long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(@NonNull Long updatedAt) {
+        this.updatedAt = updatedAt;
+    }
+
     @DynamoDBAttribute(attributeName = "newsTitle")
+    @NonNull
     public String getNewsTitle() {
         return newsTitle;
     }
 
-    public void setNewsTitle(String newsTitle) {
+    public void setNewsTitle(@NonNull String newsTitle) {
         this.newsTitle = newsTitle;
     }
 
     @DynamoDBAttribute(attributeName = "newsBody")
+    @NonNull
     public String getNewsBody() {
         return newsBody;
     }
 
-    public void setNewsBody(String newsBody) {
+    public void setNewsBody(@NonNull String newsBody) {
         this.newsBody = newsBody;
-    }
-
-    @DynamoDBAttribute(attributeName = "startTime")
-    public Long getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(Long startTime) {
-        this.startTime = startTime;
-    }
-
-    @DynamoDBAttribute(attributeName = "endTime")
-    public Long getEndTime() {
-        return endTime;
-    }
-
-    public void setEndTime(Long endTime) {
-        this.endTime = endTime;
-    }
-
-    @DynamoDBAttribute(attributeName = "meetingPlace")
-    public String getMeetingPlace() {
-        return meetingPlace;
-    }
-
-    public void setMeetingPlace(String meetingPlace) {
-        this.meetingPlace = meetingPlace;
-    }
-
-    @DynamoDBAttribute(attributeName = "meetingUrl")
-    public String getMeetingUrl() {
-        return meetingUrl;
-    }
-
-    public void setMeetingUrl(String meetingUrl) {
-        this.meetingUrl = meetingUrl;
-    }
-
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "newsByPublishDate", attributeName = "meeting")
-    @NonNull
-    public String getMeeting() {
-        return meeting;
-    }
-
-    public void setMeeting(@NonNull String meeting) {
-        this.meeting = meeting;
     }
 
     @DynamoDBAttribute(attributeName = "publishDate")
@@ -121,16 +91,6 @@ public class News {
 
     public void setPublishDate(@NonNull Long publishDate) {
         this.publishDate = publishDate;
-    }
-
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "newsByPublishDate", attributeName = "updatedAt")
-    @NonNull
-    public Long getUpdatedAt() {
-        return updatedAt;
-    }
-
-    public void setUpdatedAt(@NonNull Long updatedAt) {
-        this.updatedAt = updatedAt;
     }
 
 }

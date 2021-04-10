@@ -6,22 +6,14 @@ import java.util.List;
 
 public interface NewsRepository {
 
-    List<News> listAllNews();
+    List<News> listAllNews(); //lists all news that the meeting variable is false
 
-    List<News> listAllMeetings();
-
-    News  findNewsByNewsId(String newsId); //find users with a specific role
+    News findNewsByNewsId(String newsId);
 
     News saveNews(News news);
 
-    News saveMeeting(News meeting);
-
     News updateNews(String newsId, News news);
 
-    News updateMeeting(String meetingId, News meeting);
-
     void deleteNews(String newsId);
-
-    void deleteMeeting(String meetingId);
 
 }

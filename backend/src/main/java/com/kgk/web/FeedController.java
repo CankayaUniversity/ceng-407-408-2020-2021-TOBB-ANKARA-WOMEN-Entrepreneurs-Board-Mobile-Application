@@ -33,8 +33,9 @@ public class FeedController {
     }
 
     @Post
-    public News saveNews(@Valid @Body News news) {return newsRepository.saveNews(news); }
-
+    public News saveNews(@Valid @Body News news) {
+        return newsRepository.saveNews(news);
+    }
 
     @Put("/{newsId}")
     public News updateNews(@PathVariable("newsId") String newsId, @Valid @Body News news){
@@ -42,6 +43,8 @@ public class FeedController {
     }
 
     @Delete("/{newsId}")
-    public void deleteNews(@PathVariable("newsId") String newsId){ newsRepository.deleteNews(newsId); }
+    public void deleteNews(@PathVariable("newsId") String newsId){
+        newsRepository.deleteNews(newsId);
+    }
 
 }
