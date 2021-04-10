@@ -2,12 +2,20 @@ package com.kgk.repository.admin.impl;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.kgk.model.Catalog;
+import com.kgk.model.User;
 import com.kgk.model.admin.News;
 import com.kgk.repository.admin.NewsRepository;
+import io.micronaut.core.util.CollectionUtils;
 
 import javax.inject.Singleton;
 import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Singleton
 public class NewsRepositoryImpl implements NewsRepository {
@@ -18,52 +26,89 @@ public class NewsRepositoryImpl implements NewsRepository {
     private final DynamoDBMapperConfig config;
 
     public NewsRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config) {
+
         this.mapper = mapper;
         this.config = config;
     }
 
-    public Collection<News> listAllNews() {
-        //TODO: Scan yapma, query yaz, meeting'i false olanları çek
-        var scanExpression = new DynamoDBScanExpression();
-        return mapper.scan(News.class, scanExpression);
+    public List<News> listAllNews() {
+
+        Map<String, AttributeValue> eav = new HashMap<>();
+        eav.put(":meeting", new AttributeValue().withBOOL(false));
+
+        DynamoDBQueryExpression<News> queryExpression = new DynamoDBQueryExpression<News>()
+                .withKeyConditionExpression("meeting = :meeting")
+                .withExpressionAttributeValues(eav);
+
+       return mapper.query(News.class, queryExpression);
+    }
+
+    public News findNewsByNewsId(String newsId) {
+
+        return mapper.load(News.class, newsId, config);
     }
 
     @Override
-    public Collection<News> listAllMeetings() {
-        //TODO: query yaz, meeting'i true olanları çek
-        return null;
+    public List<News> listAllMeetings() {
+
+        Map<String, AttributeValue> eav = new HashMap<>();
+        eav.put(":meeting", new AttributeValue().withBOOL(true));
+
+        DynamoDBQueryExpression<News> queryExpression = new DynamoDBQueryExpression<News>()
+                .withKeyConditionExpression("meeting = :meeting")
+                .withExpressionAttributeValues(eav);
+
+        return mapper.query(News.class, queryExpression);
     }
 
     @Override
     public News saveNews(News news) {
-        //TODO: meeting'i false yapıp kaydet
-        return null;
+
+        news.setMeeting(false);
+        news.setPublishDate(System.currentTimeMillis());
+
+        return news;
     }
 
     @Override
-    public News saveMeeting(News news) {
-        //TODO: meeting'i true yapıp kaydet
-        return null;
-    }
+    public News saveMeeting(News meeting) {
 
-    @Override
+        meeting.setMeeting(true);
+
+        return meeting;
+    }
     public News updateNews(String newsId, News news) {
-        return null;
+        News retrievedNews = mapper.load(News.class, newsId, config);
+        retrievedNews.setNewsTitle(news.getNewsTitle());
+        retrievedNews.setNewsBody(news.getNewsBody());
+        mapper.save(retrievedNews);
+        return retrievedNews;
     }
 
     @Override
-    public News updateMeeting(String meetingId, News news) {
-        return null;
+    public News updateMeeting(String meetingId, News meeting) {
+        News retrievedMeeting = mapper.load(News.class, meetingId, config);
+        retrievedMeeting.setMeetingUrl(meeting.getMeetingUrl());
+        retrievedMeeting.setMeetingPlace(meeting.getMeetingPlace());
+        retrievedMeeting.setStartTime(meeting.getStartTime());
+        retrievedMeeting.setEndTime(meeting.getEndTime());
+        mapper.save(retrievedMeeting);
+
+        return retrievedMeeting;
     }
 
     @Override
     public void deleteNews(String newsId) {
 
+        News news = mapper.load(News.class, newsId, config);
+        mapper.delete(news);
     }
 
     @Override
     public void deleteMeeting(String meetingId) {
 
+        News meeting = mapper.load(News.class, meetingId, config);
+        mapper.delete(meeting);
     }
 
 }
