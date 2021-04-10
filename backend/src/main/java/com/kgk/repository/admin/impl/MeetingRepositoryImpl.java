@@ -59,7 +59,7 @@ public class MeetingRepositoryImpl implements MeetingRepository {
         meeting.setUpdatedAt(meeting.getPublishDate());
 
         mapper.save(meeting);
-        System.out.println("[NEWS REPO] Meeting is saved");
+        System.out.println("[MEETING REPO] Meeting is saved");
 
         return meeting;
     }
@@ -75,7 +75,7 @@ public class MeetingRepositoryImpl implements MeetingRepository {
         retrievedMeeting.setUpdatedAt(System.currentTimeMillis());
 
         mapper.save(retrievedMeeting);
-        System.out.println("[NEWS REPO] Meeting is updated");
+        System.out.println("[MEETING REPO] Meeting is updated");
 
         return retrievedMeeting;
     }
@@ -98,10 +98,10 @@ public class MeetingRepositoryImpl implements MeetingRepository {
             e.printStackTrace();
         }
         mapper.save(deletedMeeting);
-        System.out.println("[NEWS REPO] Deleted meeting is saved to DeletedItems table");
+        System.out.println("[MEETING REPO] Deleted meeting is saved to DeletedItems table");
 
         mapper.delete(meeting);
-        System.out.println("[NEWS REPO] Meeting is deleted");
+        System.out.println("[MEETING REPO] Meeting is deleted");
     }
 
 }

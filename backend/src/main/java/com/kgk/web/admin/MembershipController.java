@@ -40,4 +40,5 @@ public class MembershipController {
     public void decline(@PathVariable("registerId") String registerId) {
         membershipRepository.declineRegisterForm(registerId);
     }
+
 }

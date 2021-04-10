@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface NewsRepository {
 
-    List<News> listAllNews(); //lists all news that the meeting variable is false
+    List<News> listAllNews();
 
     News findNewsByNewsId(String newsId);
 

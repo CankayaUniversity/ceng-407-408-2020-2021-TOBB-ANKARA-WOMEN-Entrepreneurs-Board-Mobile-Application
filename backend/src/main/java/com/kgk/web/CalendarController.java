@@ -1,9 +1,7 @@
 package com.kgk.web;
 
 import com.kgk.model.admin.Meeting;
-import com.kgk.model.admin.News;
 import com.kgk.repository.admin.MeetingRepository;
-import com.kgk.repository.admin.NewsRepository;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
