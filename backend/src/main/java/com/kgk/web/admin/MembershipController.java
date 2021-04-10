@@ -36,8 +36,8 @@ public class MembershipController {
         return membershipRepository.approveRegisterForm(registerId, registerForm);
     }
 
-    @Delete("/{registerId}/{city}")
-    public void decline(@PathVariable("registerId") String registerId, @PathVariable("city") String city) {
-        membershipRepository.declineRegisterForm(registerId, city);
+    @Delete("/{registerId}")
+    public void decline(@PathVariable("registerId") String registerId) {
+        membershipRepository.declineRegisterForm(registerId);
     }
 }

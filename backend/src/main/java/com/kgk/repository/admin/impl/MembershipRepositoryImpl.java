@@ -88,8 +88,8 @@ public class MembershipRepositoryImpl implements MembershipRepository {
     }
 
     @Override
-    public void declineRegisterForm(String registerId, String city) {
-        RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, city, config);
+    public void declineRegisterForm(String registerId) {
+        RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, config);
         DeletedItem deletedItem = new DeletedItem();
         deletedItem.setDeletedTime(System.currentTimeMillis());
         deletedItem.setWhichTable("RegisterForms");

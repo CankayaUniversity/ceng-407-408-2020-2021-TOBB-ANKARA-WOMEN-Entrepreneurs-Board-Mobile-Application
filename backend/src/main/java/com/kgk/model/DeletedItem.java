@@ -51,7 +51,7 @@ public class DeletedItem {
         return originalId;
     }
 
-    public void setOriginalId(@NonNull String id) {
+    public void setOriginalId(@NonNull String originalId) {
         this.originalId = originalId;
     }
 
