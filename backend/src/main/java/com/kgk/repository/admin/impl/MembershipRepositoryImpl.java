@@ -58,9 +58,10 @@ public class MembershipRepositoryImpl implements MembershipRepository {
     public RegisterForm approveRegisterForm(String registerId, RegisterForm registerForm) {
         User user = new User();
         UserRole userRole = new UserRole();
-        RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, config);
 
+        RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, config);
         retrievedForm.setApproved("true");
+
         Role role = mapper.load(Role.class, RoleType.MEMBER.toString(), "101", config);
         user.setUserId(UUID.randomUUID().toString());
         user.setRoleId(role.getRoleId());
@@ -81,6 +82,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
 
         System.out.println("[MEMBERSHIP REPO] Register form is updated");
         mapper.save(user);
+
         System.out.println("[MEMBERSHIP REPO] User is saved");
         return retrievedForm;
     }

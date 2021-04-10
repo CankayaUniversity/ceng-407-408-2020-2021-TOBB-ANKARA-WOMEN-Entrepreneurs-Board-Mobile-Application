@@ -109,11 +109,23 @@ resources:
             AttributeType: S
           - AttributeName: publishDate
             AttributeType: N
+          - AttributeName: meeting
+            AttributeType: S
         KeySchema:
           - AttributeName: newsId
             KeyType: HASH
-          - AttributeName: publishDate
-            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: newsByPublishDate
+            KeySchema:
+              - AttributeName: meeting
+                KeyType: HASH
+              - AttributeName: publishDate
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5

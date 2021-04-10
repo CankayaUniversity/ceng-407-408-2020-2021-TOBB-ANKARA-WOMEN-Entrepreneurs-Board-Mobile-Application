@@ -13,6 +13,7 @@ import javax.inject.Singleton;
 import java.util.List;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 @Singleton
 public class GroupMessageRepositoryImpl implements GroupMessageRepository {
@@ -47,6 +48,7 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
     @Override
     public GroupMessage saveMessage(String groupId, String message) {
         GroupMessage groupMessage = new GroupMessage();
+        groupMessage.setMessageId(UUID.randomUUID().toString());
         groupMessage.setGroupId(groupId);
         groupMessage.setMessage(message);
         groupMessage.setSendAt(System.currentTimeMillis());

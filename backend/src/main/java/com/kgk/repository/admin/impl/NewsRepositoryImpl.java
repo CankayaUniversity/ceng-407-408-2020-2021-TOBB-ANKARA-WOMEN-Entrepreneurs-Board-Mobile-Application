@@ -11,6 +11,7 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 @Singleton
 public class NewsRepositoryImpl implements NewsRepository {
@@ -25,7 +26,6 @@ public class NewsRepositoryImpl implements NewsRepository {
     }
 
     public List<News> listAllNews() {
-
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":meeting", new AttributeValue().withBOOL(false));
 
@@ -54,6 +54,7 @@ public class NewsRepositoryImpl implements NewsRepository {
 
     @Override
     public News saveNews(News news) {
+        news.setNewsId(UUID.randomUUID().toString());
         news.setMeeting("false");
         news.setPublishDate(System.currentTimeMillis());
         mapper.save(news);
@@ -63,6 +64,7 @@ public class NewsRepositoryImpl implements NewsRepository {
 
     @Override
     public News saveMeeting(News meeting) {
+        meeting.setNewsId(UUID.randomUUID().toString());
         meeting.setMeeting("true");
         meeting.setPublishDate(System.currentTimeMillis());
         mapper.save(meeting);
