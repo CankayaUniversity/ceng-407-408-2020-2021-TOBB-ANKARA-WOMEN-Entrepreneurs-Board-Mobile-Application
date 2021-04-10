@@ -4,6 +4,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kgk.model.DeletedItem;
 import com.kgk.model.user.User;
 import com.kgk.model.admin.UserRole;
 import com.kgk.repository.user.UserRepository;
@@ -16,6 +18,8 @@ import java.util.Map;
 
 @Singleton
 public class UserRoleRepositoryImpl implements UserRoleRepository {
+
+    private static final String TABLE_NAME = "UserRoles";
 
     private static final String CITY_GSI_NAME = "userRolesByCity";
 
@@ -70,7 +74,7 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
     }
 
     @Override
-    public UserRole changeRole(String userId, UserRole userRole) {
+    public UserRole changeUserRole(String userId, UserRole userRole) {
         User user = userRepository.findUserById(userId);
         user.setRoleId(userRole.getRoleId());
         mapper.save(user);
@@ -80,6 +84,28 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
         System.out.println("[USER ROLE REPO] User role is saved");
 
         return userRole;
+    }
+
+    @Override
+    public void deleteUserRole(String userId) {
+        UserRole userRole = findUserRoleByUserId(userId);
+        DeletedItem deletedUserRole = new DeletedItem();
+        deletedUserRole.setDeletedTime(System.currentTimeMillis());
+        deletedUserRole.setWhichTable(TABLE_NAME);
+        deletedUserRole.setOriginalId(userRole.getUserId());
+
+        try {
+            //Creating the ObjectMapper object
+            ObjectMapper om = new ObjectMapper();
+            //Converting the Object to JSONString
+            String json = om.writeValueAsString(userRole);
+            deletedUserRole.setJson(json);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mapper.save(deletedUserRole);
+        System.out.println("[USER ROLE REPO] Deleted User Role is saved to DeletedItems table");
     }
 
 }

@@ -54,8 +54,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
 
     @Override
     public RegisterForm findRegisterFormById(String registerFormId) {
-        RegisterForm registerForm = mapper.load(RegisterForm.class, registerFormId, config);
-        return registerForm;
+        return mapper.load(RegisterForm.class, registerFormId, config);
     }
 
     @Override
@@ -77,39 +76,42 @@ public class MembershipRepositoryImpl implements MembershipRepository {
         user.setCity(retrievedForm.getCity());
         user.setTobbRegisterId(retrievedForm.getTobbRegisterId());
         user.setOccupation(retrievedForm.getOccupation());
-        mapper.save(retrievedForm);
+
+        mapper.save(user);
+        System.out.println("[MEMBERSHIP REPO] User is saved");
 
         userRole.setRoleId(user.getRoleId());
         userRole.setUserId(user.getUserId());
         userRole.setCity(user.getCity());
+
         mapper.save(userRole);
+        System.out.println("[MEMBERSHIP REPO] User Role is saved");
 
+        mapper.save(retrievedForm);
         System.out.println("[MEMBERSHIP REPO] Register form is updated");
-        mapper.save(user);
 
-        System.out.println("[MEMBERSHIP REPO] User is saved");
         return retrievedForm;
     }
 
     @Override
     public void declineRegisterForm(String registerId) {
         RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, config);
-        DeletedItem deletedItem = new DeletedItem();
-        deletedItem.setDeletedTime(System.currentTimeMillis());
-        deletedItem.setWhichTable(TABLE_NAME);
-        deletedItem.setOriginalId(retrievedForm.getRegisterId());
+        DeletedItem deletedRegisterForm = new DeletedItem();
+        deletedRegisterForm.setDeletedTime(System.currentTimeMillis());
+        deletedRegisterForm.setWhichTable(TABLE_NAME);
+        deletedRegisterForm.setOriginalId(retrievedForm.getRegisterId());
 
         try {
             //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
             //Converting the Object to JSONString
             String json = om.writeValueAsString(retrievedForm);
-            deletedItem.setJson(json);
+            deletedRegisterForm.setJson(json);
         } catch (Exception e) {
             e.printStackTrace();
         }
 
-        mapper.save(deletedItem);
+        mapper.save(deletedRegisterForm);
         System.out.println("[MEMBERSHIP REPO] Deleted Register Form is saved to DeletedItems table");
 
         mapper.delete(retrievedForm);

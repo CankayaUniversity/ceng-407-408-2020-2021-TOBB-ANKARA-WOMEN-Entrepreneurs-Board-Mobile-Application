@@ -10,6 +10,7 @@ import com.kgk.model.user.Catalog;
 import com.kgk.model.DeletedItem;
 import com.kgk.model.user.Password;
 import com.kgk.model.user.User;
+import com.kgk.repository.admin.UserRoleRepository;
 import com.kgk.repository.user.CatalogRepository;
 import com.kgk.repository.user.UserRepository;
 import io.micronaut.core.util.CollectionUtils;
@@ -34,10 +35,14 @@ public class UserRepositoryImpl implements UserRepository {
 
     private final CatalogRepository catalogRepository;
 
-    public UserRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config, CatalogRepository catalogRepository) {
+    private final UserRoleRepository userRoleRepository;
+
+    public UserRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config,
+                              CatalogRepository catalogRepository, UserRoleRepository userRoleRepository) {
         this.mapper = mapper;
         this.config = config;
         this.catalogRepository = catalogRepository;
+        this.userRoleRepository = userRoleRepository;
     }
 
     public List<User> listAllUsers() {
@@ -129,6 +134,8 @@ public class UserRepositoryImpl implements UserRepository {
                             catalog -> catalogRepository.deleteCatalog(userId, catalog.getCatalogId())
                     );
         }
+
+        userRoleRepository.deleteUserRole(userId);
 
         DeletedItem deletedUser = new DeletedItem();
         deletedUser.setDeletedTime(System.currentTimeMillis());

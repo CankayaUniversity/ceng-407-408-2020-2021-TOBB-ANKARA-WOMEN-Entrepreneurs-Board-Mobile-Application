@@ -37,7 +37,7 @@ public class UserRoleController {
 
     @Put("/{userId}")
     public UserRole update(@PathVariable("userId") String userId, @Valid @Body UserRole userRole) {
-        return userRolesRepository.changeRole(userId, userRole);
+        return userRolesRepository.changeUserRole(userId, userRole);
     }
 
 }

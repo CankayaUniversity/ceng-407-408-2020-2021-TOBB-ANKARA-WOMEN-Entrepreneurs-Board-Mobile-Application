@@ -12,6 +12,8 @@ public interface UserRoleRepository {
 
     UserRole findUserRoleByUserId(String userId); //returns a specific user role
 
-    UserRole changeRole(String userId, UserRole userRole); //changes the role of a user
+    UserRole changeUserRole(String userId, UserRole userRole); //changes the role of a user
+
+    void deleteUserRole(String userId);
 
 }
