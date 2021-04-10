@@ -28,11 +28,11 @@ public class NewsRepositoryImpl implements NewsRepository {
     public List<News> listAllNews() {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":meeting", new AttributeValue().withS("false"));
-        eav.put(":publishDate", new AttributeValue().withN(String.valueOf(System.currentTimeMillis())));
+        eav.put(":updatedAt", new AttributeValue().withN(String.valueOf(System.currentTimeMillis())));
 
         DynamoDBQueryExpression<News> queryExpression = new DynamoDBQueryExpression<News>()
                 .withIndexName("newsByPublishDate")
-                .withKeyConditionExpression("meeting = :meeting and publishDate < :publishDate")
+                .withKeyConditionExpression("meeting = :meeting and updatedAt < :updatedAt")
                 .withExpressionAttributeValues(eav)
                 .withConsistentRead(false);
 
@@ -47,11 +47,11 @@ public class NewsRepositoryImpl implements NewsRepository {
     public List<News> listAllMeetings() {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":meeting", new AttributeValue().withS("true"));
-        eav.put(":publishDate", new AttributeValue().withN(String.valueOf(System.currentTimeMillis())));
+        eav.put(":updatedAt", new AttributeValue().withN(String.valueOf(System.currentTimeMillis())));
 
         DynamoDBQueryExpression<News> queryExpression = new DynamoDBQueryExpression<News>()
                 .withIndexName("newsByPublishDate")
-                .withKeyConditionExpression("meeting = :meeting and publishDate < :publishDate")
+                .withKeyConditionExpression("meeting = :meeting and updatedAt < :updatedAt")
                 .withExpressionAttributeValues(eav)
                 .withConsistentRead(false);
 
@@ -63,6 +63,7 @@ public class NewsRepositoryImpl implements NewsRepository {
         news.setNewsId(UUID.randomUUID().toString());
         news.setMeeting("false");
         news.setPublishDate(System.currentTimeMillis());
+        news.setUpdatedAt(news.getPublishDate());
         mapper.save(news);
 
         return news;
@@ -73,6 +74,7 @@ public class NewsRepositoryImpl implements NewsRepository {
         meeting.setNewsId(UUID.randomUUID().toString());
         meeting.setMeeting("true");
         meeting.setPublishDate(System.currentTimeMillis());
+        meeting.setUpdatedAt(meeting.getPublishDate());
         mapper.save(meeting);
 
         return meeting;
@@ -83,6 +85,7 @@ public class NewsRepositoryImpl implements NewsRepository {
         News retrievedNews = mapper.load(News.class, newsId, config);
         retrievedNews.setNewsTitle(news.getNewsTitle());
         retrievedNews.setNewsBody(news.getNewsBody());
+        retrievedNews.setUpdatedAt(System.currentTimeMillis());
         mapper.save(retrievedNews);
 
         return retrievedNews;
@@ -95,6 +98,7 @@ public class NewsRepositoryImpl implements NewsRepository {
         retrievedMeeting.setMeetingPlace(meeting.getMeetingPlace());
         retrievedMeeting.setStartTime(meeting.getStartTime());
         retrievedMeeting.setEndTime(meeting.getEndTime());
+        retrievedMeeting.setUpdatedAt(System.currentTimeMillis());
         mapper.save(retrievedMeeting);
 
         return retrievedMeeting;

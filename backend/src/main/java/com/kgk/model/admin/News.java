@@ -109,6 +109,10 @@ public class News {
         return meeting;
     }
 
+    public void setMeeting(@NonNull String meeting) {
+        this.meeting = meeting;
+    }
+
     @DynamoDBAttribute(attributeName = "publishDate")
     @NonNull
     public Long getPublishDate() {
