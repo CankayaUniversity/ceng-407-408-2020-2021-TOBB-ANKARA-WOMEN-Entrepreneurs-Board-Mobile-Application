@@ -44,15 +44,15 @@ public class GroupRepositoryImpl implements GroupRepository {
 
     @Override
     public Group findGroupByGroupId(String groupId) {
-        Group group = mapper.load(Group.class, groupId, config);
-        return group;
+        return mapper.load(Group.class, groupId, config);
     }
 
     @Override
-    public List<Group> listAllGroupsByUserId(String createdBy, String city) {
+    public List<Group> listAllCreatedGroupsByUser(String createdBy) {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":createdBy", new AttributeValue().withS(createdBy));
-        eav.put(":city", new AttributeValue().withS(city));
+        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        eav.put(":city", new AttributeValue().withS("Ankara"));
 
         DynamoDBQueryExpression<Group> queryExpression = new DynamoDBQueryExpression<Group>()
                 .withIndexName(GSI_NAME)
@@ -77,8 +77,8 @@ public class GroupRepositoryImpl implements GroupRepository {
     }
 
     @Override
-    public Group updateGroup(String groupId, String city, Group group) {
-        Group groupRetrieved = mapper.load(Group.class, groupId, city, config);
+    public Group updateGroup(String groupId, Group group) {
+        Group groupRetrieved = mapper.load(Group.class, groupId, config);
         groupRetrieved.setGroupName(group.getGroupName());
         groupRetrieved.setGroupDesc(group.getGroupDesc());
         mapper.save(groupRetrieved);
@@ -87,8 +87,8 @@ public class GroupRepositoryImpl implements GroupRepository {
     }
 
     @Override
-    public void deleteGroup(String groupId, String city) {
-        Group group = mapper.load(Group.class, groupId, city, config);
+    public void deleteGroup(String groupId) {
+        Group group = mapper.load(Group.class, groupId, config);
 
         List<GroupMember> groupMembers = groupMemberRepository.listAllUsersByGroupId(groupId);
         groupMembers.forEach(
