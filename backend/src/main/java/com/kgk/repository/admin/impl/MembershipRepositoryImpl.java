@@ -10,7 +10,6 @@ import com.kgk.model.admin.RegisterForm;
 import com.kgk.model.admin.Role;
 import com.kgk.model.admin.RoleType;
 import com.kgk.model.user.User;
-import com.kgk.model.admin.UserRole;
 import com.kgk.repository.admin.MembershipRepository;
 
 import javax.inject.Singleton;
@@ -60,7 +59,6 @@ public class MembershipRepositoryImpl implements MembershipRepository {
     @Override
     public RegisterForm approveRegisterForm(String registerId, RegisterForm registerForm) {
         User user = new User();
-        UserRole userRole = new UserRole();
 
         RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, config);
         retrievedForm.setApproved("true");
@@ -79,13 +77,6 @@ public class MembershipRepositoryImpl implements MembershipRepository {
 
         mapper.save(user);
         System.out.println("[MEMBERSHIP REPO] User is saved");
-
-        userRole.setRoleId(user.getRoleId());
-        userRole.setUserId(user.getUserId());
-        userRole.setCity(user.getCity());
-
-        mapper.save(userRole);
-        System.out.println("[MEMBERSHIP REPO] User Role is saved");
 
         mapper.save(retrievedForm);
         System.out.println("[MEMBERSHIP REPO] Register form is updated");

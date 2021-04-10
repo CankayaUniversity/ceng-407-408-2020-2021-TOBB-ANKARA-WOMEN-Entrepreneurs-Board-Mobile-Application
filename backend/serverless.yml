@@ -67,7 +67,16 @@ resources:
           - AttributeName: userId
             KeyType: HASH
         GlobalSecondaryIndexes:
-          - IndexName: usersByRoleId
+          - IndexName: usersByCity
+            KeySchema:
+              - AttributeName: city
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
+          - IndexName: usersByCityAndRoleId
             KeySchema:
               - AttributeName: city
                 KeyType: HASH
@@ -281,44 +290,6 @@ resources:
             KeyType: HASH
           - AttributeName: roleId
             KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-    userRolesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: UserRoles
-        AttributeDefinitions:
-          - AttributeName: userId
-            AttributeType: S
-          - AttributeName: city
-            AttributeType: S
-          - AttributeName: roleId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: userId
-            KeyType: HASH
-        GlobalSecondaryIndexes:
-          - IndexName: userRolesByCity
-            KeySchema:
-              - AttributeName: city
-                KeyType: HASH
-            Projection:
-              ProjectionType: ALL
-            ProvisionedThroughput:
-              ReadCapacityUnits: 5
-              WriteCapacityUnits: 5
-          - IndexName: userRolesByCityAndRoleId
-            KeySchema:
-              - AttributeName: city
-                KeyType: HASH
-              - AttributeName: roleId
-                KeyType: RANGE
-            Projection:
-              ProjectionType: ALL
-            ProvisionedThroughput:
-              ReadCapacityUnits: 5
-              WriteCapacityUnits: 5
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5

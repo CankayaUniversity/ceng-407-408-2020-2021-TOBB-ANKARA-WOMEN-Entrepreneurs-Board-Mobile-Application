@@ -24,7 +24,7 @@ public class User {
 
     @NonNull
     @NotBlank
-    private String city;   //gsi hash key
+    private String city;   //gsi - hash key
 
     @NonNull
     private String roleId; //gsi - range key
@@ -78,7 +78,7 @@ public class User {
       this.userId = userId;
     }
 
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "usersByRoleId", attributeName = "city")
+    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {"usersByCity", "usersByCityAndRoleId"}, attributeName = "city")
     @NonNull
     public String getCity() {
         return city;
@@ -88,7 +88,7 @@ public class User {
         this.city = city;
     }
 
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "usersByRoleId", attributeName = "roleId")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "usersByCityAndRoleId", attributeName = "roleId")
     @NonNull
     public String getRoleId() {
       return roleId;

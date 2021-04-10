@@ -10,7 +10,6 @@ import com.kgk.model.user.Catalog;
 import com.kgk.model.DeletedItem;
 import com.kgk.model.user.Password;
 import com.kgk.model.user.User;
-import com.kgk.repository.admin.UserRoleRepository;
 import com.kgk.repository.user.CatalogRepository;
 import com.kgk.repository.user.UserRepository;
 import io.micronaut.core.util.CollectionUtils;
@@ -35,14 +34,10 @@ public class UserRepositoryImpl implements UserRepository {
 
     private final CatalogRepository catalogRepository;
 
-    private final UserRoleRepository userRoleRepository;
-
-    public UserRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config,
-                              CatalogRepository catalogRepository, UserRoleRepository userRoleRepository) {
+    public UserRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config, CatalogRepository catalogRepository) {
         this.mapper = mapper;
         this.config = config;
         this.catalogRepository = catalogRepository;
-        this.userRoleRepository = userRoleRepository;
     }
 
     public List<User> listAllUsers() {
@@ -125,7 +120,7 @@ public class UserRepositoryImpl implements UserRepository {
     }
 
     public void deleteUser(String userId) {
-        User user = mapper.load(User.class, userId, config);
+        User user = findUserById(userId);
         List<Catalog> catalogs = catalogRepository.listCatalogsByUserId(userId);
 
         if (CollectionUtils.isNotEmpty(catalogs)) {
@@ -134,8 +129,6 @@ public class UserRepositoryImpl implements UserRepository {
                             catalog -> catalogRepository.deleteCatalog(userId, catalog.getCatalogId())
                     );
         }
-
-        userRoleRepository.deleteUserRole(userId);
 
         DeletedItem deletedUser = new DeletedItem();
         deletedUser.setDeletedTime(System.currentTimeMillis());
