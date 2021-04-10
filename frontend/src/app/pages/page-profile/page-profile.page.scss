@@ -24,6 +24,51 @@ ion-header{
     margin-top: 15px;
   }
 
+  /*.avatar {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    overflow: hidden;
+    float: left;
+    border: 4px solid #3e4999;
+    background-color: #fff;
+
+
+
+    display:inline-block;
+    vertical-align:middle;
+    img {
+      display: flex;
+      margin: auto;
+      height: 100%;
+      width: auto;
+
+    }
+  }*/
+}
+ion-content {
+  --background: url(../../../assets/backgrounds/bigger-right-bubble.png) 0 0/100% 100% no-repeat;
+  position: relative;
+  height: 100%;
+  width: 100%;
+
+  ion-grid {
+    height: 100%;
+
+  }
+
+  .row1{
+
+  }
+  .row2{
+    height: 50%;
+    margin-top: 15px;
+    justify-content: center;
+
+  }
+  .row3{
+    height: 1%;
+  }
   .avatar {
     width: 150px;
     height: 150px;
@@ -34,7 +79,6 @@ ion-header{
     background-color: #fff;
 
 
-    /*for demo*/
     display:inline-block;
     vertical-align:middle;
     img {
@@ -45,16 +89,61 @@ ion-header{
 
     }
   }
-}
-ion-content {
-  --background: url(../../../assets/backgrounds/bigger-right-bubble.png) 0 0/100% 100% no-repeat;
-  position: relative;
-  height: 100%;
-  width: 100%;
+
+  p{
+    color: #717171;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+  }
+  ion-icon{
+    color: #3e4999;
+  }
+  ion-item {
+    padding-top: 5px;
+    border-radius: 50px;
+    height: 55px;
+    box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.08);
+    --highlight-height: 0px;
+    color: #717171;
+
+    ion-input {
+      font-size: 18px;
+      --padding-top: 20px;
+      --padding-bottom: 15px;
+      --padding-start: 5px;
+    }
+    ion-select {
+      font-size: 18px;
+      font-color: #717171;
+      --padding-top: 20px;
+      --padding-bottom: 15px;
+      --padding-start: 5px;
+    }
+    ion-select-option{
+      border-radius: 100%;
+    }
+
+    }
+  ion-label{
+    color: #717171;
+    font-weight: 600;
+    font-size: 14px;
+    text-align: center;
+    margin-left: 5px;
+  }
 
   ion-button {
-    margin-top: 1em;
-    margin-bottom: 1em
+    --background: #3e4999;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    height: 48px;
+    width: 60%;
+    font-size: 18px;
+    text-transform: initial;
+    border-radius: 50px;
+    --box-shadow: none;
   }
 }
 ion-toolbar {

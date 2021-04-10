@@ -3,16 +3,60 @@
       <button class = "round" (click)="goBack()"><img src="../../../assets/icon/ok-left.png"></button>
     </div>
     <div class="float-child2">
+
+    </div>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row class="row1"></ion-row>
+    <ion-row class="row2">
       <div class="avatar">
         <img src="../../../assets/women/woman.png" alt="">
       </div>
-    </div>
+       <ion-item color = "whitesmoke">
+          <ion-icon name="person-sharp"></ion-icon>
+          <ion-input required="true" placeholder="First Name"></ion-input>
+        </ion-item>
 
+        <ion-item color = "whitesmoke">
+          <ion-icon name="person-sharp"></ion-icon>
+          <ion-input required="true" placeholder="Last Name"></ion-input>
+        </ion-item>
 
+        <ion-item color = "whitesmoke">
+          <ion-icon name="mail"></ion-icon>
+          <ion-input required="true" type = "email" placeholder="E-mail"></ion-input>
+        </ion-item>
 
+        <ion-item color = "whitesmoke">
+          <ion-icon name="home"></ion-icon>
+          <ion-input required="true" placeholder="City"></ion-input>
+        </ion-item>
 
-</ion-header>
+        <ion-item color = "whitesmoke">
+          <ion-icon name="lock-closed-sharp"></ion-icon>
+          <ion-input required="true" type="password" placeholder="Password"></ion-input>
+        </ion-item>
 
-<ion-content>
+        <ion-item color = "whitesmoke">
+          <ion-icon name="business"></ion-icon>
+          <ion-input required="true" type="occupation" placeholder="Occupation"></ion-input>
+        </ion-item>
 
+        <ion-item color = "whitesmoke">
+          <ion-icon name="document"></ion-icon>
+          <ion-input required="true" type="number" placeholder="Registration Number"></ion-input>
+        </ion-item>
+
+        <ion-item color = "whitesmoke">
+          <ion-icon name="call"></ion-icon>
+          <ion-input type="number" placeholder="Mobile Phone"></ion-input>
+        </ion-item>
+
+        <!-- regMeIn() might come in handy in future so the button feature that has them is commented right below-->
+        <!--<ion-button expand="block" shape="round" [disabled]="!ionicForm.valid" type="submit" (click)="regMeIn()" [disabled]="!isToggled">Register</ion-button>-->
+        <ion-button expand="block" shape="round" type="submit">Register</ion-button>
+    </ion-row>
+    <ion-row class="row3"></ion-row>
+  </ion-grid>
 </ion-content>
