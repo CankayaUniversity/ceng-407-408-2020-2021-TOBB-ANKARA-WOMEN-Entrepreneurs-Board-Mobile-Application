@@ -12,8 +12,6 @@ public interface CatalogRepository {
 
     Catalog addCatalog(String userId, Catalog catalog);
 
-    //Catalog updateCatalog(String catalogId, Catalog catalog);
-
     void deleteCatalog(String userId, String catalogId);
 
 }

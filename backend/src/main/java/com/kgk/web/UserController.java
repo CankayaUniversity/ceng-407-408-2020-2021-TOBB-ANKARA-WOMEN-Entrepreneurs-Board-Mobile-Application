@@ -56,9 +56,4 @@ public class UserController {
     @Delete("/{userId}")
     public void delete(@PathVariable("userId") String userId){ userRepository.deleteUser(userId); }
 
-    /*@Delete("/{userId}/{catalogId}")
-    public void deleteCatalog(@PathVariable("userId") String userId, @PathVariable("catalogId") String catalogId) {
-        catalogRepository.deleteCatalog(userId, catalogId);
-    }*/
-
 }

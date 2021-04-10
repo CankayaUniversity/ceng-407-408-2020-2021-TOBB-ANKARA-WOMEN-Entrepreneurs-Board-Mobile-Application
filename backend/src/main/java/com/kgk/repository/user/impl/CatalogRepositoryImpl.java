@@ -56,13 +56,6 @@ public class CatalogRepositoryImpl implements CatalogRepository {
         return mapper.load(Catalog.class, userId, catalog.getCatalogId(), config);
     }
 
-    /*@Override
-    public Catalog updateCatalog(String catalogId, Catalog catalog) {
-        mapper.save(catalog);
-        return catalog;
-        // return mapper.load(Catalog.class, catalog.getCatalogId());
-    }*/
-
     @Override
     public void deleteCatalog(String userId, String catalogId) {
         Catalog catalog = mapper.load(Catalog.class, userId, catalogId, config);
