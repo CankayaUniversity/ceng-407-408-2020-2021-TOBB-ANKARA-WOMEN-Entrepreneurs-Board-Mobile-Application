@@ -25,14 +25,14 @@ public class UserRoleController {
         return userRolesRepository.listAllUserRoles();
     }
 
-    @Get("/{roleId}/{city}")
-    public List<UserRole> findUserRolesWithUserId(@PathVariable("roleId") String roleId, @PathVariable("city") String city) {
-        return userRolesRepository.findAllUsersWithRoleId(roleId, city);
+    @Get("/{roleId}")
+    public List<UserRole> findUserRolesWithUserId(@PathVariable("roleId") String roleId) {
+        return userRolesRepository.findAllUsersWithRoleId(roleId);
     }
 
-    @Put
-    public UserRole update(@Valid @Body UserRole userRole) {
-        return userRolesRepository.changeRole(userRole);
+    @Put("/{userId}")
+    public UserRole update(@PathVariable("userId") String userId, @Valid @Body UserRole userRole) {
+        return userRolesRepository.changeRole(userId, userRole);
     }
 
 }

@@ -35,15 +35,16 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
 
     @Override
     public List<UserRole> listAllUserRoles() {
+        //TODO: write query, not scan
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
-
         return mapper.scan(UserRole.class, scanExpression).stream().collect(Collectors.toList());
     }
 
     @Override
-    public List<UserRole> findAllUsersWithRoleId(String roleId, String city) {
+    public List<UserRole> findAllUsersWithRoleId(String roleId) {
         Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":city", new AttributeValue().withS(city));
+        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        eav.put(":city", new AttributeValue().withS("Ankara"));
         eav.put(":roleId", new AttributeValue().withS(roleId));
 
         DynamoDBQueryExpression<UserRole> queryExpression = new DynamoDBQueryExpression<UserRole>()
@@ -54,7 +55,7 @@ public class UserRoleRepositoryImpl implements UserRoleRepository {
     }
 
     @Override
-    public UserRole changeRole(UserRole userRole) {
+    public UserRole changeRole(String userId, UserRole userRole) {
         //User user = userRepository.findUserById(userRole.getUserId(), );
         //user.setRoleId(userRole.getRoleId());
         //mapper.save(user);
