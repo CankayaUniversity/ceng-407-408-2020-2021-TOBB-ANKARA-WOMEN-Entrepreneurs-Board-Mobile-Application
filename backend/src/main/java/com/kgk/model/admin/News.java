@@ -15,9 +15,6 @@ public class News {
     @NonNull
     private String newsId; //hash key
 
-    @NonNull
-    private Long publishDate;   //gsi - range key
-
     private String newsTitle;
 
     private String newsBody;
@@ -33,6 +30,12 @@ public class News {
 
     private String meetingUrl;
 
+    @NonNull
+    private Long publishDate;
+
+    @NonNull
+    private Long updatedAt;  //gsi - range key
+
     public News() {}
 
     // Partition key
@@ -44,16 +47,6 @@ public class News {
 
     public void setNewsId(@NonNull String newsId) {
         this.newsId= newsId;
-    }
-
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "newsByPublishDate", attributeName = "publishDate")
-    @NonNull
-    public Long getPublishDate() {
-        return publishDate;
-    }
-
-    public void setPublishDate(@NonNull Long publishDate) {
-        this.publishDate = publishDate;
     }
 
     @DynamoDBAttribute(attributeName = "newsTitle")
@@ -72,16 +65,6 @@ public class News {
 
     public void setNewsBody(String newsBody) {
         this.newsBody = newsBody;
-    }
-
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = "newsByPublishDate", attributeName = "meeting")
-    @NonNull
-    public String isMeeting() {
-        return meeting;
-    }
-
-    public void setMeeting(@NonNull String meeting) {
-        this.meeting = meeting;
     }
 
     @DynamoDBAttribute(attributeName = "startTime")
@@ -118,6 +101,32 @@ public class News {
 
     public void setMeetingUrl(String meetingUrl) {
         this.meetingUrl = meetingUrl;
+    }
+
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "newsByPublishDate", attributeName = "meeting")
+    @NonNull
+    public String getMeeting() {
+        return meeting;
+    }
+
+    @DynamoDBAttribute(attributeName = "publishDate")
+    @NonNull
+    public Long getPublishDate() {
+        return publishDate;
+    }
+
+    public void setPublishDate(@NonNull Long publishDate) {
+        this.publishDate = publishDate;
+    }
+
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "newsByPublishDate", attributeName = "updatedAt")
+    @NonNull
+    public Long getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(@NonNull Long updatedAt) {
+        this.updatedAt = updatedAt;
     }
 
 }

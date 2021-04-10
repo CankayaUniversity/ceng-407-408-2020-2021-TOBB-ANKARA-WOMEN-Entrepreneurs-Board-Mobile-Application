@@ -107,7 +107,7 @@ resources:
         AttributeDefinitions:
           - AttributeName: newsId
             AttributeType: S
-          - AttributeName: publishDate
+          - AttributeName: updatedAt
             AttributeType: N
           - AttributeName: meeting
             AttributeType: S
@@ -119,7 +119,7 @@ resources:
             KeySchema:
               - AttributeName: meeting
                 KeyType: HASH
-              - AttributeName: publishDate
+              - AttributeName: updatedAt
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL

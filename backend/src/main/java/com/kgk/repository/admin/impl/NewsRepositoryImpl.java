@@ -27,11 +27,14 @@ public class NewsRepositoryImpl implements NewsRepository {
 
     public List<News> listAllNews() {
         Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":meeting", new AttributeValue().withBOOL(false));
+        eav.put(":meeting", new AttributeValue().withS("false"));
+        eav.put(":publishDate", new AttributeValue().withN(String.valueOf(System.currentTimeMillis())));
 
         DynamoDBQueryExpression<News> queryExpression = new DynamoDBQueryExpression<News>()
-                .withKeyConditionExpression("meeting = :meeting")
-                .withExpressionAttributeValues(eav);
+                .withIndexName("newsByPublishDate")
+                .withKeyConditionExpression("meeting = :meeting and publishDate < :publishDate")
+                .withExpressionAttributeValues(eav)
+                .withConsistentRead(false);
 
        return mapper.query(News.class, queryExpression);
     }
@@ -43,11 +46,14 @@ public class NewsRepositoryImpl implements NewsRepository {
     @Override
     public List<News> listAllMeetings() {
         Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":meeting", new AttributeValue().withBOOL(true));
+        eav.put(":meeting", new AttributeValue().withS("true"));
+        eav.put(":publishDate", new AttributeValue().withN(String.valueOf(System.currentTimeMillis())));
 
         DynamoDBQueryExpression<News> queryExpression = new DynamoDBQueryExpression<News>()
-                .withKeyConditionExpression("meeting = :meeting")
-                .withExpressionAttributeValues(eav);
+                .withIndexName("newsByPublishDate")
+                .withKeyConditionExpression("meeting = :meeting and publishDate < :publishDate")
+                .withExpressionAttributeValues(eav)
+                .withConsistentRead(false);
 
         return mapper.query(News.class, queryExpression);
     }
