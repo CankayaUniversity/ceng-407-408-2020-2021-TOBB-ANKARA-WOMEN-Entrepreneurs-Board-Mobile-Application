@@ -22,6 +22,10 @@ import java.util.UUID;
 @Singleton
 public class MembershipRepositoryImpl implements MembershipRepository {
 
+    private static final String TABLE_NAME = "RegisterForms";
+
+    private static final String GSI_NAME = "registerFormsByCity";
+
     private final DynamoDBMapper mapper;
 
     private final DynamoDBMapperConfig config;
@@ -41,7 +45,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
 
         DynamoDBQueryExpression<RegisterForm> queryExpression = new DynamoDBQueryExpression<RegisterForm>()
                 .withKeyConditionExpression("approved = :approved and city = :city")
-                .withIndexName("registerFormsByCity")
+                .withIndexName(GSI_NAME)
                 .withExpressionAttributeValues(eav)
                 .withConsistentRead(false);
 
@@ -92,7 +96,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
         RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, config);
         DeletedItem deletedItem = new DeletedItem();
         deletedItem.setDeletedTime(System.currentTimeMillis());
-        deletedItem.setWhichTable("RegisterForms");
+        deletedItem.setWhichTable(TABLE_NAME);
         deletedItem.setOriginalId(retrievedForm.getRegisterId());
 
         try {

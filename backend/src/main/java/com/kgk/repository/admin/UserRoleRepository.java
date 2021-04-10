@@ -8,8 +8,10 @@ public interface UserRoleRepository {
 
     List<UserRole> listAllUserRoles(); //list all users with their roles
 
-    List<UserRole> findAllUsersWithRoleId(String roleId, String city); //find users with a specific role
+    List<UserRole> findAllUsersByRoleId(String roleId); //find users with a specific role
 
-    UserRole changeRole(UserRole userRole); //give/take role to/from user
+    UserRole findUserRoleByUserId(String userId); //returns a specific user role
+
+    UserRole changeRole(String userId, UserRole userRole); //changes the role of a user
 
 }
