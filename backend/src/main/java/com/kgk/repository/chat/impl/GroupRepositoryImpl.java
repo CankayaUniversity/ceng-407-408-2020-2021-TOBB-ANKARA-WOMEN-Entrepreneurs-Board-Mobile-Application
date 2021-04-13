@@ -9,7 +9,6 @@ import com.kgk.model.DeletedItem;
 import com.kgk.model.chat.Group;
 import com.kgk.model.chat.GroupMember;
 import com.kgk.model.chat.GroupMessage;
-import com.kgk.model.user.User;
 import com.kgk.repository.chat.GroupMemberRepository;
 import com.kgk.repository.chat.GroupMessageRepository;
 import com.kgk.repository.chat.GroupRepository;
@@ -31,15 +30,15 @@ public class GroupRepositoryImpl implements GroupRepository {
 
     private final DynamoDBMapperConfig config;
 
-    private final GroupMessageRepository groupMessageRepository;
+    //private final GroupMessageRepository groupMessageRepository;
 
-    private final GroupMemberRepository groupMemberRepository;
+    //private final GroupMemberRepository groupMemberRepository;
 
-    public GroupRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config, GroupMessageRepository groupMessageRepository, GroupMemberRepository groupMemberRepository) {
+    public GroupRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config/*, GroupMessageRepository groupMessageRepository, GroupMemberRepository groupMemberRepository*/) {
         this.mapper = mapper;
         this.config = config;
-        this.groupMessageRepository = groupMessageRepository;
-        this.groupMemberRepository = groupMemberRepository;
+        //this.groupMessageRepository = groupMessageRepository;
+        //this.groupMemberRepository = groupMemberRepository;
     }
 
     @Override
@@ -69,11 +68,11 @@ public class GroupRepositoryImpl implements GroupRepository {
         group.setCreatedAt(System.currentTimeMillis());
         //group.setCreatedBy(currentUser.getUserId());
         //group.setCity(currentUser.getCity());
-        group.setCreatedBy("d6082f95-1901-4138-8398-6ed7b2939cbe");
+        group.setCreatedBy("036d512f-5b57-4cc3-a050-ffd907b10496");
         group.setCity("Ankara");
         mapper.save(group);
 
-        return mapper.load(Group.class, group.getGroupId(), group.getCity(), config);
+        return group;
     }
 
     @Override
@@ -90,7 +89,7 @@ public class GroupRepositoryImpl implements GroupRepository {
     public void deleteGroup(String groupId) {
         Group group = mapper.load(Group.class, groupId, config);
 
-        List<GroupMember> groupMembers = groupMemberRepository.listAllUsersByGroupId(groupId);
+        /*List<GroupMember> groupMembers = groupMemberRepository.listAllUsersByGroupId(groupId);
         groupMembers.forEach(
                 groupMember -> groupMemberRepository.removeUser(groupMember.getUserId())
         );
@@ -98,7 +97,7 @@ public class GroupRepositoryImpl implements GroupRepository {
         List<GroupMessage> groupMessages = groupMessageRepository.listAllMessagesByGroupId(groupId);
         groupMessages.forEach(
                 groupMessage -> groupMessageRepository.deleteMessage(groupId, groupMessage.getMessageId())
-        );
+        );*/
 
         DeletedItem deletedGroup = new DeletedItem();
         deletedGroup.setDeletedTime(System.currentTimeMillis());

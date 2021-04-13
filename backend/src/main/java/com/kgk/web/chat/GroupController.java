@@ -1,7 +1,13 @@
 package com.kgk.web.chat;
 
 import com.kgk.model.chat.Group;
+import com.kgk.model.chat.GroupMember;
+import com.kgk.model.chat.GroupMessage;
+import com.kgk.model.user.User;
+import com.kgk.repository.chat.GroupMemberRepository;
+import com.kgk.repository.chat.GroupMessageRepository;
 import com.kgk.repository.chat.GroupRepository;
+import com.kgk.repository.user.UserRepository;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Post;
@@ -17,11 +23,22 @@ import java.util.List;
 public class GroupController {
 
     private final GroupRepository groupRepository;
-    public GroupController(GroupRepository groupRepository) {
+
+    private final GroupMemberRepository groupMemberRepository;
+
+    private final GroupMessageRepository groupMessageRepository;
+
+    private final UserRepository userRepository;
+
+    public GroupController(GroupRepository groupRepository, GroupMemberRepository groupMemberRepository,
+                           GroupMessageRepository groupMessageRepository, UserRepository userRepository) {
         this.groupRepository = groupRepository;
+        this.groupMemberRepository = groupMemberRepository;
+        this.groupMessageRepository = groupMessageRepository;
+        this.userRepository = userRepository;
     }
 
-    @Get("/{createdBy}")
+    @Get("/created-groups/{createdBy}")
     public List<Group> listAllCreatedGroupsByUser(@PathVariable("createdBy") String createdBy) {
         return groupRepository.listAllCreatedGroupsByUser(createdBy);
     }
@@ -46,4 +63,46 @@ public class GroupController {
         groupRepository.deleteGroup(groupId);
     }
 
+    //GroupMemberRepository methods
+    @Get("/group-members/{groupId}")
+    public List<GroupMember> listAllUsersByGroupId(@PathVariable("groupId") String groupId) {
+        return groupMemberRepository.listAllUsersByGroupId(groupId);
+    }
+
+    @Get("/group-members/add-user")
+    public List<User> listAllUsers() {
+        return userRepository.listAllUsers();
+    }
+
+    @Get("/all-groups/{userId}")
+    public List<Group> listAllGroupsThatUserIsIn(@PathVariable("userId") String userId) {
+        return groupMemberRepository.listAllGroupsByUserId(userId);
+    }
+
+    @Post("/{userId}/{groupId}")
+    public GroupMember addUser(@PathVariable("userId") String userId, @PathVariable("groupId") String groupId) {
+        return groupMemberRepository.addUser(userId, groupId);
+    }
+
+    @Delete("/remove-user/{userId}")
+    public void removeUser(@PathVariable("userId") String userId) {
+        groupMemberRepository.removeUser(userId);
+    }
+
+    //GroupMessageRepository methods
+    @Get("/messages/{groupId}")
+    public List<GroupMessage> listAllMessagesByGroupId(@PathVariable("groupId") String groupId) {
+        return groupMessageRepository.listAllMessagesByGroupId(groupId);
+    }
+
+    //FIXME: Required body not specified error
+    @Post("/messages/{groupId}")
+    public GroupMessage sendMessage(@PathVariable("groupId") String groupId, @Valid @Body GroupMessage groupMessage) {
+        return groupMessageRepository.saveMessage(groupId, groupMessage);
+    }
+
+    @Delete("/messages/{groupId}/{messageId}")
+    public void deleteMessage(@PathVariable("groupId") String groupId, @PathVariable("messageId") String messageId) {
+        groupMessageRepository.deleteMessage(groupId, messageId);
+    }
 }

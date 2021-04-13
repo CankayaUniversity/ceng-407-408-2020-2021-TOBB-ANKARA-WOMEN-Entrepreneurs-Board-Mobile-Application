@@ -46,12 +46,12 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
     }
 
     @Override
-    public GroupMessage saveMessage(String groupId, String message) {
-        GroupMessage groupMessage = new GroupMessage();
+    public GroupMessage saveMessage(String groupId, GroupMessage groupMessage) {
         groupMessage.setMessageId(UUID.randomUUID().toString());
         groupMessage.setGroupId(groupId);
-        groupMessage.setMessage(message);
         groupMessage.setSendAt(System.currentTimeMillis());
+        //groupMessage.setSentBy(CurrentUser.getUserId());
+        groupMessage.setSentBy("7320be64-69f5-4f92-8fa3-40f455b457fa");
 
         mapper.save(groupMessage);
         System.out.println("[GROUP MESSAGE REPO] Message is saved");
