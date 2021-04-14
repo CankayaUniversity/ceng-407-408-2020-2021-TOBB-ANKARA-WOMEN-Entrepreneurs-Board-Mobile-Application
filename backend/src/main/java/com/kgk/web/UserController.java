@@ -1,12 +1,12 @@
 package com.kgk.web;
 
-import com.kgk.model.Catalog;
-import com.kgk.model.User;
-import com.kgk.repository.CatalogRepository;
-import com.kgk.repository.UserRepository;
+import com.kgk.model.user.Catalog;
+import com.kgk.model.user.Password;
+import com.kgk.model.user.User;
+import com.kgk.repository.user.CatalogRepository;
+import com.kgk.repository.user.UserRepository;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;
-import io.micronaut.http.annotation.Post;
 import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.PathVariable;
@@ -42,38 +42,18 @@ public class UserController {
         return catalogRepository.findCatalogByCatalogId(userId, catalogId);
     }
 
-    /*@Post
-    public User save(@Valid @Body User user) {
-      return userRepository.saveUser(user);
-    }*/
-
     @Put("/{userId}")
     public User update(@PathVariable("userId") String userId, @Valid @Body User user) {
       return userRepository.updateUser(userId, user);
     }
 
     @Put("/change-password/{userId}")
-    //TODO: tek body gönderilmeli, direk update metoduna mı dahil olsa
-    public User changePassword(@PathVariable("userId") String userId, @Valid @Body String oldPassword,
-                               @Valid @Body String newPassword) {
-        return userRepository.changePassword(userId, oldPassword, newPassword);
+    public User changePassword(@PathVariable("userId") String userId,
+                               @Valid @Body Password changedPassword) {
+        return userRepository.changePassword(userId, changedPassword);
     }
 
     @Delete("/{userId}")
     public void delete(@PathVariable("userId") String userId){ userRepository.deleteUser(userId); }
-
-    /*@Delete("/{userId}/{catalogId}")
-    public void deleteCatalog(@PathVariable("userId") String userId, @PathVariable("catalogId") String catalogId) {
-        catalogRepository.deleteCatalog(userId, catalogId);
-    }*/
-
-    //Authorize for Permission Admin
-    /*@Put("/{userId}")
-    public User assignRole(@PathVariable("userId") String userId, @Valid @Body String roleId) {
-      User user = userRepository.findUserById(userId);
-      user.setRoleId(roleId);
-
-      return userRepository.updateUser(userId, user);
-    }*/
 
 }

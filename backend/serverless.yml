@@ -66,17 +66,27 @@ resources:
         KeySchema:
           - AttributeName: userId
             KeyType: HASH
-          - AttributeName: city
-            KeyType: RANGE
-        LocalSecondaryIndexes:
-          - IndexName: usersByRoleId
+        GlobalSecondaryIndexes:
+          - IndexName: usersByCity
             KeySchema:
-              - AttributeName: userId
+              - AttributeName: city
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
+          - IndexName: usersByCityAndRoleId
+            KeySchema:
+              - AttributeName: city
                 KeyType: HASH
               - AttributeName: roleId
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
@@ -104,13 +114,54 @@ resources:
         AttributeDefinitions:
           - AttributeName: newsId
             AttributeType: S
-          - AttributeName: publishDate
+          - AttributeName: updatedAt
             AttributeType: N
+          - AttributeName: city
+            AttributeType: S
         KeySchema:
           - AttributeName: newsId
             KeyType: HASH
-          - AttributeName: publishDate
-            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: newsByCity
+            KeySchema:
+              - AttributeName: city
+                KeyType: HASH
+              - AttributeName: updatedAt
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+    meetingsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: Meetings
+        AttributeDefinitions:
+          - AttributeName: meetingId
+            AttributeType: S
+          - AttributeName: updatedAt
+            AttributeType: N
+          - AttributeName: city
+            AttributeType: S
+        KeySchema:
+          - AttributeName: meetingId
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: meetingsByCity
+            KeySchema:
+              - AttributeName: city
+                KeyType: HASH
+              - AttributeName: updatedAt
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
@@ -128,8 +179,6 @@ resources:
         KeySchema:
           - AttributeName: groupId
             KeyType: HASH
-          - AttributeName: city
-            KeyType: RANGE
         GlobalSecondaryIndexes:
           - IndexName: groupsByCreatedBy
             KeySchema:
@@ -150,15 +199,23 @@ resources:
       Properties:
         TableName: GroupMembers
         AttributeDefinitions:
-          - AttributeName: userId
-            AttributeType: S
-          - AttributeName: groupId
-            AttributeType: S
+        - AttributeName: groupId
+          AttributeType: S
+        - AttributeName: userId
+          AttributeType: S
         KeySchema:
-          - AttributeName: userId
-            KeyType: HASH
           - AttributeName: groupId
-            KeyType: RANGE
+            KeyType: HASH
+        GlobalSecondaryIndexes:
+          - IndexName: groupMembersByUserId
+            KeySchema:
+              - AttributeName: userId
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
@@ -167,23 +224,23 @@ resources:
       Properties:
         TableName: GroupMessages
         AttributeDefinitions:
+          - AttributeName: groupId
+            AttributeType: S
           - AttributeName: messageId
             AttributeType: S
           - AttributeName: sendAt
             AttributeType: N
-          - AttributeName: groupId
-            AttributeType: S
         KeySchema:
-          - AttributeName: messageId
+          - AttributeName: groupId
             KeyType: HASH
-          - AttributeName: sendAt
+          - AttributeName: messageId
             KeyType: RANGE
         LocalSecondaryIndexes:
           - IndexName: messagesByGroupId
             KeySchema:
-              - AttributeName: messageId
-                KeyType: HASH
               - AttributeName: groupId
+                KeyType: HASH
+              - AttributeName: sendAt
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL
@@ -199,11 +256,23 @@ resources:
             AttributeType: S
           - AttributeName: city
             AttributeType: S
+          - AttributeName: approved
+            AttributeType: S
         KeySchema:
           - AttributeName: registerId
             KeyType: HASH
-          - AttributeName: city
-            KeyType: RANGE
+        GlobalSecondaryIndexes:
+          - IndexName: registerFormsByCity
+            KeySchema:
+              - AttributeName: city
+                KeyType: HASH
+              - AttributeName: approved
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
@@ -224,51 +293,34 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-    deletedRegisterForms:
+    deletedItems:
       Type: AWS::DynamoDB::Table
       Properties:
-        TableName: DeletedRegisterForms
+        TableName: DeletedItems
         AttributeDefinitions:
-          - AttributeName: deletedRegisterId
+          - AttributeName: whichTable
             AttributeType: S
-          - AttributeName: city
+          - AttributeName: deletedTime
+            AttributeType: N
+          - AttributeName: originalId
             AttributeType: S
         KeySchema:
-          - AttributeName: deletedRegisterId
+          - AttributeName: whichTable
             KeyType: HASH
-          - AttributeName: city
+          - AttributeName: deletedTime
             KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
-    userRolesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: UserRoles
-        AttributeDefinitions:
-          - AttributeName: roleId
-            AttributeType: S
-          - AttributeName: userId
-            AttributeType: S
-          - AttributeName: city
-            AttributeType: S
-        KeySchema:
-          - AttributeName: roleId
-            KeyType: HASH
-          - AttributeName: userId
-            KeyType: RANGE
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
         GlobalSecondaryIndexes:
-          - IndexName: rolesByCity
+          - IndexName: itemsByOriginalId
             KeySchema:
-              - AttributeName: city
+              - AttributeName: whichTable
                 KeyType: HASH
-              - AttributeName: roleId
+              - AttributeName: originalId
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL
             ProvisionedThroughput:
               ReadCapacityUnits: 5
               WriteCapacityUnits: 5
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
