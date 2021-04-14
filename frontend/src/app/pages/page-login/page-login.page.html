@@ -21,6 +21,7 @@
           <span class="error ion-padding" *ngIf="submitted && errorCtr.password.errors?.required">
             Password is required.
           </span>
+          <!-- <ion-button *ngFor="let user of user" (click)="click(user)" expand="block" shape="round" [disabled]="!loginForm.valid" type="submit" (click)="logMeIn()">Sign in</ion-button> -->
           <ion-button expand="block" shape="round" [disabled]="!loginForm.valid" type="submit" (click)="logMeIn()">Sign in</ion-button>
         </form>
         <p>Don't have an account?
