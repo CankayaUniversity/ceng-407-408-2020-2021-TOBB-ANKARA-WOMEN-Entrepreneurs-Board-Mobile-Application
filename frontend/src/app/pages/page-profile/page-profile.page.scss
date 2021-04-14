@@ -110,7 +110,7 @@ ion-content {
     box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.08);
     --highlight-height: 0px;
     justify-content: center;
-
+    margin-left: 15px;
     ion-input {
       font-size: 18px;
       --padding-top: 20px;
@@ -118,7 +118,9 @@ ion-content {
       --padding-start: 5px;
     }
     ion-label {
+      color: #717171;
       font-size: 18px;
+      font-weight: 500;
       --padding-top: 20px;
       --padding-bottom: 15px;
       --padding-start: 5px;
@@ -135,13 +137,23 @@ ion-content {
     }
 
     }
-  ion-label{
-    color: #717171;
-    font-weight: 600;
-    font-size: 14px;
-    text-align: center;
-    margin-left: 5px;
+  ion-card{
+    border-radius: 50px;
+    height: 200px;
+    width: 300px;
+    box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.08);
+    --highlight-height: 0px;
+    justify-content: center;
+    overflow: auto;
+    ion-card-content{
+      padding-top: 0px;
+      color: #717171;
+      font-size: 18px;
+      font-weight: 500;
+
+    }
   }
+
 
   ion-button {
     --background: #3e4999;

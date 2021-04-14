@@ -19,22 +19,32 @@
 
         <ion-item color = "whitesmoke">
           <ion-icon name="person-sharp"></ion-icon>
-          <ion-label position="fixed">First Name</ion-label>
+          <ion-label position="fixed">First Name: {{users.firstName}}</ion-label>
         </ion-item>
 
         <ion-item color = "whitesmoke">
           <ion-icon name="person-sharp"></ion-icon>
-          <ion-label position="fixed">Last Name</ion-label>
+          <ion-label position="fixed">Last Name: {{users.lastName}}</ion-label>
         </ion-item>
 
         <ion-item color = "whitesmoke">
           <ion-icon name="mail"></ion-icon>
-          <ion-label position="fixed">E-Mail</ion-label>
+          <ion-label position="fixed">E-Mail: {{users.email}}</ion-label>
         </ion-item>
 
         <ion-item color = "whitesmoke">
           <ion-icon name="home"></ion-icon>
-          <ion-label position="fixed">City</ion-label>
+          <ion-label position="fixed">City: {{users.city}}</ion-label>
+        </ion-item>
+
+        <ion-item color = "whitesmoke">
+          <ion-icon name="document"></ion-icon>
+          <ion-label position="fixed">Registration Number: {{users.tobbRegisterId}} </ion-label>
+        </ion-item>
+
+        <ion-item color = "whitesmoke">
+          <ion-icon name="call"></ion-icon>
+          <ion-label position="fixed">Mobile Phone: {{users.phone}}</ion-label>
         </ion-item>
 
         <!-- <ion-item color = "whitesmoke">
@@ -48,23 +58,24 @@
         </ion-item>-->
 
         <ion-item color = "whitesmoke">
+          <ion-icon name="calendar"></ion-icon>
+          <ion-label position="fixed">Birth Date: {{users.birthDate}}</ion-label>
+        </ion-item>
+
+        <ion-item color = "whitesmoke">
           <ion-icon name="business"></ion-icon>
-          <ion-label position="fixed">Occupation</ion-label>
+          <ion-label position="fixed">Occupation: {{users.occupation}}</ion-label>
         </ion-item>
-
-        <ion-item color = "whitesmoke">
-          <ion-icon name="document"></ion-icon>
-          <ion-label position="fixed">Registration Number</ion-label>
-        </ion-item>
-
-        <ion-item color = "whitesmoke">
-          <ion-icon name="call"></ion-icon>
-          <ion-label position="fixed">Mobile Phone</ion-label>
-        </ion-item>
+        <ion-card color = "whitesmoke">
+          <ion-card-content>
+            <ion-icon name="pencil"></ion-icon>
+            Description: {{users.description}}
+          </ion-card-content>
+        </ion-card>
 
         <!-- regMeIn() might come in handy in future so the button feature that has them is commented right below-->
         <!--<ion-button expand="block" shape="round" [disabled]="!ionicForm.valid" type="submit" (click)="regMeIn()" [disabled]="!isToggled">Register</ion-button>-->
-        <ion-button expand="block" shape="round" type="submit">Register</ion-button>
+        <ion-button expand="block" shape="round" type="submit">Edit Profile (?)</ion-button>
       </div>
 
 
