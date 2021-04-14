@@ -24,7 +24,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/page-register/page-register.module').then( m => m.PageRegisterPageModule)
   },
   {
-    path: 'tabs',
+    path: '',
     loadChildren: () => import('./pages/page-tabs/page-tabs.module').then( m => m.PageTabsPageModule)
   },
 
