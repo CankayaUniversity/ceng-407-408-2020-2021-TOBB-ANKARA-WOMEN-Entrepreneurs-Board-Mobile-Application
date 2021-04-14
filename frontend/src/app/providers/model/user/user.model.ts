@@ -10,6 +10,7 @@ export interface User {
   phone: string;
   photo: string;
   birthDate: number;  //
+  occupation: string;
   description: string;
   catalogList: string; //
 
