@@ -8,12 +8,35 @@ import { PageTabsPageRoutingModule } from './page-tabs-routing.module';
 
 import { PageTabsPage } from './page-tabs.page';
 
+import {PageFeedPage} from '../page-feed/page-feed.page';
+
+import { Routes, RouterModule } from '@angular/router';
+
+
+const routes: Routes = [
+  {
+    path: 'tabs',
+    component: PageTabsPage,
+    children: [
+      {
+        path: 'feed',
+        loadChildren: () => import('../page-feed/page-feed.module').then(m => m.PageFeedPageModule)
+      },
+    ]
+  },
+  {
+    path: '',
+    redirectTo: '/tabs/feed'
+  }
+];
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PageTabsPageRoutingModule
+    PageTabsPageRoutingModule,
+    RouterModule.forChild(routes)
   ],
   declarations: [PageTabsPage]
 })

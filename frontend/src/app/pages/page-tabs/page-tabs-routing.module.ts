@@ -9,19 +9,19 @@ const routes: Routes = [
     component: PageTabsPage,
     children: [
       {
-        path: 'feed',
+        path: '',
         loadChildren: () => import('../page-feed/page-feed.module').then(m => m.PageFeedPageModule)
       },
       {
         path: '',
-        redirectTo: '../page-tabs/feed',
+        redirectTo: '/tabs/feed',
         pathMatch: 'full'
       },
     ],
   },
   {
     path: '',
-    redirectTo: '../page-tabs/feed',
+    redirectTo: '/tabs/feed',
     pathMatch: 'full'
   }
 ];
