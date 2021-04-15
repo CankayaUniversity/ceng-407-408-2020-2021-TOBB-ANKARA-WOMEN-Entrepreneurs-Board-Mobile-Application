@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {FeedService} from './feed.service';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -7,11 +8,10 @@ import {FeedService} from './feed.service';
   styleUrls: ['app.component.scss'],
 })
 export class AppComponent {
-  feed$;
-
+  feed;
   constructor(private feedService: FeedService) {}
 
-  getFeed(){
-    this.feed$ = this.feedService.getFeed();
+  getFeed(apiUrl: string){
+    this.feed = this.feedService.getFeed(environment.apiUrl);
   }
 }

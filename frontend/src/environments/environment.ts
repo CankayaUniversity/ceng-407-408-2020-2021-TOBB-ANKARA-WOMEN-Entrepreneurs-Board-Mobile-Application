@@ -4,8 +4,7 @@
 
 export const environment = {
   production: false,
-  apiUrl: '/api/feed',
-  // apiKey: '395c70625c124efba32308bd0f3fc8de',
+  apiUrl: '/api/feed'
 };
 
 /*

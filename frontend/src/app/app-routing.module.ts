@@ -27,6 +27,11 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./pages/page-tabs/page-tabs.module').then( m => m.PageTabsPageModule)
   },
+  {
+    path: 'feed-single',
+    loadChildren: () => import('./pages/page-feed-single/page-feed-single.module').then( m => m.PageFeedSinglePageModule)
+  },
+
 
   /* For educational purposes, will be enhanced later{
     path: 'product/:id',
