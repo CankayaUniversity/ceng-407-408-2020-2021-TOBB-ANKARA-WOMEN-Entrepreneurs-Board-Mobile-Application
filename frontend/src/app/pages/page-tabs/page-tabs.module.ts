@@ -1,16 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
 import { PageTabsPageRoutingModule } from './page-tabs-routing.module';
-
 import { PageTabsPage } from './page-tabs.page';
-
-import {PageFeedPage} from '../page-feed/page-feed.page';
-
 import { Routes, RouterModule } from '@angular/router';
+import {PageFeedPageModule} from '../page-feed/page-feed.module';
 
 
 const routes: Routes = [
@@ -36,6 +31,7 @@ const routes: Routes = [
     FormsModule,
     IonicModule,
     PageTabsPageRoutingModule,
+    PageFeedPageModule,
     RouterModule.forChild(routes)
   ],
   declarations: [PageTabsPage]
