@@ -26,8 +26,6 @@ public class UserRepositoryImpl implements UserRepository {
 
     private static final String TABLE_NAME = "Users";
 
-    private static final String GSI_NAME = "usersByRoleId";
-
     private final DynamoDBMapper mapper;
 
     private final DynamoDBMapperConfig config;
@@ -40,6 +38,7 @@ public class UserRepositoryImpl implements UserRepository {
         this.catalogRepository = catalogRepository;
     }
 
+    @Override
     public List<User> listAllUsers() {
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
         List<User> users = mapper.scan(User.class, scanExpression).stream().collect(Collectors.toList());
@@ -50,21 +49,6 @@ public class UserRepositoryImpl implements UserRepository {
         return users;
     }
 
-    public List<User> findUsersByRoleId(String roleId, String city) {
-        //TODO: check if it works
-        Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":city", new AttributeValue().withS(city));
-        eav.put(":roleId", new AttributeValue().withS(roleId));
-
-        DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
-                .withIndexName(GSI_NAME)
-                .withKeyConditionExpression("city = :city and roleId = :roleId")
-                .withExpressionAttributeValues(eav)
-                .withConsistentRead(false);
-
-        return mapper.query(User.class, queryExpression);
-    }
-
     @Override
     public User findUserById(String userId) {
         User user = mapper.load(User.class, userId, config);
@@ -73,6 +57,7 @@ public class UserRepositoryImpl implements UserRepository {
         return user;
     }
 
+    @Override
     public User updateUser(String userId, User user) {
         User userRetrieved = mapper.load(User.class, userId, config);
         userRetrieved.copyFrom(user);
@@ -101,6 +86,7 @@ public class UserRepositoryImpl implements UserRepository {
         return userRetrieved;
     }
 
+    @Override
     public User changePassword(String userId, Password changedPassword) {
         User user = findUserById(userId);
 
@@ -119,6 +105,7 @@ public class UserRepositoryImpl implements UserRepository {
         return null;
     }
 
+    @Override
     public void deleteUser(String userId) {
         User user = findUserById(userId);
         List<Catalog> catalogs = catalogRepository.listCatalogsByUserId(userId);

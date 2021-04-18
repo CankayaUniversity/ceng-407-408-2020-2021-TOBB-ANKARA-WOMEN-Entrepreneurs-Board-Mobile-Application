@@ -9,8 +9,6 @@ public interface UserRepository {
 
     List<User> listAllUsers(); //list all users
 
-    List<User> findUsersByRoleId(String roleId, String city); //find users with a specific role
-
     User findUserById(String userId); //find a specific user
 
     User updateUser(String userId, User user); //update user info on database
