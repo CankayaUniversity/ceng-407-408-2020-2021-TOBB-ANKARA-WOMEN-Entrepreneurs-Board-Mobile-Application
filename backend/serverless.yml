@@ -224,18 +224,16 @@ resources:
       Properties:
         TableName: GroupMessages
         AttributeDefinitions:
-          - AttributeName: groupId
-            AttributeType: S
           - AttributeName: messageId
+            AttributeType: S
+          - AttributeName: groupId
             AttributeType: S
           - AttributeName: sendAt
             AttributeType: N
         KeySchema:
-          - AttributeName: groupId
-            KeyType: HASH
           - AttributeName: messageId
-            KeyType: RANGE
-        LocalSecondaryIndexes:
+            KeyType: HASH
+        GlobalSecondaryIndexes:
           - IndexName: messagesByGroupId
             KeySchema:
               - AttributeName: groupId
@@ -244,6 +242,9 @@ resources:
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5

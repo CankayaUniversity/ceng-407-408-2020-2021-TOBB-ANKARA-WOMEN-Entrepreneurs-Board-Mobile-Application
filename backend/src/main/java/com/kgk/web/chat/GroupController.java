@@ -95,7 +95,6 @@ public class GroupController {
         return groupMessageRepository.listAllMessagesByGroupId(groupId);
     }
 
-    //FIXME: Required body not specified error
     @Post("/messages/{groupId}")
     public GroupMessage sendMessage(@PathVariable("groupId") String groupId, @Valid @Body GroupMessage groupMessage) {
         return groupMessageRepository.saveMessage(groupId, groupMessage);
