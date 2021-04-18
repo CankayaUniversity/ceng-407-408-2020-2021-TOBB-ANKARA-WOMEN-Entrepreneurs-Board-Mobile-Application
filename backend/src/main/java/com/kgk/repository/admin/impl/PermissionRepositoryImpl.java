@@ -5,7 +5,6 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kgk.model.admin.Role;
-import com.kgk.model.admin.RoleType;
 import com.kgk.model.user.User;
 import com.kgk.repository.user.UserRepository;
 import com.kgk.repository.admin.PermissionRepository;
@@ -24,13 +23,10 @@ public class PermissionRepositoryImpl implements PermissionRepository {
 
     private final DynamoDBMapper mapper;
 
-    private final DynamoDBMapperConfig config;
-
     private final UserRepository userRepository;
 
-    public PermissionRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config, UserRepository userRepository) {
+    public PermissionRepositoryImpl(DynamoDBMapper mapper, UserRepository userRepository) {
         this.mapper = mapper;
-        this.config = config;
         this.userRepository = userRepository;
     }
 
@@ -73,7 +69,6 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     @Override
     public User changeUserRole(String userId, Role role) {
         User userRetrieved = findUserRoleByUserId(userId);
-        //Role retrievedRole = mapper.load(Role.class, role.getRoleName(), config);
         userRetrieved.setRoleId(role.getRoleName());
 
         mapper.save(userRetrieved);
