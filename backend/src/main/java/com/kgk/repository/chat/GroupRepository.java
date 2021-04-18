@@ -15,4 +15,5 @@ public interface GroupRepository {
     Group updateGroup(String groupId, Group group);
 
     void deleteGroup(String groupId);
+
 }

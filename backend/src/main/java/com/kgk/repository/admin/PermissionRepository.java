@@ -1,5 +1,6 @@
 package com.kgk.repository.admin;
 
+import com.kgk.model.admin.Role;
 import com.kgk.model.user.User;
 
 import java.util.List;
@@ -12,6 +13,6 @@ public interface PermissionRepository {
 
     User findUserRoleByUserId(String userId); //returns a specific user role
 
-    User changeUserRole(String userId, User user); //changes the role of a user
+    User changeUserRole(String userId, Role role); //changes the role of a user
 
 }

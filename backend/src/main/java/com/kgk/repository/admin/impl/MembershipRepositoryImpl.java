@@ -63,9 +63,9 @@ public class MembershipRepositoryImpl implements MembershipRepository {
         RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, config);
         retrievedForm.setApproved("true");
 
-        Role role = mapper.load(Role.class, RoleType.MEMBER.toString(), "101", config);
+        //Role role = mapper.load(Role.class, RoleType.MEMBER.toString(), config);
         user.setUserId(UUID.randomUUID().toString());
-        user.setRoleId(role.getRoleId());
+        user.setRoleId("MEMBER");
         user.setFirstName(retrievedForm.getFirstName());
         user.setLastName(retrievedForm.getLastName());
         user.setEmail(retrievedForm.getEmail());

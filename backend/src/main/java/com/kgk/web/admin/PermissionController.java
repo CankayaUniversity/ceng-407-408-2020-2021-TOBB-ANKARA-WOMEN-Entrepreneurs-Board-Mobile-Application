@@ -1,5 +1,6 @@
 package com.kgk.web.admin;
 
+import com.kgk.model.admin.Role;
 import com.kgk.model.user.User;
 import com.kgk.repository.admin.PermissionRepository;
 import io.micronaut.http.annotation.Controller;
@@ -36,8 +37,8 @@ public class PermissionController {
     }
 
     @Put("/{userId}")
-    public User update(@PathVariable("userId") String userId, @Valid @Body User user) {
-        return userRolesRepository.changeUserRole(userId, user);
+    public User update(@PathVariable("userId") String userId, @Valid @Body Role role) {
+        return userRolesRepository.changeUserRole(userId, role);
     }
 
 }

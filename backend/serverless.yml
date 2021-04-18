@@ -284,13 +284,9 @@ resources:
         AttributeDefinitions:
           - AttributeName: roleName
             AttributeType: S
-          - AttributeName: roleId
-            AttributeType: S
         KeySchema:
           - AttributeName: roleName
             KeyType: HASH
-          - AttributeName: roleId
-            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
