@@ -1,5 +1,6 @@
 package com.kgk.web;
 
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.kgk.model.user.Catalog;
 import com.kgk.model.user.Password;
 import com.kgk.model.user.User;
@@ -11,7 +12,6 @@ import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Body;
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 
 import javax.validation.Valid;
 import java.util.List;

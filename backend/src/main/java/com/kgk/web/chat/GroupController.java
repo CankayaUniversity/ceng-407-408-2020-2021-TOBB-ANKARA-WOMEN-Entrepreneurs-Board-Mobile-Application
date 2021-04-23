@@ -39,7 +39,7 @@ public class GroupController {
         this.userRepository = userRepository;
     }
 
-    @Get("/created-groups")
+    @Get
     public List<Group> listAllCreatedGroupsByUser(/*AwsProxyRequest awsRequest*/) {
         return groupRepository.listAllCreatedGroupsByUser(/*awsRequest*/);
     }
