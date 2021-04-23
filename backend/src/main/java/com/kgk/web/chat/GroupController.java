@@ -1,5 +1,6 @@
 package com.kgk.web.chat;
 
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.kgk.model.chat.Group;
 import com.kgk.model.chat.GroupMember;
 import com.kgk.model.chat.GroupMessage;
@@ -38,9 +39,9 @@ public class GroupController {
         this.userRepository = userRepository;
     }
 
-    @Get("/created-groups/{createdBy}")
-    public List<Group> listAllCreatedGroupsByUser(@PathVariable("createdBy") String createdBy) {
-        return groupRepository.listAllCreatedGroupsByUser(createdBy);
+    @Get("/created-groups")
+    public List<Group> listAllCreatedGroupsByUser(/*AwsProxyRequest awsRequest*/) {
+        return groupRepository.listAllCreatedGroupsByUser(/*awsRequest*/);
     }
 
     @Get("/{groupId}")
@@ -49,8 +50,8 @@ public class GroupController {
     }
 
     @Post
-    public Group createGroup(@Valid @Body Group group) {
-        return groupRepository.createGroup(group);
+    public Group createGroup(/*AwsProxyRequest awsRequest,*/ @Valid @Body Group group) {
+        return groupRepository.createGroup(/*awsRequest,*/ group);
     }
 
     @Put("/{groupId}")
@@ -96,8 +97,8 @@ public class GroupController {
     }
 
     @Post("/messages/{groupId}")
-    public GroupMessage sendMessage(@PathVariable("groupId") String groupId, @Valid @Body GroupMessage groupMessage) {
-        return groupMessageRepository.saveMessage(groupId, groupMessage);
+    public GroupMessage sendMessage(/*AwsProxyRequest awsRequest,*/ @PathVariable("groupId") String groupId, @Valid @Body GroupMessage groupMessage) {
+        return groupMessageRepository.saveMessage(/*awsRequest,*/ groupId, groupMessage);
     }
 
     @Delete("/messages/{groupId}/{messageId}")

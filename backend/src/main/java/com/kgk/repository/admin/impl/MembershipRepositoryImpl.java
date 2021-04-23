@@ -39,13 +39,13 @@ public class MembershipRepositoryImpl implements MembershipRepository {
     }
 
     @Override
-    public List<RegisterForm> listAllUnapprovedRegisterForms(AwsProxyRequest awsRequest) {
-        //TODO: CurrentUser's city info must pulled
+    public List<RegisterForm> listAllUnapprovedRegisterForms(/*AwsProxyRequest awsRequest*/) {
+        //User currentUser = currentUserRepository.findCurrentUser(awsRequest);
+
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":approved", new AttributeValue().withS("false"));
-        User currentUser = currentUserRepository.findCurrentUser(awsRequest);
-        eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        //eav.put(":city", new AttributeValue().withS("Ankara"));
+        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        eav.put(":city", new AttributeValue().withS("Ankara"));
 
         DynamoDBQueryExpression<RegisterForm> queryExpression = new DynamoDBQueryExpression<RegisterForm>()
                 .withKeyConditionExpression("approved = :approved and city = :city")

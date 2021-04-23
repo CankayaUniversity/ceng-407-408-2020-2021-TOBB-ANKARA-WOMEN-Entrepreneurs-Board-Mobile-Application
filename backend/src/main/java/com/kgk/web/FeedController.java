@@ -1,5 +1,6 @@
 package com.kgk.web;
 
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.kgk.model.admin.News;
 import com.kgk.repository.admin.NewsRepository;
 import io.micronaut.http.annotation.Controller;
@@ -23,8 +24,8 @@ public class FeedController {
     }
 
     @Get
-    public List<News> listAllNews() {
-        return newsRepository.listAllNews();
+    public List<News> listAllNews(/*AwsProxyRequest awsRequest*/) {
+        return newsRepository.listAllNews(/*awsRequest*/);
     }
 
     @Get("/{newsId}")

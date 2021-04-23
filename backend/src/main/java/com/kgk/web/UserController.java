@@ -4,7 +4,6 @@ import com.kgk.model.user.Catalog;
 import com.kgk.model.user.Password;
 import com.kgk.model.user.User;
 import com.kgk.repository.user.CatalogRepository;
-import com.kgk.repository.user.CurrentUserRepository;
 import com.kgk.repository.user.UserRepository;
 import io.micronaut.http.annotation.Controller;
 import io.micronaut.http.annotation.Get;

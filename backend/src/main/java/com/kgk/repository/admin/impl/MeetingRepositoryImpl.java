@@ -1,5 +1,6 @@
 package com.kgk.repository.admin.impl;
 
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
@@ -7,7 +8,9 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgk.model.DeletedItem;
 import com.kgk.model.admin.Meeting;
+import com.kgk.model.user.User;
 import com.kgk.repository.admin.MeetingRepository;
+import com.kgk.repository.user.CurrentUserRepository;
 
 import javax.inject.Singleton;
 import java.util.HashMap;
@@ -26,13 +29,19 @@ public class MeetingRepositoryImpl implements MeetingRepository {
 
     private final DynamoDBMapperConfig config;
 
-    public MeetingRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config) {
+    private final CurrentUserRepository currentUserRepository;
+
+    public MeetingRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config,
+                                 CurrentUserRepository currentUserRepository) {
         this.mapper = mapper;
         this.config = config;
+        this.currentUserRepository = currentUserRepository;
     }
 
     @Override
-    public List<Meeting> listAllMeetings() {
+    public List<Meeting> listAllMeetings(/*AwsProxyRequest awsRequest*/) {
+        //User currentUser = currentUserRepository.findCurrentUser(awsRequest);
+
         Map<String, AttributeValue> eav = new HashMap<>();
         //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
         eav.put(":city", new AttributeValue().withS("Ankara"));

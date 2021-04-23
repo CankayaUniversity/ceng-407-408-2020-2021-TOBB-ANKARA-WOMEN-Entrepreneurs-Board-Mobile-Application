@@ -24,8 +24,8 @@ public class MembershipController {
 
     //TODO: how to send a AwsProxyRequest
     @Get
-    public List<RegisterForm> listAll(AwsProxyRequest awsRequest){
-        return membershipRepository.listAllUnapprovedRegisterForms(awsRequest);
+    public List<RegisterForm> listAll(/*AwsProxyRequest awsRequest*/){
+        return membershipRepository.listAllUnapprovedRegisterForms(/*awsRequest*/);
     }
 
     @Get("/{registerId}")

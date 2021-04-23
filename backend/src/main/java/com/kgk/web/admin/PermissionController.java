@@ -1,5 +1,6 @@
 package com.kgk.web.admin;
 
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.kgk.model.admin.Role;
 import com.kgk.model.user.User;
 import com.kgk.repository.admin.PermissionRepository;
@@ -22,13 +23,13 @@ public class PermissionController {
     }
 
     @Get
-    public List<User> listAll(){
-        return userRolesRepository.listAllUserRoles();
+    public List<User> listAll(/*AwsProxyRequest awsProxyRequest*/){
+        return userRolesRepository.listAllUserRoles(/*awsProxyRequest*/);
     }
 
     @Get("/by-role-id/{roleId}")
-    public List<User> findAllUsersByRoleId(@PathVariable("roleId") String roleId) {
-        return userRolesRepository.findAllUsersByRoleId(roleId);
+    public List<User> findAllUsersByRoleId(/*AwsProxyRequest awsProxyRequest, */@PathVariable("roleId") String roleId) {
+        return userRolesRepository.findAllUsersByRoleId(/*awsProxyRequest, */roleId);
     }
 
     @Get("/{userId}")

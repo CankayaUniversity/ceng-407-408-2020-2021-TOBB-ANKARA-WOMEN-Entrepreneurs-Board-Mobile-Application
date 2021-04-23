@@ -1,5 +1,6 @@
 package com.kgk.web;
 
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.kgk.model.admin.Meeting;
 import com.kgk.repository.admin.MeetingRepository;
 import io.micronaut.http.annotation.Controller;
@@ -22,8 +23,8 @@ public class CalendarController {
     }
 
     @Get
-    public List<Meeting> listAllMeetings() {
-        return meetingRepository.listAllMeetings();
+    public List<Meeting> listAllMeetings(/*AwsProxyRequest awsRequest*/) {
+        return meetingRepository.listAllMeetings(/*awsRequest*/);
     }
 
     @Get("/{meetingId}")

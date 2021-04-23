@@ -1,5 +1,6 @@
 package com.kgk.repository.admin.impl;
 
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
@@ -7,12 +8,14 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgk.model.DeletedItem;
 import com.kgk.model.admin.News;
+import com.kgk.model.user.User;
 import com.kgk.repository.admin.NewsRepository;
+import com.kgk.repository.user.CurrentUserRepository;
 
 import javax.inject.Singleton;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.UUID;
 
 @Singleton
@@ -26,13 +29,19 @@ public class NewsRepositoryImpl implements NewsRepository {
 
     private final DynamoDBMapperConfig config;
 
-    public NewsRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config) {
+    private final CurrentUserRepository currentUserRepository;
+
+    public NewsRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config,
+                              CurrentUserRepository currentUserRepository) {
         this.mapper = mapper;
         this.config = config;
+        this.currentUserRepository = currentUserRepository;
     }
 
     @Override
-    public List<News> listAllNews() {
+    public List<News> listAllNews(/*AwsProxyRequest awsRequest*/) {
+        //User currentUser = currentUserRepository.findCurrentUser(awsRequest);
+
         Map<String, AttributeValue> eav = new HashMap<>();
         //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
         eav.put(":city", new AttributeValue().withS("Ankara"));

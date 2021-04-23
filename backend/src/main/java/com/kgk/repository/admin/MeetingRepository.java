@@ -1,12 +1,13 @@
 package com.kgk.repository.admin;
 
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.kgk.model.admin.Meeting;
 
 import java.util.List;
 
 public interface MeetingRepository {
 
-    List<Meeting> listAllMeetings();
+    List<Meeting> listAllMeetings(/*AwsProxyRequest awsRequest*/);
 
     Meeting findMeetingByMeetingId(String newsId);
 

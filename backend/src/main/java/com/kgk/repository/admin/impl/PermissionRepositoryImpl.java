@@ -1,11 +1,12 @@
 package com.kgk.repository.admin.impl;
 
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kgk.model.admin.Role;
 import com.kgk.model.user.User;
+import com.kgk.repository.user.CurrentUserRepository;
 import com.kgk.repository.user.UserRepository;
 import com.kgk.repository.admin.PermissionRepository;
 
@@ -25,13 +26,19 @@ public class PermissionRepositoryImpl implements PermissionRepository {
 
     private final UserRepository userRepository;
 
-    public PermissionRepositoryImpl(DynamoDBMapper mapper, UserRepository userRepository) {
+    private final CurrentUserRepository currentUserRepository;
+
+    public PermissionRepositoryImpl(DynamoDBMapper mapper, UserRepository userRepository,
+                                    CurrentUserRepository currentUserRepository) {
         this.mapper = mapper;
         this.userRepository = userRepository;
+        this.currentUserRepository = currentUserRepository;
     }
 
     @Override
-    public List<User> listAllUserRoles() {
+    public List<User> listAllUserRoles(/*AwsProxyRequest awsRequest*/) {
+        //User currentUser = currentUserRepository.findCurrentUser(awsRequest);
+
         Map<String, AttributeValue> eav = new HashMap<>();
         //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
         eav.put(":city", new AttributeValue().withS("Ankara"));
@@ -46,7 +53,9 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     }
 
     @Override
-    public List<User> findAllUsersByRoleId(String roleId) {
+    public List<User> findAllUsersByRoleId(/*AwsProxyRequest awsRequest, */String roleId) {
+        //User currentUser = currentUserRepository.findCurrentUser(awsRequest);
+
         Map<String, AttributeValue> eav = new HashMap<>();
         //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
         eav.put(":city", new AttributeValue().withS("Ankara"));

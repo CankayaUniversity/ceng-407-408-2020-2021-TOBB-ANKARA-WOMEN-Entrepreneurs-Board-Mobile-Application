@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MembershipRepository {
 
-    List<RegisterForm> listAllUnapprovedRegisterForms(AwsProxyRequest awsRequest); //lists all unapproved register forms
+    List<RegisterForm> listAllUnapprovedRegisterForms(/*AwsProxyRequest awsRequest*/); //lists all unapproved register forms
 
     RegisterForm findRegisterFormById(String registerFormId); //returns a specific register form
 
