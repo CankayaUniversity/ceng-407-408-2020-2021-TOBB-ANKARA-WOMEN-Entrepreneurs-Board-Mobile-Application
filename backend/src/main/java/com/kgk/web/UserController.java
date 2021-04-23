@@ -11,6 +11,7 @@ import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Body;
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 
 import javax.validation.Valid;
 import java.util.List;
@@ -32,13 +33,20 @@ public class UserController {
         return userRepository.listAllUsers();
     }
 
+    // show user's own profile page
+    @Get("/profile")
+    public User findUsersOwnProfile(AwsProxyRequest awsRequest) {
+        return userRepository.findCurrentUser(awsRequest);
+    }
+
+    //show other user's profile page
     @Get("/{userId}")
-    public User showUserProfile(@PathVariable("userId") String userId) {
+    public User findUserProfile(@PathVariable("userId") String userId) {
         return userRepository.findUserById(userId);
     }
 
     @Get("/{userId}/{catalogId}")
-    public Catalog showCatalog(@PathVariable("userId") String userId, @PathVariable("catalogId") String catalogId) {
+    public Catalog findCatalog(@PathVariable("userId") String userId, @PathVariable("catalogId") String catalogId) {
         return catalogRepository.findCatalogByCatalogId(userId, catalogId);
     }
 

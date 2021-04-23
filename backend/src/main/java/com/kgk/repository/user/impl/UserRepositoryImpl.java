@@ -1,10 +1,9 @@
 package com.kgk.repository.user.impl;
 
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgk.model.user.Catalog;
 import com.kgk.model.DeletedItem;
@@ -16,9 +15,7 @@ import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.core.util.StringUtils;
 
 import javax.inject.Singleton;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -36,6 +33,13 @@ public class UserRepositoryImpl implements UserRepository {
         this.mapper = mapper;
         this.config = config;
         this.catalogRepository = catalogRepository;
+    }
+
+
+    @Override
+    public User findCurrentUser(AwsProxyRequest awsRequest) {
+        String userId = awsRequest.getRequestContext().getAuthorizer().getClaims().getSubject();
+        return findUserById(userId);
     }
 
     @Override

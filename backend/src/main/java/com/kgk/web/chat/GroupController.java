@@ -44,7 +44,7 @@ public class GroupController {
     }
 
     @Get("/{groupId}")
-    public Group showGroup(@PathVariable("groupId") String groupId) {
+    public Group findGroup(@PathVariable("groupId") String groupId) {
         return groupRepository.findGroupByGroupId(groupId);
     }
 

@@ -1,11 +1,14 @@
 package com.kgk.repository.user;
 
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.kgk.model.user.Password;
 import com.kgk.model.user.User;
 
 import java.util.List;
 
 public interface UserRepository {
+
+    User findCurrentUser(AwsProxyRequest awsRequest);
 
     List<User> listAllUsers(); //list all users
 
