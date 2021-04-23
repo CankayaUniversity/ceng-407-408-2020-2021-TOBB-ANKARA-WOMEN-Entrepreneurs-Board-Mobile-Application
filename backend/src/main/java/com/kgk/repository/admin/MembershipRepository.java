@@ -1,12 +1,13 @@
 package com.kgk.repository.admin;
 
+import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.kgk.model.admin.RegisterForm;
 
 import java.util.List;
 
 public interface MembershipRepository {
 
-    List<RegisterForm> listAllUnapprovedRegisterForms(); //lists all unapproved register forms
+    List<RegisterForm> listAllUnapprovedRegisterForms(AwsProxyRequest awsRequest); //lists all unapproved register forms
 
     RegisterForm findRegisterFormById(String registerFormId); //returns a specific register form
 

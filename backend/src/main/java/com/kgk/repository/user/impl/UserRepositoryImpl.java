@@ -35,7 +35,6 @@ public class UserRepositoryImpl implements UserRepository {
         this.catalogRepository = catalogRepository;
     }
 
-
     @Override
     public User findCurrentUser(AwsProxyRequest awsRequest) {
         String userId = awsRequest.getRequestContext().getAuthorizer().getClaims().getSubject();
