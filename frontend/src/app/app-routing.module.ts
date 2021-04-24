@@ -27,6 +27,11 @@ const routes: Routes = [
     path: 'profile',
     loadChildren: () => import('./pages/page-profile/page-profile.module').then( m => m.PageProfilePageModule)
   },
+  {
+    path: 'message',
+    loadChildren: () => import('./pages/page-message/page-message.module').then( m => m.PageMessagePageModule)
+  },
+
 
   /* For educational purposes, will be enhanced later{
     path: 'product/:id',
