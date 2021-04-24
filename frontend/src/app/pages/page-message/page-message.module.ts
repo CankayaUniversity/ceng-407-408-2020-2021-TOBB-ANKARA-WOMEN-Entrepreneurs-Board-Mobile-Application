@@ -8,12 +8,15 @@ import { PageMessagePageRoutingModule } from './page-message-routing.module';
 
 import { PageMessagePage } from './page-message.page';
 
+import { AutosizeModule } from 'ngx-autosize';
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    PageMessagePageRoutingModule
+    PageMessagePageRoutingModule,
+    AutosizeModule
   ],
   declarations: [PageMessagePage]
 })
