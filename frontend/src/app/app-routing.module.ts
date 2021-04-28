@@ -31,6 +31,11 @@ const routes: Routes = [
     path: 'message',
     loadChildren: () => import('./pages/page-message/page-message.module').then( m => m.PageMessagePageModule)
   },
+  {
+    path: '',
+    loadChildren: () => import('./pages/page-tabs/page-tabs.module').then( m => m.PageTabsPageModule)
+  },
+
 
 
   /* For educational purposes, will be enhanced later{
