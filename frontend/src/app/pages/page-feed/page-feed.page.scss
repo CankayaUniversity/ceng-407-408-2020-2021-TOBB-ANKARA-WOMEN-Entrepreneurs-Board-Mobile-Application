@@ -1,0 +1,45 @@
+.background {
+  --background: url(../../../assets/backgrounds/bigger-left-bubble-edited.png) 0 0/100% 100% no-repeat;
+}
+
+ion-grid {
+  height: 100%;
+}
+
+.row1{
+  height: 12%;
+}
+.row2{
+  padding: 7% 9% 11% 3%;
+  height: 87%;
+}
+.row3{
+  height: 1%;
+}
+
+.feed{
+  font-size: 30px;
+  display:inline-block;
+  font-weight: bold;
+  padding-left: 50px;
+  padding-top: 47px;
+}
+
+.card{
+  margin-top: 10%;
+  margin-left: 6%;
+  width: 80%;
+  height: 63%;
+  display:inline-block;
+}
+
+ion-card-content{
+  height: 44%;
+}
+
+.card-image{
+  width: 80%;
+  height: 35%;
+  display: inline-block;
+  margin: 3%;
+}

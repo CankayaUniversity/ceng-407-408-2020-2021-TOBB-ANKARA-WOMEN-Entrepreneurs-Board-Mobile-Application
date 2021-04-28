@@ -26,13 +26,19 @@ public class MembershipController {
         return membershipRepository.listAllUnapprovedRegisterForms();
     }
 
-    @Put("/{registerId}")
-    public void approve(@PathVariable("registerId") String registerId, @Valid @Body RegisterForm registerForm) {
-        membershipRepository.approveRegisterForm(registerId, registerForm);
+    @Get("/{registerId}")
+    public RegisterForm findRegisterFormById(@PathVariable("registerId") String registerId){
+        return membershipRepository.findRegisterFormById(registerId);
     }
 
-    @Delete("/{registerId}/{city}")
-    public void decline(@PathVariable("registerId") String registerId, @PathVariable("city") String city) {
-        membershipRepository.declineRegisterForm(registerId, city);
+    @Put("/{registerId}")
+    public RegisterForm approve(@PathVariable("registerId") String registerId, @Valid @Body RegisterForm registerForm) {
+        return membershipRepository.approveRegisterForm(registerId, registerForm);
     }
+
+    @Delete("/{registerId}")
+    public void decline(@PathVariable("registerId") String registerId) {
+        membershipRepository.declineRegisterForm(registerId);
+    }
+
 }

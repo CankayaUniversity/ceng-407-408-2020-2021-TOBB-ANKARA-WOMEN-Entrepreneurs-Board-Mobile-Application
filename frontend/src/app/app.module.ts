@@ -8,6 +8,7 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ProductApi} from './providers/model/product/product.api';
 import {HttpClientModule} from '@angular/common/http';
+import {FeedService} from './feed.service';
 
 @NgModule({
   declarations: [AppComponent],
@@ -18,7 +19,7 @@ import {HttpClientModule} from '@angular/common/http';
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [
+  providers: [ FeedService,
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
     ProductApi,
   ],

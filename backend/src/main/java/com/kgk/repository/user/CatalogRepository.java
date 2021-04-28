@@ -1,6 +1,6 @@
-package com.kgk.repository;
+package com.kgk.repository.user;
 
-import com.kgk.model.Catalog;
+import com.kgk.model.user.Catalog;
 
 import java.util.List;
 
@@ -11,8 +11,6 @@ public interface CatalogRepository {
     Catalog findCatalogByCatalogId(String userId, String catalogId);
 
     Catalog addCatalog(String userId, Catalog catalog);
-
-    //Catalog updateCatalog(String catalogId, Catalog catalog);
 
     void deleteCatalog(String userId, String catalogId);
 

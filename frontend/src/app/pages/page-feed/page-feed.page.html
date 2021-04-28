@@ -1,0 +1,52 @@
+<ion-content class="background" >
+  <ion-grid>
+    <ion-row class="row1"><ion-label class="feed"></ion-label></ion-row>
+
+    <ion-row class="row2">
+        <ion-content class="card-inside" style="background-color: transparent">
+          <div>
+            <ion-card class="card" *ngFor="let news of data?.feed" (click)="onGoToNewsSingle(news)">
+              <!-- <ion-img [src]="news.urlToImage"></ion-img> -->
+
+              <ion-card-content>
+                <ion-card-header style="background-color: mediumvioletred">
+                  <ion-card-title>{{news.newsTitle}}</ion-card-title>
+                  <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+                </ion-card-header>
+                <p>{{news.newsBody}}</p>
+              </ion-card-content>
+            </ion-card>
+
+            <ion-infinite-scroll  style="background-color: #ffd948"> // (ionInfinite)="loadMoreNews($event)">
+              <ion-infinite-scroll-content loadingSpinner="bubble" style="color: #0d0d0d" loadingText="load news.."></ion-infinite-scroll-content>
+            </ion-infinite-scroll>
+          </div>
+        </ion-content>
+    </ion-row>
+
+    <ion-row class="row3"></ion-row>
+  </ion-grid>
+</ion-content>
+
+
+
+<!--<ion-card class="card" style="background-color: darkred">
+  <ion-item class="card-image">
+    <ion-img src="../../../assets/ok-left.png"></ion-img>
+  </ion-item>
+
+  <ion-card-header style="background-color: mediumvioletred">
+    <ion-card-title>Card Title</ion-card-title>
+    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+  </ion-card-header>
+
+  <ion-card-content style="background-color: indianred">
+    Keep close to Nature's heart... and break clear away, once in awhile,
+    and climb a mountain or spend a week in the woods. Wash your spirit clean.
+  </ion-card-content>
+
+  <ion-item style="background-color: red">
+    <ion-button fill="outline" slot="end">View</ion-button>
+  </ion-item>
+</ion-card>-->
+
