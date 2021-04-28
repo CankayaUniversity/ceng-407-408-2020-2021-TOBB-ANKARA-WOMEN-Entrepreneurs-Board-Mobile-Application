@@ -92,7 +92,7 @@ export class PageLoginPage implements OnInit {
   }
 
   logMeIn(){
-    this.router.navigate(['/home']);
+    this.router.navigate(['/tabs/feed']);
   }
   regMeIn(){
     this.router.navigate(['/register']);
