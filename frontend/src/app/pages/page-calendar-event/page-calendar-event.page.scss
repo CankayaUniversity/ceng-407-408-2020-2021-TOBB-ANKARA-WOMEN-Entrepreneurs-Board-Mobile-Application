@@ -1,0 +1,9 @@
+:host ::ng-deep { // hides no event section
+  .monthview-container {
+    height: auto !important;
+  }
+
+  .event-detail-container {
+    display: none;
+  }
+}
