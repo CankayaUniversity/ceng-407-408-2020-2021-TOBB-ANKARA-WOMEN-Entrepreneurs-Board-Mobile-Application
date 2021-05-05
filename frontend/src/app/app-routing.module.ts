@@ -35,6 +35,15 @@ const routes: Routes = [
     path: '',
     loadChildren: () => import('./pages/page-tabs/page-tabs.module').then( m => m.PageTabsPageModule)
   },
+  {
+    path: 'calendar',
+    loadChildren: () => import('./pages/page-calendar/page-calendar.module').then( m => m.PageCalendarPageModule)
+  },  {
+    path: 'page-calendar-event',
+    loadChildren: () => import('./pages/page-calendar-event/page-calendar-event.module').then( m => m.PageCalendarEventPageModule)
+  },
+
+
 
 
 
