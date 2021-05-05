@@ -17,6 +17,10 @@ const routes: Routes = [
         path: 'feed',
         loadChildren: () => import('../page-feed/page-feed.module').then(m => m.PageFeedPageModule)
       },
+      {
+        path: 'calendar',
+        loadChildren: () => import('../page-calendar/page-calendar.module').then(m => m.PageCalendarPageModule)
+      },
     ]
   },
   {
