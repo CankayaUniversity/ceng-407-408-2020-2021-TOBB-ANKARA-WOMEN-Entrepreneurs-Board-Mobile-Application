@@ -56,6 +56,6 @@ export class PageProfilePage implements OnInit {
   }
   // ngOnInit(){}
   goBack(){
-    this.router.navigate(['/login']);
+    this.router.navigate(['/feed']);
   }
 }
