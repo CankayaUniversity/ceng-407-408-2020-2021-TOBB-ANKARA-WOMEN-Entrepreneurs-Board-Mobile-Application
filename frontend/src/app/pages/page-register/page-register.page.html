@@ -38,7 +38,9 @@
         </span>
         <ion-item color = "whitesmoke">
           <ion-icon name="home"></ion-icon>
-          <ion-input formControlName="city" required="true" placeholder="City"></ion-input>
+          <ion-select formControlName="city" required="true" placeholder="City" [compareWith]="compareWith">
+            <ion-select-option *ngFor="let city of cities" [value]="city">{{city.name}}</ion-select-option>
+          </ion-select>
         </ion-item>
         <span class="error ion-padding" *ngIf="submitted && errorCtr.city.errors?.required">
           City is required.
@@ -55,7 +57,7 @@
         </span>
         <ion-item color = "whitesmoke">
           <ion-icon name="business"></ion-icon>
-          <ion-select formControlName="occupation" placeholder="Occupation" [compareWith]="compareWith">
+          <ion-select formControlName="occupation" required="true" placeholder="Occupation" [compareWith]="compareWith">
             <ion-select-option *ngFor="let occupation of occupations" [value]="occupation">{{occupation.name}}</ion-select-option>
           </ion-select>
         </ion-item>
