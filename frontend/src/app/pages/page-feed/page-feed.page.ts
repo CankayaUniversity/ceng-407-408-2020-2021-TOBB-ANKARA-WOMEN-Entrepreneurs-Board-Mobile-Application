@@ -41,4 +41,7 @@ export class PageFeedPage implements OnInit {
         console.log(this.data);
       });
   }
+  message(){
+    this.router.navigate(['/message']);
+  }
 }
