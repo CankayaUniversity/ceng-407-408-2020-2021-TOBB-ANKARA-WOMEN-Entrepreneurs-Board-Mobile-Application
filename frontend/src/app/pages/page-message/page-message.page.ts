@@ -38,7 +38,7 @@ export class PageMessagePage implements OnInit {
   ngOnInit() {
   }
   goBack(){
-    this.router.navigate(['/home']);
+    this.router.navigate(['/tabs/feed']);
   }
   sendMessage(){
     this.messages.push({
