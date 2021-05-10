@@ -12,10 +12,14 @@ import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Body;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/user")
 public class UserController {
 
@@ -35,8 +39,8 @@ public class UserController {
 
     // show user's own profile page
     @Get("/profile")
-    public User findUsersOwnProfile(AwsProxyRequest awsRequest) {
-        return userRepository.findCurrentUser(awsRequest);
+    public User findUsersOwnProfile(Principal principal) {
+        return userRepository.findUserById(principal.getName());
     }
 
     //show other user's profile page

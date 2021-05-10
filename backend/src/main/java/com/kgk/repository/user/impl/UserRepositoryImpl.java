@@ -3,7 +3,9 @@ package com.kgk.repository.user.impl;
 import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgk.model.user.Catalog;
 import com.kgk.model.DeletedItem;
@@ -15,13 +17,18 @@ import io.micronaut.core.util.CollectionUtils;
 import io.micronaut.core.util.StringUtils;
 
 import javax.inject.Singleton;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Singleton
 public class UserRepositoryImpl implements UserRepository {
 
     private static final String TABLE_NAME = "Users";
+
+    private static final String GSI_NAME = "userByEmail";
 
     private final DynamoDBMapper mapper;
 
@@ -50,6 +57,20 @@ public class UserRepositoryImpl implements UserRepository {
         );
 
         return users;
+    }
+
+    @Override
+    public Optional<User> findUserByEmail(String email) {
+        Map<String, AttributeValue> eav = new HashMap<>();
+        eav.put(":email", new AttributeValue().withS(email));
+
+        DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
+                .withKeyConditionExpression("email = :email")
+                .withIndexName(GSI_NAME)
+                .withExpressionAttributeValues(eav)
+                .withConsistentRead(false);
+
+        return mapper.query(User.class, queryExpression).stream().findFirst();
     }
 
     @Override

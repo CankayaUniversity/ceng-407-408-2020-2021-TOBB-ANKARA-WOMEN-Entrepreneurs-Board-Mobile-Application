@@ -3,7 +3,6 @@ package com.kgk.model.user;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexRangeKey;
 import edu.umd.cs.findbugs.annotations.NonNull;
@@ -13,7 +12,9 @@ import io.micronaut.core.util.StringUtils;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Introspected
 @DynamoDBTable(tableName = "Users")
@@ -40,7 +41,7 @@ public class User {
     @NonNull
     @NotBlank
     @Email
-    private String email;
+    private String email; //gsi - hash key
 
     @NonNull
     @NotBlank
@@ -118,7 +119,7 @@ public class User {
       this.lastName = lastName;
     }
 
-    @DynamoDBAttribute(attributeName = "email")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "userByEmail", attributeName = "email")
     @NonNull
     public String getEmail() {
       return email;
@@ -203,7 +204,7 @@ public class User {
 
     public void copyFrom(User user) {
         //this.setUserId(user.getUserId());
-        this.setCity(user.city);
+        this.setCity(user.getCity());
         this.setFirstName(user.getFirstName());
         this.setLastName(user.getLastName());
         this.setEmail(user.getEmail());
@@ -224,6 +225,24 @@ public class User {
         if (StringUtils.isNotEmpty(user.getDescription()))
             this.setDescription(user.getDescription());
 
+    }
+
+    public Map<String, Object> toAttributeMap() {
+        Map<String, Object> attributes = new LinkedHashMap<>();
+        attributes.put("userId", userId);
+        attributes.put("city", city);
+        attributes.put("roleId", roleId);
+        attributes.put("firstName", firstName);
+        attributes.put("lastName", lastName);
+        attributes.put("email", email);
+        attributes.put("password", password); //TODO: gerek var mı?
+        attributes.put("tobbRegisterId", tobbRegisterId);
+        attributes.put("phone", phone);
+        attributes.put("occupation", occupation);
+        attributes.put("birthDate", birthDate);
+        attributes.put("description", description);
+
+        return attributes;
     }
     
 }
