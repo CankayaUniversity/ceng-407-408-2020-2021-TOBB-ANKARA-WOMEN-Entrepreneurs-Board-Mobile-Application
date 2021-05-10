@@ -7,8 +7,12 @@ import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {ProductApi} from './providers/model/product/product.api';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {FeedService} from './feed.service';
+import {AuthService} from './providers/service/auth.service';
+import {SecurityInterceptor} from './providers/interceptor/security.interceptor';
+import {LoginGuard} from './providers/guard/login.guard';
+import {UserApi} from './providers/model/user/user.api';
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,9 +23,14 @@ import {FeedService} from './feed.service';
     AppRoutingModule,
     HttpClientModule,
   ],
-  providers: [ FeedService,
+  providers: [
+    FeedService,
+    {provide: HTTP_INTERCEPTORS, useClass: SecurityInterceptor, multi: true},
     {provide: RouteReuseStrategy, useClass: IonicRouteStrategy},
+    LoginGuard,
     ProductApi,
+    UserApi,
+    AuthService,
   ],
   bootstrap: [AppComponent],
 })
