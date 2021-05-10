@@ -63,10 +63,21 @@ resources:
             AttributeType: S
           - AttributeName: roleId
             AttributeType: S
+          - AttributeName: email
+            AttributeType: S
         KeySchema:
           - AttributeName: userId
             KeyType: HASH
         GlobalSecondaryIndexes:
+          - IndexName: userByEmail
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
           - IndexName: usersByCity
             KeySchema:
               - AttributeName: city
