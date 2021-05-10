@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FeedService } from 'src/app/feed.service';
 import { Router } from '@angular/router';
 import {environment} from '../../../environments/environment';
+import {AuthService} from '../../providers/service/auth.service';
+import {User} from '../../providers/model/user/user.model';
 
 @Component({
   selector: 'app-page-feed',
@@ -12,7 +14,9 @@ import {environment} from '../../../environments/environment';
 export class PageFeedPage implements OnInit {
   data: any;
   page = 1;
-  constructor(private feedService: FeedService, private router: Router) {}
+  user: User;
+
+  constructor(private feedService: FeedService, private router: Router, private authService: AuthService) {}
 
   ngOnInit() {
     this.feedService.getFeed('/api/feed')
@@ -20,6 +24,10 @@ export class PageFeedPage implements OnInit {
         console.log(data);
         this.data = data;
       });
+    this.user = this.authService.getUser().value;
+/*    this.authService.getUser().subscribe(user => {
+      this.user = user;
+    });*/
   }
 
   onGoToNewsSingle(news){
