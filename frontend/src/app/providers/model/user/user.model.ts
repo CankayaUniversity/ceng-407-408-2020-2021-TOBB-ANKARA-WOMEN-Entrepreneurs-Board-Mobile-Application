@@ -13,6 +13,5 @@ export interface User {
   occupation: string;
   description: string;
   catalogList: string; //
-
 }
 
