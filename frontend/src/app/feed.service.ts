@@ -7,12 +7,11 @@ const API_URL = environment.apiUrl;
 @Injectable({
   providedIn: 'root'
 })
-
 export class FeedService {
   currentNews: any;
   constructor(private http: HttpClient) {}
 
   getFeed(apiUrl: string): Observable<object>{
-    return this.http.get('${API_URL}/${url}');
+    return this.http.get(`${environment.apiUrl}/feed`);
   }
 }
