@@ -16,10 +16,13 @@ import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 
 import javax.validation.Valid;
 import java.util.List;
 
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/group")
 public class GroupController {
 
