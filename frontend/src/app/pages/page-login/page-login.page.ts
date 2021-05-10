@@ -7,6 +7,8 @@ import {HttpClient} from '@angular/common/http';
 import {LoginForm} from '../../providers/model/login-form.type';
 
 import {User} from '../../providers/model/user/user.model';
+import {AuthService} from '../../providers/service/auth.service';
+import {Credential} from '../../providers/model/user/credential.model';
 
 @Component({
   selector: 'app-page-login',
@@ -32,7 +34,13 @@ export class PageLoginPage implements OnInit {
     occupation: '',
     description: '',
     catalogList: ''};*/
-  constructor(public formBuilder: FormBuilder, private router: Router, private http: HttpClient, private route: ActivatedRoute) {
+  constructor(
+    public formBuilder: FormBuilder,
+    private router: Router,
+    private http: HttpClient,
+    private route: ActivatedRoute,
+    private authService: AuthService,
+    ) {
 
     this.loginForm = formBuilder.group({
     email: [
@@ -83,8 +91,11 @@ export class PageLoginPage implements OnInit {
       // console.log('Users', this.users);
       try {
         // For database action
-        const res = await this.http.post<LoginForm>(environment.apiUrl + '/api/login-form', formData).toPromise();
-        this.router.navigate(['/home']);
+        const credential = await this.http.post<Credential>(environment.apiUrl + '/login', formData).toPromise();
+        this.authService.setCredential(credential);
+        const user = await this.http.get<User>(environment.apiUrl + '/api/profile').toPromise();
+        this.authService.setUser(user);
+        this.router.navigate(['/tabs/feed']);
       } catch (e) {
         // error toast
       }
