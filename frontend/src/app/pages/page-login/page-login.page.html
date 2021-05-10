@@ -22,10 +22,10 @@
             Password is required.
           </span>
           <!-- <ion-button *ngFor="let user of user" (click)="click(user)" expand="block" shape="round" [disabled]="!loginForm.valid" type="submit" (click)="logMeIn()">Sign in</ion-button> -->
-          <ion-button expand="block" shape="round" [disabled]="!loginForm.valid" type="submit" (click)="logMeIn()">Sign in</ion-button>
+          <ion-button expand="block" shape="round" [disabled]="!loginForm.valid" type="submit">Sign in</ion-button>
         </form>
         <p>Don't have an account?
-          <a (click)="regMeIn()" ><u>Sign up</u></a>
+          <a routerLink="/register"><u>Sign up</u></a>
       </div>
     </ion-row>
     <ion-row class="row3"></ion-row>
