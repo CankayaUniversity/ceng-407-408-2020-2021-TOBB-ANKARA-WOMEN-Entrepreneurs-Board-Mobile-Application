@@ -432,7 +432,7 @@ export class PageRegisterPage implements OnInit {
       console.log(formData);
       try {
         // For database action
-        const res = await this.http.post<RegisterForm>(environment.apiUrl + '/api/register-form', formData).toPromise();
+        await this.http.post(environment.apiUrl + '/api/register-form', formData).toPromise();
         this.router.navigate(['/login']);
       } catch (e) {
         // error toast
