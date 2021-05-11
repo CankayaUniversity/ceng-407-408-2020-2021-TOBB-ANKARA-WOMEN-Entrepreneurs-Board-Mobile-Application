@@ -10,9 +10,9 @@ export class AuthService {
   private user$ = new BehaviorSubject<User>(null);
 
   constructor() {
-    const userStr = localStorage.getItem('credential');
-    if (userStr) {
-      this.user$.next(JSON.parse(userStr));
+    const credential = localStorage.getItem('credential');
+    if (credential) {
+      this.credential$.next(JSON.parse(credential));
     }
   }
 
