@@ -4,58 +4,39 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {UserApi} from '../../providers/model/user/user.api';
 import {User} from '../../providers/model/user/user.model';
+import {AuthService} from '../../providers/service/auth.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 @Component({
   selector: 'app-page-profile',
   templateUrl: './page-profile.page.html',
   styleUrls: ['./page-profile.page.scss'],
 })
 export class PageProfilePage implements OnInit {
+  user: User;
+  form: FormGroup;
 
-  // users: User[];
-  user: User[] = []; //
-  users = {userId: '',
-    city: '' ,
-    roleId: '',
-    firstName: '',
-    lastName: '',
-    email: '',
-    password: '',
-    tobbRegisterId: '',
-    phone: '',
-    photo: '',
-    birthDate: '',  //
-    occupation: '',
-    description: '',
-    catalogList: ''};
-
-  constructor(private router: Router, private route: ActivatedRoute, /*private userApi: UserApi,*/ private http: HttpClient) { }
+  constructor(private router: Router, private authService: AuthService, /*private userApi: UserApi, private formBuilder: FormBuilder*/) { }
 
   async ngOnInit() {
+    this.user = this.authService.getUser().value;
 
-    /*this.route.paramMap.subscribe(paramMap => {
-      const id = paramMap.get('id');
+    // EDIT
+    /*this.form = this.formBuilder.group({
+      firstName: [this.user.firstName, Validators.required],
+      lastName: [this.user.lastName]
     });*/
-    const res = await this.http.get<User>(environment.apiUrl + '/api/{userId}').toPromise();
-    this.route.paramMap.subscribe(paramMap => {
-      this.users.userId = paramMap.get(res.userId);
-      this.users.city = paramMap.get(res.city);
-      this.users.roleId = paramMap.get(res.roleId);
-      this.users.firstName = paramMap.get(res.firstName);
-      this.users.lastName = paramMap.get(res.lastName);
-      this.users.email = paramMap.get(res.email);
-      this.users.password = paramMap.get(res.password);
-      this.users.tobbRegisterId = paramMap.get(res.tobbRegisterId);
-      this.users.phone = paramMap.get(res.phone);
-      this.users.photo = paramMap.get(res.photo);
-      this.users.birthDate = paramMap.get(String(res.birthDate));
-      this.users.occupation = paramMap.get(res.occupation);
-      this.users.description = paramMap.get(res.description);
-      this.users.catalogList = paramMap.get(res.catalogList);
-    });
-    // this.users = await this.userApi.getAll().toPromise();
+
   }
   // ngOnInit(){}
   goBack(){
     this.router.navigate(['/feed']);
   }
+
+
+  // EDIT
+  /*async save(){
+    const userForm = this.form.value;
+    const user = await this.userApi.updateMyProfile(userForm).toPromise();
+    this.authService.setUser(user);
+  }*/
 }
