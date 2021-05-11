@@ -21,7 +21,7 @@ public class RegisterFormRepositoryImpl implements RegisterFormRepository {
         registerForm.setRegisterId(UUID.randomUUID().toString());
         registerForm.setApproved("false");
         registerForm.setRegisterDate(System.currentTimeMillis());
-        registerForm.setRoleId("MEMBERSHIP_ADMIN"); // meaning, no assigned role yet
+        registerForm.setRoleId("NONE"); // meaning, no assigned role yet
         mapper.save(registerForm);
         System.out.println("[REGISTER FORM REPO] Register form is saved");
 
