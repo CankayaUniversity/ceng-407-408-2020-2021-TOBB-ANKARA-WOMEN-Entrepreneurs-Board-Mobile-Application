@@ -1,6 +1,5 @@
 package com.kgk.web;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.kgk.model.user.Catalog;
 import com.kgk.model.user.Password;
 import com.kgk.model.user.User;
@@ -49,23 +48,23 @@ public class UserController {
         return userRepository.findUserById(userId);
     }
 
-    @Get("/{userId}/{catalogId}")
-    public Catalog findCatalog(@PathVariable("userId") String userId, @PathVariable("catalogId") String catalogId) {
-        return catalogRepository.findCatalogByCatalogId(userId, catalogId);
+    @Get("/profile/{catalogId}")
+    public Catalog findCatalog(Principal principal, @PathVariable("catalogId") String catalogId) {
+        return catalogRepository.findCatalogByCatalogId(principal.getName(), catalogId);
     }
 
-    @Put("/{userId}")
-    public User update(@PathVariable("userId") String userId, @Valid @Body User user) {
-      return userRepository.updateUser(userId, user);
+    @Put("/profile")
+    public User update(Principal principal, @Valid @Body User user) {
+      return userRepository.updateUser(principal.getName(), user);
     }
 
-    @Put("/change-password/{userId}")
-    public User changePassword(@PathVariable("userId") String userId,
+    @Put("/profile/change-password")
+    public User changePassword(Principal principal,
                                @Valid @Body Password changedPassword) {
-        return userRepository.changePassword(userId, changedPassword);
+        return userRepository.changePassword(principal.getName(), changedPassword);
     }
 
-    @Delete("/{userId}")
-    public void delete(@PathVariable("userId") String userId){ userRepository.deleteUser(userId); }
+    @Delete("/profile")
+    public void delete(Principal principal){ userRepository.deleteUser(principal.getName()); }
 
 }

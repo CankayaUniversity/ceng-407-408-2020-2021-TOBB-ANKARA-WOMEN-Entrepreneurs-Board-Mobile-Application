@@ -235,12 +235,12 @@ public class User {
         attributes.put("firstName", firstName);
         attributes.put("lastName", lastName);
         attributes.put("email", email);
-        attributes.put("password", password); //TODO: gerek var mı?
         attributes.put("tobbRegisterId", tobbRegisterId);
         attributes.put("phone", phone);
         attributes.put("occupation", occupation);
         attributes.put("birthDate", birthDate);
         attributes.put("description", description);
+        attributes.put("catalogList", catalogList);
 
         return attributes;
     }

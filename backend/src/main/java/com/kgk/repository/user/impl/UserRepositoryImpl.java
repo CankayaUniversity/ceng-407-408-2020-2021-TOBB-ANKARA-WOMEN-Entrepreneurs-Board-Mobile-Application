@@ -1,6 +1,5 @@
 package com.kgk.repository.user.impl;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
@@ -40,12 +39,6 @@ public class UserRepositoryImpl implements UserRepository {
         this.mapper = mapper;
         this.config = config;
         this.catalogRepository = catalogRepository;
-    }
-
-    @Override
-    public User findCurrentUser(AwsProxyRequest awsRequest) {
-        String userId = awsRequest.getRequestContext().getAuthorizer().getClaims().getSubject();
-        return findUserById(userId);
     }
 
     @Override
