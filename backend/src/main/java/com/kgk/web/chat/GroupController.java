@@ -22,7 +22,7 @@ import io.micronaut.security.rules.SecurityRule;
 import javax.validation.Valid;
 import java.util.List;
 
-@Secured(SecurityRule.IS_AUTHENTICATED)
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/api/group")
 public class GroupController {
 

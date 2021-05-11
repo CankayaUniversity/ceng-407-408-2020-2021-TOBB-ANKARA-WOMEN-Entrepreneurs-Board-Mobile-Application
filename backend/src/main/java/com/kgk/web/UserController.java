@@ -19,7 +19,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
-@Secured(SecurityRule.IS_AUTHENTICATED)
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/api/user")
 public class UserController {
 
