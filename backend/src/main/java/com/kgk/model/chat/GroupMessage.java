@@ -11,7 +11,7 @@ import io.micronaut.core.annotation.Introspected;
 import javax.validation.constraints.NotBlank;
 
 @Introspected
-@DynamoDBTable(tableName = "GroupMembers")
+@DynamoDBTable(tableName = "GroupMessages")
 public class GroupMessage {
 
     @NonNull
@@ -45,7 +45,7 @@ public class GroupMessage {
 
     public void setGroupId(@NonNull String groupId) { this.groupId = groupId; }
 
-    @DynamoDBIndexRangeKey(localSecondaryIndexName = "messagesByGroupId", attributeName = "sendAt")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = "messagesByGroupId", attributeName = "sendAt")
     @NonNull
     public Long getSendAt() { return sendAt; }
 
