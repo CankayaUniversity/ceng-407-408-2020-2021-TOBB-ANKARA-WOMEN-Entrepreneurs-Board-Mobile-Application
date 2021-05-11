@@ -13,6 +13,6 @@ export class FeedService {
   constructor(private http: HttpClient) {}
 
   getFeed(apiUrl: string): Observable<object>{
-    return this.http.get('${API_URL}/${url}');
+    return this.http.get(`${environment.apiUrl}/api/feed`);
   }
 }
