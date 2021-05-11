@@ -1,6 +1,5 @@
 package com.kgk.web.admin;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.kgk.model.admin.Role;
 import com.kgk.model.user.User;
 import com.kgk.repository.admin.PermissionRepository;
@@ -13,6 +12,7 @@ import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Secured(SecurityRule.IS_ANONYMOUS)
@@ -26,13 +26,13 @@ public class PermissionController {
     }
 
     @Get
-    public List<User> listAll(/*AwsProxyRequest awsProxyRequest*/){
-        return userRolesRepository.listAllUserRoles(/*awsProxyRequest*/);
+    public List<User> listAll(Principal principal){
+        return userRolesRepository.listAllUserRoles(principal.getName());
     }
 
     @Get("/by-role-id/{roleId}")
-    public List<User> findAllUsersByRoleId(/*AwsProxyRequest awsProxyRequest, */@PathVariable("roleId") String roleId) {
-        return userRolesRepository.findAllUsersByRoleId(/*awsProxyRequest, */roleId);
+    public List<User> findAllUsersByRoleId(Principal principal, @PathVariable("roleId") String roleId) {
+        return userRolesRepository.findAllUsersByRoleId(principal.getName(), roleId);
     }
 
     @Get("/{userId}")

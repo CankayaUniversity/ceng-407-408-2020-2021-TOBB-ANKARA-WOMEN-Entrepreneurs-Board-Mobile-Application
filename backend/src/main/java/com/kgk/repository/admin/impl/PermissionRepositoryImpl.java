@@ -1,12 +1,10 @@
 package com.kgk.repository.admin.impl;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kgk.model.admin.Role;
 import com.kgk.model.user.User;
-import com.kgk.repository.user.CurrentUserRepository;
 import com.kgk.repository.user.UserRepository;
 import com.kgk.repository.admin.PermissionRepository;
 
@@ -26,22 +24,19 @@ public class PermissionRepositoryImpl implements PermissionRepository {
 
     private final UserRepository userRepository;
 
-    private final CurrentUserRepository currentUserRepository;
 
-    public PermissionRepositoryImpl(DynamoDBMapper mapper, UserRepository userRepository,
-                                    CurrentUserRepository currentUserRepository) {
+    public PermissionRepositoryImpl(DynamoDBMapper mapper, UserRepository userRepository) {
         this.mapper = mapper;
         this.userRepository = userRepository;
-        this.currentUserRepository = currentUserRepository;
     }
 
     @Override
-    public List<User> listAllUserRoles(/*AwsProxyRequest awsRequest*/) {
-        //User currentUser = currentUserRepository.findCurrentUser(awsRequest);
+    public List<User> listAllUserRoles(String userId) {
+        User currentUser = userRepository.findUserById(userId);
 
         Map<String, AttributeValue> eav = new HashMap<>();
-        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        eav.put(":city", new AttributeValue().withS("Ankara"));
+        eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        //eav.put(":city", new AttributeValue().withS("Ankara"));
 
         DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
                 .withIndexName(CITY_GSI_NAME)
@@ -53,12 +48,12 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     }
 
     @Override
-    public List<User> findAllUsersByRoleId(/*AwsProxyRequest awsRequest, */String roleId) {
-        //User currentUser = currentUserRepository.findCurrentUser(awsRequest);
+    public List<User> findAllUsersByRoleId(String userId, String roleId) {
+        User currentUser = userRepository.findUserById(userId);
 
         Map<String, AttributeValue> eav = new HashMap<>();
-        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        eav.put(":city", new AttributeValue().withS("Ankara"));
+        eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        //eav.put(":city", new AttributeValue().withS("Ankara"));
         eav.put(":roleId", new AttributeValue().withS(roleId));
 
         DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()

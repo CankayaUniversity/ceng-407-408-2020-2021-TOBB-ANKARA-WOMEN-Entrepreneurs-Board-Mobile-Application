@@ -1,6 +1,5 @@
 package com.kgk.repository.admin.impl;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
@@ -10,9 +9,10 @@ import com.kgk.model.DeletedItem;
 import com.kgk.model.admin.Meeting;
 import com.kgk.model.user.User;
 import com.kgk.repository.admin.MeetingRepository;
-import com.kgk.repository.user.CurrentUserRepository;
+import com.kgk.repository.user.UserRepository;
 
 import javax.inject.Singleton;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,22 +29,22 @@ public class MeetingRepositoryImpl implements MeetingRepository {
 
     private final DynamoDBMapperConfig config;
 
-    private final CurrentUserRepository currentUserRepository;
+    private final UserRepository userRepository;
 
     public MeetingRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config,
-                                 CurrentUserRepository currentUserRepository) {
+                                 UserRepository userRepository) {
         this.mapper = mapper;
         this.config = config;
-        this.currentUserRepository = currentUserRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public List<Meeting> listAllMeetings(/*AwsProxyRequest awsRequest*/) {
-        //User currentUser = currentUserRepository.findCurrentUser(awsRequest);
+    public List<Meeting> listAllMeetings(Principal principal) {
+        User currentUser = userRepository.findUserById(principal.getName());
 
         Map<String, AttributeValue> eav = new HashMap<>();
-        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        eav.put(":city", new AttributeValue().withS("Ankara"));
+        eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        //eav.put(":city", new AttributeValue().withS("Ankara"));
         eav.put(":updatedAt", new AttributeValue().withN(String.valueOf(System.currentTimeMillis())));
 
         DynamoDBQueryExpression<Meeting> queryExpression = new DynamoDBQueryExpression<Meeting>()

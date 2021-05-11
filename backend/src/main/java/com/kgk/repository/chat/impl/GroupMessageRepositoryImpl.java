@@ -1,6 +1,5 @@
 package com.kgk.repository.chat.impl;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
@@ -8,9 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgk.model.DeletedItem;
 import com.kgk.model.chat.GroupMessage;
-import com.kgk.model.user.User;
 import com.kgk.repository.chat.GroupMessageRepository;
-import com.kgk.repository.user.CurrentUserRepository;
 
 import javax.inject.Singleton;
 import java.util.List;
@@ -29,13 +26,9 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
 
     private final DynamoDBMapperConfig config;
 
-    private final CurrentUserRepository currentUserRepository;
-
-    public GroupMessageRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config,
-                                      CurrentUserRepository currentUserRepository) {
+    public GroupMessageRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config) {
         this.mapper = mapper;
         this.config = config;
-        this.currentUserRepository = currentUserRepository;
     }
 
     @Override
@@ -54,15 +47,13 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
     }
 
     @Override
-    public GroupMessage saveMessage(/*AwsProxyRequest awsRequest,*/ String groupId, GroupMessage groupMessage) {
-        //User currentUser = currentUserRepository.findCurrentUser(awsRequest);
+    public GroupMessage saveMessage(String userId, String groupId, GroupMessage groupMessage) {
         groupMessage.setMessageId(UUID.randomUUID().toString());
         groupMessage.setGroupId(groupId);
         groupMessage.setSendAt(System.currentTimeMillis());
-        //groupMessage.setSentBy(currentUser.getUserId());
-        groupMessage.setSentBy("7320be64-69f5-4f92-8fa3-40f455b457fa");
+        groupMessage.setSentBy(userId);
+        //groupMessage.setSentBy("7320be64-69f5-4f92-8fa3-40f455b457fa");
 
-        //FIXME: does not save
         mapper.save(groupMessage);
         System.out.println("[GROUP MESSAGE REPO] Message is saved");
 

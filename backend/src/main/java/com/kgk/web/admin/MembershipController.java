@@ -1,6 +1,5 @@
 package com.kgk.web.admin;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.kgk.model.admin.RegisterForm;
 import com.kgk.repository.admin.MembershipRepository;
 import io.micronaut.http.annotation.Controller;
@@ -13,6 +12,7 @@ import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Secured(SecurityRule.IS_ANONYMOUS)
@@ -25,10 +25,9 @@ public class MembershipController {
         this.membershipRepository = membershipRepository;
     }
 
-    //TODO: how to send a AwsProxyRequest
     @Get
-    public List<RegisterForm> listAll(/*AwsProxyRequest awsRequest*/){
-        return membershipRepository.listAllUnapprovedRegisterForms(/*awsRequest*/);
+    public List<RegisterForm> listAll(Principal principal){
+        return membershipRepository.listAllUnapprovedRegisterForms(principal.getName());
     }
 
     @Get("/{registerId}")

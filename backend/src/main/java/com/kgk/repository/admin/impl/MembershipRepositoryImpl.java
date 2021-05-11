@@ -1,6 +1,5 @@
 package com.kgk.repository.admin.impl;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
@@ -10,7 +9,6 @@ import com.kgk.model.DeletedItem;
 import com.kgk.model.admin.RegisterForm;
 import com.kgk.model.user.User;
 import com.kgk.repository.admin.MembershipRepository;
-import com.kgk.repository.user.CurrentUserRepository;
 import com.kgk.repository.user.UserRepository;
 
 import javax.inject.Singleton;
@@ -30,22 +28,23 @@ public class MembershipRepositoryImpl implements MembershipRepository {
 
     private final DynamoDBMapperConfig config;
 
-    private final CurrentUserRepository currentUserRepository;
+    private final UserRepository userRepository;
 
-    public MembershipRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config, CurrentUserRepository currentUserRepository) {
+    public MembershipRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config,
+                                    UserRepository userRepository) {
         this.mapper = mapper;
         this.config = config;
-        this.currentUserRepository = currentUserRepository;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public List<RegisterForm> listAllUnapprovedRegisterForms(/*AwsProxyRequest awsRequest*/) {
-        //User currentUser = currentUserRepository.findCurrentUser(awsRequest);
+    public List<RegisterForm> listAllUnapprovedRegisterForms(String userId) {
+        User currentUser = userRepository.findUserById(userId);
 
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":approved", new AttributeValue().withS("false"));
-        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        eav.put(":city", new AttributeValue().withS("Ankara"));
+        eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        //eav.put(":city", new AttributeValue().withS("Ankara"));
 
         DynamoDBQueryExpression<RegisterForm> queryExpression = new DynamoDBQueryExpression<RegisterForm>()
                 .withKeyConditionExpression("approved = :approved and city = :city")

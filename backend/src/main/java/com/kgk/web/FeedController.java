@@ -1,6 +1,5 @@
 package com.kgk.web;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.kgk.model.admin.News;
 import com.kgk.repository.admin.NewsRepository;
 import io.micronaut.http.annotation.Controller;
@@ -14,6 +13,7 @@ import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Secured(SecurityRule.IS_ANONYMOUS)
@@ -27,8 +27,8 @@ public class FeedController {
     }
 
     @Get
-    public List<News> listAllNews(/*AwsProxyRequest awsRequest*/) {
-        return newsRepository.listAllNews(/*awsRequest*/);
+    public List<News> listAllNews(Principal principal) {
+        return newsRepository.listAllNews(principal.getName());
     }
 
     @Get("/{newsId}")

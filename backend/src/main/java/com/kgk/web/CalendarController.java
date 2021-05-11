@@ -1,6 +1,5 @@
 package com.kgk.web;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.kgk.model.admin.Meeting;
 import com.kgk.repository.admin.MeetingRepository;
 import io.micronaut.http.annotation.Controller;
@@ -14,6 +13,7 @@ import io.micronaut.security.annotation.Secured;
 import io.micronaut.security.rules.SecurityRule;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Secured(SecurityRule.IS_ANONYMOUS)
@@ -27,8 +27,8 @@ public class CalendarController {
     }
 
     @Get
-    public List<Meeting> listAllMeetings(/*AwsProxyRequest awsRequest*/) {
-        return meetingRepository.listAllMeetings(/*awsRequest*/);
+    public List<Meeting> listAllMeetings(Principal principal) {
+        return meetingRepository.listAllMeetings(principal);
     }
 
     @Get("/{meetingId}")
