@@ -43,10 +43,10 @@ export class PageLoginPage implements OnInit {
     ) {
 
     this.loginForm = formBuilder.group({
-    email: [
+    username: [
       '',
       Validators.compose([
-        Validators.pattern('[A-Za-z0-9._%+-]{2,}@[a-zA-Z-_.]{2,}[.]{1}[a-zA-Z]{2,}'),
+        Validators.email, // pattern('[A-Za-z0-9._%+-]{2,}@[a-zA-Z-_.]{2,}[.]{1}[a-zA-Z]{2,}'),
         Validators.required
       ])
     ],
@@ -93,7 +93,7 @@ export class PageLoginPage implements OnInit {
         // For database action
         const credential = await this.http.post<Credential>(environment.apiUrl + '/login', formData).toPromise();
         this.authService.setCredential(credential);
-        const user = await this.http.get<User>(environment.apiUrl + '/api/profile').toPromise();
+        const user = await this.http.get<User>(environment.apiUrl + '/api/user/profile').toPromise();
         this.authService.setUser(user);
         this.router.navigate(['/tabs/feed']);
       } catch (e) {

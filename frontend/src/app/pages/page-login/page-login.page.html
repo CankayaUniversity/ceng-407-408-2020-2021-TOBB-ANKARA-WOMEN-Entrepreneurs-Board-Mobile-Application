@@ -9,7 +9,7 @@
         <form [formGroup]="loginForm" (ngSubmit)="submitForm()" id="form">
           <ion-item color = "whitesmoke"class="ion-margin-bottom">
             <ion-icon name="person-sharp"></ion-icon>
-            <ion-input formControlName="email" required="true" placeholder="E-mail"></ion-input>
+            <ion-input formControlName="username" required="true" placeholder="E-mail"></ion-input>
           </ion-item>
           <span class="error ion-padding" *ngIf="submitted && errorCtr.email.errors?.required">
             E-mail is required.
