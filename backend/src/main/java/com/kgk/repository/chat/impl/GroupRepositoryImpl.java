@@ -1,6 +1,5 @@
 package com.kgk.repository.chat.impl;
 
-import com.amazonaws.serverless.proxy.model.AwsProxyRequest;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
@@ -14,7 +13,7 @@ import com.kgk.model.user.User;
 import com.kgk.repository.chat.GroupMemberRepository;
 import com.kgk.repository.chat.GroupMessageRepository;
 import com.kgk.repository.chat.GroupRepository;
-import com.kgk.repository.user.CurrentUserRepository;
+import com.kgk.repository.user.UserRepository;
 
 import javax.inject.Singleton;
 import java.util.HashMap;
@@ -33,19 +32,18 @@ public class GroupRepositoryImpl implements GroupRepository {
 
     private final DynamoDBMapperConfig config;
 
-    private final CurrentUserRepository currentUserRepository;
+    private final UserRepository userRepository;
 
-    //private final GroupMessageRepository groupMessageRepository;
+    private final GroupMessageRepository groupMessageRepository;
 
-    //private final GroupMemberRepository groupMemberRepository;
+    private final GroupMemberRepository groupMemberRepository;
 
-    public GroupRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config,
-            CurrentUserRepository currentUserRepository/*, GroupMessageRepository groupMessageRepository, GroupMemberRepository groupMemberRepository*/) {
+    public GroupRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config, UserRepository userRepository) {
         this.mapper = mapper;
         this.config = config;
-        this.currentUserRepository = currentUserRepository;
-        //this.groupMessageRepository = groupMessageRepository;
-        //this.groupMemberRepository = groupMemberRepository;
+        this.userRepository = userRepository;
+        this.groupMessageRepository = new GroupMessageRepositoryImpl(this.mapper, this.config);
+        this.groupMemberRepository = new GroupMemberRepositoryImpl(this.mapper, this.config, this);
     }
 
     @Override
@@ -54,15 +52,15 @@ public class GroupRepositoryImpl implements GroupRepository {
     }
 
     @Override
-    public List<Group> listAllCreatedGroupsByUser(/*AwsProxyRequest awsRequest*/) {
-        //User currentUser = currentUserRepository.findCurrentUser(awsRequest);
+    public List<Group> listAllCreatedGroupsByUser(String userId) {
+        User currentUser = userRepository.findUserById(userId);
 
         Map<String, AttributeValue> eav = new HashMap<>();
-        //eav.put(":createdBy", new AttributeValue().withS(currentUser.getUserId()));
-        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        eav.put(":createdBy", new AttributeValue().withS(currentUser.getUserId()));
+        eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
 
-        eav.put(":createdBy", new AttributeValue().withS("036d512f-5b57-4cc3-a050-ffd907b10496"));
-        eav.put(":city", new AttributeValue().withS("Ankara"));
+        //eav.put(":createdBy", new AttributeValue().withS("036d512f-5b57-4cc3-a050-ffd907b10496"));
+        //eav.put(":city", new AttributeValue().withS("Ankara"));
 
         DynamoDBQueryExpression<Group> queryExpression = new DynamoDBQueryExpression<Group>()
                 .withIndexName(GSI_NAME)
@@ -74,15 +72,15 @@ public class GroupRepositoryImpl implements GroupRepository {
     }
 
     @Override
-    public Group createGroup(/*AwsProxyRequest awsRequest,*/ Group group) {
-        //User currentUser = currentUserRepository.findCurrentUser(awsRequest);
+    public Group createGroup(String userId, Group group) {
+        User currentUser = userRepository.findUserById(userId);
 
         group.setGroupId(UUID.randomUUID().toString());
         group.setCreatedAt(System.currentTimeMillis());
-        //group.setCreatedBy(currentUser.getUserId());
-        //group.setCity(currentUser.getCity());
-        group.setCreatedBy("036d512f-5b57-4cc3-a050-ffd907b10496");
-        group.setCity("Ankara");
+        group.setCreatedBy(currentUser.getUserId());
+        group.setCity(currentUser.getCity());
+        //group.setCreatedBy("036d512f-5b57-4cc3-a050-ffd907b10496");
+        //group.setCity("Ankara");
         mapper.save(group);
 
         return group;
@@ -102,7 +100,7 @@ public class GroupRepositoryImpl implements GroupRepository {
     public void deleteGroup(String groupId) {
         Group group = mapper.load(Group.class, groupId, config);
 
-        /*List<GroupMember> groupMembers = groupMemberRepository.listAllUsersByGroupId(groupId);
+        List<GroupMember> groupMembers = groupMemberRepository.listAllUsersByGroupId(groupId);
         groupMembers.forEach(
                 groupMember -> groupMemberRepository.removeUser(groupMember.getUserId())
         );
@@ -110,7 +108,7 @@ public class GroupRepositoryImpl implements GroupRepository {
         List<GroupMessage> groupMessages = groupMessageRepository.listAllMessagesByGroupId(groupId);
         groupMessages.forEach(
                 groupMessage -> groupMessageRepository.deleteMessage(groupId, groupMessage.getMessageId())
-        );*/
+        );
 
         DeletedItem deletedGroup = new DeletedItem();
         deletedGroup.setDeletedTime(System.currentTimeMillis());
