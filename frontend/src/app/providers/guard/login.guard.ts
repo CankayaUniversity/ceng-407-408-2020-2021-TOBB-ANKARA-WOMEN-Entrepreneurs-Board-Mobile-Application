@@ -15,7 +15,7 @@ export class LoginGuard implements CanActivate {
     const credential = this.authService.getCredential().value;
     if (credential) {
       try {
-        const user = await this.http.get<User>(environment.apiUrl + '/api/profile').toPromise();
+        const user = await this.http.get<User>(environment.apiUrl + '/api/user/profile').toPromise();
         this.authService.setUser(user);
         return true;
       } catch (e) {
