@@ -36,11 +36,14 @@ const routes: Routes = [
     canActivate: [LoginGuard],
   },
   {
+    path: 'edit-profile',
+    loadChildren: () => import('./pages/page-edit-profile/page-edit-profile.module').then( m => m.PageEditProfilePageModule)
+  },
+  {
     path: '',
     loadChildren: () => import('./pages/page-tabs/page-tabs.module').then( m => m.PageTabsPageModule),
     canActivate: [LoginGuard],
   },
-
 
 
   /* For educational purposes, will be enhanced later{
