@@ -17,10 +17,10 @@ const routes: Routes = [
         path: 'feed',
         loadChildren: () => import('../page-feed/page-feed.module').then(m => m.PageFeedPageModule)
       },
-      /*{
+      {
         path: 'calendar',
-        loadChildren: () => import('../page-calender/page-calender.module').then(m => m.PageCalenderPageModule)
-      },*/
+        loadChildren: () => import('../page-calendar/page-calendar.module').then(m => m.PageCalendarPageModule)
+      },
       {
         path: 'profile',
         loadChildren: () => import('../page-profile/page-profile.module').then(m => m.PageProfilePageModule)
