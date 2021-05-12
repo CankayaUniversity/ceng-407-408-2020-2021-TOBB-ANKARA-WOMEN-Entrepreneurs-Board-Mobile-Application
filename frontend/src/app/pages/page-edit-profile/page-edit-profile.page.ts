@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
-
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
-import {RegisterForm} from '../../providers/model/register-form.type';
+import {User} from '../../providers/model/user/user.model';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {AuthService} from '../../providers/service/auth.service';
+import {UserApi} from '../../providers/model/user/user.api';
 
 interface Occupation {
   name: string;
@@ -14,76 +13,25 @@ interface City {
 }
 
 @Component({
-  selector: 'app-page-register',
-  templateUrl: './page-register.page.html',
-  styleUrls: ['./page-register.page.scss'],
+  selector: 'app-page-edit-profile',
+  templateUrl: './page-edit-profile.page.html',
+  styleUrls: ['./page-edit-profile.page.scss'],
 })
-export class PageRegisterPage implements OnInit {
-  public isToggled   = false;
-  ionicForm: FormGroup;
-  submitted =  false;
-  constructor(public formBuilder: FormBuilder, private router: Router, private http: HttpClient) {
-    this.ionicForm = formBuilder.group({
-      firstName: [
-        '',
-        Validators.compose([
-          Validators.minLength(2),
-          Validators.maxLength(50),
-          Validators.pattern('[0-9a-z-A-Z-_]*'),
-          Validators.required
-        ])
-      ],
-      lastName: [
-        '',
-        Validators.compose([
-          Validators.minLength(2),
-          Validators.maxLength(50),
-          Validators.pattern('[0-9a-z-A-Z-_]*'),
-          Validators.required
-        ])
-      ],
-      email: [
-        '',
-        Validators.compose([
-          Validators.minLength(4),
-          Validators.pattern('[A-Za-z0-9._%+-]{2,}@[a-zA-Z-_.]{2,}[.]{1}[a-zA-Z]{2,}'),
-          Validators.required
-        ])
-      ],
-      city: [
-        '',
-        Validators.compose([
-          Validators.required
-        ])
-      ],
-      password: [
-        '',
-        Validators.compose([
-          Validators.minLength(6),
-          Validators.pattern('[0-9a-z-A-Z@.#*$!?&+-/]*'),
-          Validators.required
-        ])
-      ],
-      occupation: [
-        '',
-        Validators.compose([
-          Validators.required
-        ])
-      ],
-      tobbRegisterId: [
-        '',
-        Validators.compose([
-        Validators.pattern('^[0-9]+$'),
-        Validators.required
-        ])
-      ],
-      phone: [
-        '',
-        Validators.compose([
-          Validators.pattern('^[0-9]+$'),
-          Validators.required
-        ])
-      ],
+export class PageEditProfilePage implements OnInit {
+
+  user: User;
+  form: FormGroup;
+
+  constructor(private router: Router, private authService: AuthService, private userApi: UserApi, private formBuilder: FormBuilder) {
+    this.form = this.formBuilder.group({
+      firstName: [''],
+      lastName: [''],
+      email: [''],
+      city: [''],
+      phone: [''],
+      birthDate: [''],
+      occupation: [''],
+      description: [''],
     });
   }
 
@@ -414,49 +362,41 @@ export class PageRegisterPage implements OnInit {
     }
   ];
 
-  get errorCtr() {
-    return this.ionicForm.controls;
+  async ngOnInit() {
+    this.user = this.authService.getUser().value;
+
+    // EDIT
+    this.form = this.formBuilder.group({
+      firstName: [this.user.firstName, Validators.required],
+      lastName: [this.user.lastName],
+      email: [this.user.email],
+      city: [this.user.city],
+      tobbRegisterId: [this.user.tobbRegisterId],
+      phone: [this.user.tobbRegisterId],
+      birthDate: [this.user.birthDate],
+      occupation: [this.user.occupation],
+      description: [this.user.description],
+    });
+
+  }
+  // ngOnInit(){}
+  goBack(){
+    this.router.navigate(['/tabs/profile']);
   }
 
-  async submitForm() {
-    const formData: RegisterForm = {...this.ionicForm.value};
-    formData.occupation = (formData.occupation as any).name;
-    formData.city = (formData.city as any).name;
-
-    this.submitted = true;
-    if (this.ionicForm.invalid && this.isToggled) {
-      console.log('All fields are required.');
-      this.router.navigate(['/register']);
-      return false;
-    } else {
-      console.log(formData);
-      try {
-        // For database action
-        await this.http.post(environment.apiUrl + '/api/register-form', formData).toPromise();
-        this.router.navigate(['/login']);
-      } catch (e) {
-        // error toast
-      }
-
-    }
-  }
   compareWith(o1: Occupation, o2: Occupation) {
     return o1 && o2 ? o1.name === o2.name : o1 === o2;
   }
+  // EDIT
+  async save(){
+    const userForm = this.form.value;
 
-  ngOnInit() {
+    /*const userForm: User = {...this.form.value};
+    userForm.occupation = (userForm.occupation as any).name;
+    userForm.city = (userForm.city as any).name;
+    userForm.birthDate = (userForm.birthDate as any).name;*/
+    const user = await this.userApi.updateMyProfile(userForm).toPromise();
+    this.authService.setUser(user);
+    this.router.navigate(['/tabs/feed']);
   }
-
-  /*This method might come in handy for ion-button in the future
-  regMeIn(){
-    this.router.navigate(['/home']);
-  }*/
-  goBack(){
-    this.router.navigate(['/login']);
-  }
-  notify() {
-    this.isToggled = !this.isToggled;
-  }
-
-
 }

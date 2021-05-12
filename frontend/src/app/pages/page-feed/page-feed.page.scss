@@ -1,3 +1,29 @@
+ion-header{
+  height: 0px;
+  .column {
+    float: left;
+  }
+  ion-icon{
+    width: 30%;
+    color: whitesmoke;
+    margin-top: 10%;
+    text-align: center;
+    display:inline-block;
+    vertical-align:middle;
+    margin-left: auto;
+    display: flex;
+    height: 45%;
+    padding-left: 50px;
+    margin-right: auto;
+  }
+  .left, .right {
+    width: 50%;
+    height: 80px;
+    padding-top: 10px;
+    padding-left: 60px;
+  }
+
+}
 .background {
   --background: url(../../../assets/backgrounds/bigger-left-bubble-edited.png) 0 0/100% 100% no-repeat;
 }

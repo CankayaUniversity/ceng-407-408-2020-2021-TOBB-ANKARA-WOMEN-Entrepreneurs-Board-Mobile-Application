@@ -12,5 +12,8 @@ export class PageTabsPage implements OnInit {
 
   ngOnInit() {
   }
+  /*profile(){
+    this.router.navigate(['/tabs/profile']);
+  }*/
 
 }

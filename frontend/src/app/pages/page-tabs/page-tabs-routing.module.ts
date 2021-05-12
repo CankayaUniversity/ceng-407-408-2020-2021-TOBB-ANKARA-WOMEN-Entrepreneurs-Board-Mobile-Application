@@ -18,7 +18,12 @@ const routes: Routes = [
       },
       {
         path: '',
-        redirectTo: '/tabs/calendar',
+        redirectTo: '/tabs/calender',
+        pathMatch: 'full'
+      },
+      {
+        path: '',
+        redirectTo: '/tabs/profile',
         pathMatch: 'full'
       },
     ],

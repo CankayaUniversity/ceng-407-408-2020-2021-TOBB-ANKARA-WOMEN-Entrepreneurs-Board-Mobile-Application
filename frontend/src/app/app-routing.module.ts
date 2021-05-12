@@ -1,11 +1,12 @@
 import {NgModule} from '@angular/core';
 import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {LoginGuard} from './providers/guard/login.guard';
 
 const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: '',
@@ -13,7 +14,8 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./pages/page-home/page-home.module').then( m => m.PageHomePageModule)
+    loadChildren: () => import('./pages/page-home/page-home.module').then( m => m.PageHomePageModule),
+    canActivate: [LoginGuard],
   },
   {
     path: 'login',
@@ -25,30 +27,35 @@ const routes: Routes = [
   },
   {
     path: 'profile',
-    loadChildren: () => import('./pages/page-profile/page-profile.module').then( m => m.PageProfilePageModule)
+    loadChildren: () => import('./pages/page-profile/page-profile.module').then( m => m.PageProfilePageModule),
+    canActivate: [LoginGuard],
   },
   {
     path: 'message',
-    loadChildren: () => import('./pages/page-message/page-message.module').then( m => m.PageMessagePageModule)
+    loadChildren: () => import('./pages/page-message/page-message.module').then( m => m.PageMessagePageModule),
+    canActivate: [LoginGuard],
+  },
+  {
+    path: 'edit-profile',
+    loadChildren: () => import('./pages/page-edit-profile/page-edit-profile.module').then( m => m.PageEditProfilePageModule)
   },
   {
     path: '',
-    loadChildren: () => import('./pages/page-tabs/page-tabs.module').then( m => m.PageTabsPageModule)
+    loadChildren: () => import('./pages/page-tabs/page-tabs.module').then( m => m.PageTabsPageModule),
+    canActivate: [LoginGuard],
   },
-  {
+  /*{
     path: 'calendar',
     loadChildren: () => import('./pages/page-calendar/page-calendar.module').then( m => m.PageCalendarPageModule)
-  },  {
+  },
+  {
     path: 'page-calendar-event',
     loadChildren: () => import('./pages/page-calendar-event/page-calendar-event.module').then( m => m.PageCalendarEventPageModule)
-  },
-
-
-
+  },*/
 
 
   /* For educational purposes, will be enhanced later{
-    path: 'product/:id',
+    path: 'user/:id',
     loadChildren: () => import('./pages/page-register/page-register.module').then( m => m.PageRegisterPageModule)
   },*/
 ];
