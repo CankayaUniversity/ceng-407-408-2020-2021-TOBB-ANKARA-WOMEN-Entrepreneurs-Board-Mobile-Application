@@ -116,7 +116,7 @@ ion-content {
     }
   ion-card{
     border-radius: 50px;
-    height: 200px;
+    height: 100px;
     width: 90%;
     box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.08);
     --highlight-height: 0px;
@@ -124,6 +124,7 @@ ion-content {
     overflow: auto;
     ion-card-content{
       padding-top: 0px;
+      height: 200px;
       color: #717171;
       font-size: 18px;
       font-weight: 500;
