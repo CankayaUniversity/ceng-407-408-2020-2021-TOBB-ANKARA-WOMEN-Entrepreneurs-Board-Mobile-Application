@@ -22,6 +22,7 @@
     "@ionic/angular": "^5.5.2",
     "@ionic/lab": "^3.2.10",
     "cordova-android": "^9.0.0",
+    "date-fns": "^2.21.3",
     "ngx-autosize": "^1.8.4",
     "rxjs": "~6.6.0",
     "tslib": "^2.0.0",
