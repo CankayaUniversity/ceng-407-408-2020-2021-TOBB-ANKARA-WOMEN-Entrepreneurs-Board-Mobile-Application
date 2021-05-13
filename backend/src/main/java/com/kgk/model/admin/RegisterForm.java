@@ -19,7 +19,6 @@ public class RegisterForm {
     private String registerId; //hash key
 
     @NonNull
-    @NotBlank
     private String city;   //gsi hash key
 
     @NonNull
