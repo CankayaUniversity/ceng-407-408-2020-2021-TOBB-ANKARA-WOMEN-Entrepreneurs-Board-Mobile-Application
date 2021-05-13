@@ -6,6 +6,8 @@ import {UserApi} from '../../providers/model/user/user.api';
 import {User} from '../../providers/model/user/user.model';
 import {AuthService} from '../../providers/service/auth.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {format} from 'date-fns';
+
 @Component({
   selector: 'app-page-profile',
   templateUrl: './page-profile.page.html',
@@ -19,6 +21,7 @@ export class PageProfilePage implements OnInit {
 
   async ngOnInit() {
     this.user = this.authService.getUser().value;
+    this.user.birthDate = format(new Date(this.user.birthDate), 'yyyy-MM-dd');
 
     // EDIT
     /*this.form = this.formBuilder.group({
