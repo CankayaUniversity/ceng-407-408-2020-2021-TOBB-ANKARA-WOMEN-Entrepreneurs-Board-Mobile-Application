@@ -52,7 +52,6 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
         groupMessage.setGroupId(groupId);
         groupMessage.setSendAt(System.currentTimeMillis());
         groupMessage.setSentBy(userId);
-        //groupMessage.setSentBy("7320be64-69f5-4f92-8fa3-40f455b457fa");
 
         mapper.save(groupMessage);
         System.out.println("[GROUP MESSAGE REPO] Message is saved");
@@ -70,9 +69,7 @@ public class GroupMessageRepositoryImpl implements GroupMessageRepository {
         deletedMessage.setOriginalId(groupMessage.getMessageId());
 
         try {
-            //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
-            //Converting the Object to JSONString
             String json = om.writeValueAsString(groupMessage);
             deletedMessage.setJson(json);
         } catch (Exception e) {

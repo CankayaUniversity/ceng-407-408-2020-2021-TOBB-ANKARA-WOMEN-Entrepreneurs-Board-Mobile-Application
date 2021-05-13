@@ -43,7 +43,6 @@ public class NewsRepositoryImpl implements NewsRepository {
 
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        //eav.put(":city", new AttributeValue().withS("Ankara"));
         eav.put(":updatedAt", new AttributeValue().withN(String.valueOf(System.currentTimeMillis())));
 
         DynamoDBQueryExpression<News> queryExpression = new DynamoDBQueryExpression<News>()
@@ -95,9 +94,7 @@ public class NewsRepositoryImpl implements NewsRepository {
         deletedNews.setOriginalId(news.getNewsId());
 
         try {
-            //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
-            //Converting the Object to JSONString
             String json = om.writeValueAsString(news);
             deletedNews.setJson(json);
         } catch (Exception e) {

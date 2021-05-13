@@ -24,7 +24,6 @@ public class PermissionRepositoryImpl implements PermissionRepository {
 
     private final UserRepository userRepository;
 
-
     public PermissionRepositoryImpl(DynamoDBMapper mapper, UserRepository userRepository) {
         this.mapper = mapper;
         this.userRepository = userRepository;
@@ -36,7 +35,6 @@ public class PermissionRepositoryImpl implements PermissionRepository {
 
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        //eav.put(":city", new AttributeValue().withS("Ankara"));
 
         DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
                 .withIndexName(CITY_GSI_NAME)
@@ -53,7 +51,6 @@ public class PermissionRepositoryImpl implements PermissionRepository {
 
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        //eav.put(":city", new AttributeValue().withS("Ankara"));
         eav.put(":roleId", new AttributeValue().withS(roleId));
 
         DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()

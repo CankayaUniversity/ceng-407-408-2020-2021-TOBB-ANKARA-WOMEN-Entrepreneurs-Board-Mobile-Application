@@ -140,9 +140,7 @@ public class UserRepositoryImpl implements UserRepository {
         deletedUser.setOriginalId(user.getUserId());
 
         try {
-            //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
-            //Converting the Object to JSONString
             String json = om.writeValueAsString(user);
             deletedUser.setJson(json);
         } catch (Exception e) {

@@ -44,7 +44,6 @@ public class MeetingRepositoryImpl implements MeetingRepository {
 
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        //eav.put(":city", new AttributeValue().withS("Ankara"));
         eav.put(":updatedAt", new AttributeValue().withN(String.valueOf(System.currentTimeMillis())));
 
         DynamoDBQueryExpression<Meeting> queryExpression = new DynamoDBQueryExpression<Meeting>()
@@ -98,9 +97,7 @@ public class MeetingRepositoryImpl implements MeetingRepository {
         deletedMeeting.setOriginalId(meeting.getMeetingId());
 
         try {
-            //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
-            //Converting the Object to JSONString
             String json = om.writeValueAsString(meeting);
             deletedMeeting.setJson(json);
         } catch (Exception e) {

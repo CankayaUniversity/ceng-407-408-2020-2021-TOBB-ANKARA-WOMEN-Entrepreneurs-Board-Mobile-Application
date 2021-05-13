@@ -59,9 +59,6 @@ public class GroupRepositoryImpl implements GroupRepository {
         eav.put(":createdBy", new AttributeValue().withS(currentUser.getUserId()));
         eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
 
-        //eav.put(":createdBy", new AttributeValue().withS("036d512f-5b57-4cc3-a050-ffd907b10496"));
-        //eav.put(":city", new AttributeValue().withS("Ankara"));
-
         DynamoDBQueryExpression<Group> queryExpression = new DynamoDBQueryExpression<Group>()
                 .withIndexName(GSI_NAME)
                 .withKeyConditionExpression("createdBy = :createdBy and city = :city")
@@ -79,8 +76,6 @@ public class GroupRepositoryImpl implements GroupRepository {
         group.setCreatedAt(System.currentTimeMillis());
         group.setCreatedBy(currentUser.getUserId());
         group.setCity(currentUser.getCity());
-        //group.setCreatedBy("036d512f-5b57-4cc3-a050-ffd907b10496");
-        //group.setCity("Ankara");
         mapper.save(group);
 
         return group;
@@ -116,9 +111,7 @@ public class GroupRepositoryImpl implements GroupRepository {
         deletedGroup.setOriginalId(group.getGroupId());
 
         try {
-            //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
-            //Converting the Object to JSONString
             String json = om.writeValueAsString(group);
             deletedGroup.setJson(json);
         } catch (Exception e) {

@@ -66,9 +66,7 @@ public class CatalogRepositoryImpl implements CatalogRepository {
         deletedCatalog.setOriginalId(catalog.getCatalogId());
 
         try {
-            //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
-            //Converting the Object to JSONString
             String json = om.writeValueAsString(catalog);
             deletedCatalog.setJson(json);
         } catch (Exception e) {

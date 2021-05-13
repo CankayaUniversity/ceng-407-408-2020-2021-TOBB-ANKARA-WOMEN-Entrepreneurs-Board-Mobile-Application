@@ -44,7 +44,6 @@ public class MembershipRepositoryImpl implements MembershipRepository {
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":approved", new AttributeValue().withS("false"));
         eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        //eav.put(":city", new AttributeValue().withS("Ankara"));
 
         DynamoDBQueryExpression<RegisterForm> queryExpression = new DynamoDBQueryExpression<RegisterForm>()
                 .withKeyConditionExpression("approved = :approved and city = :city")
@@ -66,6 +65,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
 
         RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, config);
         retrievedForm.setApproved("true");
+        retrievedForm.setRoleId("MEMBER");
 
         user.setUserId(UUID.randomUUID().toString());
         user.setRoleId("MEMBER");
@@ -96,9 +96,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
         deletedRegisterForm.setOriginalId(retrievedForm.getRegisterId());
 
         try {
-            //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
-            //Converting the Object to JSONString
             String json = om.writeValueAsString(retrievedForm);
             deletedRegisterForm.setJson(json);
         } catch (Exception e) {
