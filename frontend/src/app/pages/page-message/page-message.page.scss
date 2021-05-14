@@ -25,7 +25,10 @@ ion-content{
   }
   .row2{
     height: 85%;
-    margin-left: 30px;
+    margin-left: 40px;
+    margin-right: 30px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     overflow: auto;
 
   }
@@ -39,7 +42,11 @@ ion-content{
     white-space: pre-wrap;
 
   }
+  ion-row.ios.hydrated {
+    margin-top: 10px;
+  }
   .other-message{
+    // margin-top: 5px;
     background: var(--ion-color-tertiary);
     color: #fff;
 

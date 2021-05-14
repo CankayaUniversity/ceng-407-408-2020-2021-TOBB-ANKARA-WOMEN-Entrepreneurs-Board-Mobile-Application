@@ -4,6 +4,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {AuthService} from '../../providers/service/auth.service';
 import {UserApi} from '../../providers/model/user/user.api';
+import {format} from 'date-fns';
 
 interface Occupation {
   name: string;
@@ -373,7 +374,7 @@ export class PageEditProfilePage implements OnInit {
       city: [this.user.city],
       tobbRegisterId: [this.user.tobbRegisterId],
       phone: [this.user.tobbRegisterId],
-      birthDate: [this.user.birthDate],
+      birthDate: [format(new Date(this.user.birthDate), 'yyyy-MM-dd')],
       occupation: [this.user.occupation],
       description: [this.user.description],
     });
@@ -389,12 +390,12 @@ export class PageEditProfilePage implements OnInit {
   }
   // EDIT
   async save(){
-    const userForm = this.form.value;
+    // const userForm = this.form.value;
 
-    /*const userForm: User = {...this.form.value};
+    const userForm: User = {...this.form.value};
     userForm.occupation = (userForm.occupation as any).name;
     userForm.city = (userForm.city as any).name;
-    userForm.birthDate = (userForm.birthDate as any).name;*/
+
     const user = await this.userApi.updateMyProfile(userForm).toPromise();
     this.authService.setUser(user);
     this.router.navigate(['/tabs/feed']);

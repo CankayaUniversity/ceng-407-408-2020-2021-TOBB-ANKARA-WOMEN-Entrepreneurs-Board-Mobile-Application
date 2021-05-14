@@ -6,13 +6,13 @@
     <ion-row class="row1"></ion-row>
     <div class = "row2">
       <ion-row *ngFor = "let message of messages">
-        <ion-col size="7" *ngIf="currentUser !== message.username" class="message other-message">
+        <ion-col size="9" *ngIf="currentUser !== message.username" class="message other-message">
           <b>{{ message.username }} </b><br>
           <span>{{ message.msg }} </span>
           <div class="time" text-right><br>{{ message.createdAt | date:'short' }}</div>
         </ion-col>
 
-        <ion-col offset = "3" size="8" *ngIf="currentUser === message.username" class="message my-message">
+        <ion-col offset = "3" size="9" *ngIf="currentUser === message.username" class="message my-message">
           <b>{{ message.username }} </b><br>
           <span>{{ message.msg }} </span>
           <div class="time" text-right><br>{{ message.createdAt | date:'short' }}</div>
