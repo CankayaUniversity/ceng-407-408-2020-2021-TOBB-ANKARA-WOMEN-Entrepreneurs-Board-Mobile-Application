@@ -22,24 +22,10 @@ export class PageProfilePage implements OnInit {
   async ngOnInit() {
     this.user = this.authService.getUser().value;
     this.user.birthDate = format(new Date(this.user.birthDate), 'yyyy-MM-dd');
-
-    // EDIT
-    /*this.form = this.formBuilder.group({
-      firstName: [this.user.firstName, Validators.required],
-      lastName: [this.user.lastName]
-    });*/
-
   }
   // ngOnInit(){}
   goBack(){
     this.router.navigate(['/feed']);
   }
 
-
-  // EDIT
-  /*async save(){
-    const userForm = this.form.value;
-    const user = await this.userApi.updateMyProfile(userForm).toPromise();
-    this.authService.setUser(user);
-  }*/
 }
