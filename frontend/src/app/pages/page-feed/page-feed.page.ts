@@ -24,7 +24,7 @@ export class PageFeedPage implements OnInit {
 
   onGoToNewsSingle(news){
     this.feedService.currentNews = news;
-    this.router.navigate(['/feed-single']);
+    this.router.navigate(['/page-feed-single']);
   }
 
   loadMoreNews(event) {
