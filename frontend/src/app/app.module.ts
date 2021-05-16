@@ -13,6 +13,7 @@ import {AuthService} from './providers/service/auth.service';
 import {SecurityInterceptor} from './providers/interceptor/security.interceptor';
 import {LoginGuard} from './providers/guard/login.guard';
 import {UserApi} from './providers/model/user/user.api';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,8 @@ import {UserApi} from './providers/model/user/user.api';
     IonicModule.forRoot(),
     AppRoutingModule,
     HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule,
   ],
   providers: [
     FeedService,
