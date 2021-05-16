@@ -12,6 +12,6 @@ export class FeedService {
   constructor(private http: HttpClient) {}
 
   getFeed(apiUrl: string): Observable<object>{
-    return this.http.get(`${environment.apiUrl}/feed`);
+    return this.http.get(`${API_URL}/api/feed`);
   }
 }

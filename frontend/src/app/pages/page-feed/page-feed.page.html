@@ -11,13 +11,13 @@
   <ion-grid>
     <ion-row class="row1"><ion-label class="feed"></ion-label></ion-row>
     <ion-row class="row2">
-        <ion-content class="card-inside" style="background-color: transparent">
+        <ion-content>
           <div>
-            <ion-card class="card" *ngFor="let news of data?.feed" (click)="onGoToNewsSingle(news)">
+            <ion-card class="card" *ngFor="let news of data" (click)="onGoToNewsSingle(news)">
               <!-- <ion-img [src]="news.urlToImage"></ion-img> -->
 
               <ion-card-content>
-                <ion-card-header style="background-color: mediumvioletred">
+                <ion-card-header>
                   <ion-card-title>{{news.newsTitle}}</ion-card-title>
                   <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
                 </ion-card-header>
@@ -25,7 +25,7 @@
               </ion-card-content>
             </ion-card>
 
-            <ion-infinite-scroll  style="background-color: #ffd948"> // (ionInfinite)="loadMoreNews($event)">
+            <ion-infinite-scroll>
               <ion-infinite-scroll-content loadingSpinner="bubble" style="color: #0d0d0d" loadingText="load news.."></ion-infinite-scroll-content>
             </ion-infinite-scroll>
           </div>
