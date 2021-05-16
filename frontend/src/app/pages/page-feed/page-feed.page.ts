@@ -1,9 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, Inject, LOCALE_ID, OnInit} from '@angular/core';
 import { FeedService } from 'src/app/feed.service';
 import { Router } from '@angular/router';
 import {environment} from '../../../environments/environment';
 import {AuthService} from '../../providers/service/auth.service';
 import {User} from '../../providers/model/user/user.model';
+import {PageFeedCreatePage} from '../page-feed-create/page-feed-create.page';
+import {AlertController, ModalController} from '@ionic/angular';
+import {PageFeedCreatePageModule} from '../page-feed-create/page-feed-create.module';
 
 @Component({
   selector: 'app-page-feed',
@@ -16,7 +19,14 @@ export class PageFeedPage implements OnInit {
   page = 1;
   user: User;
 
-  constructor(private feedService: FeedService, private router: Router, private authService: AuthService) {}
+  constructor(
+    private alertCtrl: AlertController,
+    private feedService: FeedService,
+    private modalCtrl: ModalController,
+    private router: Router,
+    private authService: AuthService,
+    @Inject(LOCALE_ID) private locale: string,
+  ) {}
 
   ngOnInit() {
     this.feedService.getFeed('/api/feed')
@@ -33,6 +43,16 @@ export class PageFeedPage implements OnInit {
   onGoToNewsSingle(news){
     this.feedService.currentNews = news;
     this.router.navigate(['/page-feed-single']);
+  }
+
+  async addNews(){
+    const modal = await this.modalCtrl.create({
+      component: PageFeedCreatePage,
+      cssClass: 'feed-create',
+      backdropDismiss: false
+    });
+
+    await modal.present;
   }
 
   loadMoreNews(event) {
