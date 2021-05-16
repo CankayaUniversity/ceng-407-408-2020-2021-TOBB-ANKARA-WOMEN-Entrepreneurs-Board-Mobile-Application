@@ -27,8 +27,8 @@ public class FeedController {
     }
 
     @Get
-    public List<News> listAllNews(Principal principal) {
-        return newsRepository.listAllNews(principal.getName());
+    public List<News> listAllNews(/*Principal principal*/) {
+        return newsRepository.listAllNews(/*principal.getName()*/);
     }
 
     @Get("/{newsId}")

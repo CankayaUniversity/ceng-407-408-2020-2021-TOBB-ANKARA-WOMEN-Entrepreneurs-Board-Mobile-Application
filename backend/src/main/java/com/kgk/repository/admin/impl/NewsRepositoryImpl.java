@@ -38,11 +38,12 @@ public class NewsRepositoryImpl implements NewsRepository {
     }
 
     @Override
-    public List<News> listAllNews(String userId) {
-        User currentUser = userRepository.findUserById(userId);
+    public List<News> listAllNews(/*String userId*/) {
+        //User currentUser = userRepository.findUserById(userId);
 
         Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        eav.put(":city", new AttributeValue().withS("Ankara"));
         eav.put(":updatedAt", new AttributeValue().withN(String.valueOf(System.currentTimeMillis())));
 
         DynamoDBQueryExpression<News> queryExpression = new DynamoDBQueryExpression<News>()

@@ -27,8 +27,8 @@ public class CalendarController {
     }
 
     @Get
-    public List<Meeting> listAllMeetings(Principal principal) {
-        return meetingRepository.listAllMeetings(principal);
+    public List<Meeting> listAllMeetings(/*Principal principal*/) {
+        return meetingRepository.listAllMeetings(/*principal.getName()*/);
     }
 
     @Get("/{meetingId}")

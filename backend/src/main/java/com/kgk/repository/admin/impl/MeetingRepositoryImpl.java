@@ -39,11 +39,12 @@ public class MeetingRepositoryImpl implements MeetingRepository {
     }
 
     @Override
-    public List<Meeting> listAllMeetings(Principal principal) {
-        User currentUser = userRepository.findUserById(principal.getName());
+    public List<Meeting> listAllMeetings(/*String userId*/) {
+        //User currentUser = userRepository.findUserById(userId);
 
         Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
+        eav.put(":city", new AttributeValue().withS("Ankara"));
         eav.put(":updatedAt", new AttributeValue().withN(String.valueOf(System.currentTimeMillis())));
 
         DynamoDBQueryExpression<Meeting> queryExpression = new DynamoDBQueryExpression<Meeting>()
