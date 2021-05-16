@@ -21,6 +21,10 @@ const routes: Routes = [
         path: 'calendar',
         loadChildren: () => import('../page-calendar/page-calendar.module').then(m => m.PageCalendarPageModule)
       },
+      {
+        path: 'profile',
+        loadChildren: () => import('../page-profile/page-profile.module').then(m => m.PageProfilePageModule)
+      },
     ]
   },
   {

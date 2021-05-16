@@ -3,6 +3,8 @@ import {HttpClient} from '@angular/common/http';
 import {environment} from '../../../environments/environment';
 import {Router} from '@angular/router';
 import {IonContent} from '@ionic/angular';
+import {User} from '../../providers/model/user/user.model';
+import {AuthService} from '../../providers/service/auth.service';
 @Component({
   selector: 'app-page-message',
   templateUrl: './page-message.page.html',
@@ -12,37 +14,34 @@ export class PageMessagePage implements OnInit {
 
   messages = [
     {
-      username: 'Katy Perry',
+      username: 'Group Message Admin 1',
       createdAt: 1554090856000,
-      msg: 'Finally got back that smile :)'
+      msg: 'Welcome To W-COOP Mobile Application!'
     },
     {
-      username: 'Dua Lipa',
+      username: 'Group Message Admin 2',
       createdAt: 1554090856000,
-      msg: 'We created something phenomenal\n' + 'Don\'t you agree?',
+      msg: 'Here, you can find every new announcement about W-COOP and TOBB AKGK!',
     },
-    {
-      username: 'Taylor Swift',
-      createdAt: 1554090856000,
-      msg: 'You need to calm down!'
-    },
-
   ];
 
-  currentUser = 'Katy Perry';
+  currentUser;
   newMsg = '';
+  user: User;
   @ViewChild(IonContent) content: IonContent;
+  constructor(private router: Router, private authService: AuthService) {
+  }
 
-  constructor(private router: Router) { }
-
-  ngOnInit() {
+  async ngOnInit() {
+    this.user = this.authService.getUser().value;
+    this.currentUser =  this.user.firstName + ' ' + this.user.lastName;
   }
   goBack(){
-    this.router.navigate(['/home']);
+    this.router.navigate(['/tabs/feed']);
   }
   sendMessage(){
     this.messages.push({
-        username: 'Katy Perry',
+        username: this.user.firstName + ' ' + this.user.lastName,
         createdAt: new Date().getTime(),
         msg: this.newMsg
       });

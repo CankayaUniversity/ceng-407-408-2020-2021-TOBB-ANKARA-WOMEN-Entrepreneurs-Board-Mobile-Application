@@ -1,50 +1,54 @@
 <ion-header>
-    <div class="float-child1">
-      <button class = "round" (click)="goBack()"><img src="../../../assets/icon/ok-left.png"></button>
+  <div class="float-child1">
+    <ion-icon (click)="logout()" name="power-sharp"></ion-icon>
+    <ion-label>Log out</ion-label>
+  </div>
+  <div class="float-child2">
+    <div class="avatar">
+      <img src="../../../assets/women/woman.png" alt="">
     </div>
-    <div class="float-child2">
-      <div class="avatar">
-        <img src="../../../assets/women/woman.png" alt="">
-      </div>
-    </div>
+  </div>
 </ion-header>
 <ion-content>
   <ion-grid>
     <ion-row class="row1"></ion-row>
     <ion-row class="row2">
-      <div>
-        <!--<div class="avatar">
-       <img src="../../../assets/women/woman.png" alt="">
-     </div>-->
+      <ion-col size="12">
 
-        <ion-item color = "whitesmoke">
+        <p>First Name:
+          <ion-item color = "whitesmoke" lines="full">
           <ion-icon name="person-sharp"></ion-icon>
-          <ion-label position="fixed">First Name: {{users.firstName}}</ion-label>
+          <ion-label position="fixed">{{user.firstName}}</ion-label>
         </ion-item>
 
+        <p>Last Name:
         <ion-item color = "whitesmoke">
           <ion-icon name="person-sharp"></ion-icon>
-          <ion-label position="fixed">Last Name: {{users.lastName}}</ion-label>
+          <ion-label position="fixed">{{user.lastName}}</ion-label>
         </ion-item>
 
+        <p>E-Mail:
         <ion-item color = "whitesmoke">
           <ion-icon name="mail"></ion-icon>
-          <ion-label position="fixed">E-Mail: {{users.email}}</ion-label>
+          <ion-label position="fixed">{{user.email}}</ion-label>
         </ion-item>
 
+        <p>City:
         <ion-item color = "whitesmoke">
           <ion-icon name="home"></ion-icon>
-          <ion-label position="fixed">City: {{users.city}}</ion-label>
+          <ion-label position="fixed">{{user.city}}</ion-label>
         </ion-item>
 
+        <p>Registration Number:
         <ion-item color = "whitesmoke">
           <ion-icon name="document"></ion-icon>
-          <ion-label position="fixed">Registration Number: {{users.tobbRegisterId}} </ion-label>
+          <ion-label position="fixed">{{user.tobbRegisterId}} </ion-label>
         </ion-item>
 
+        <p>Mobile Phone:
         <ion-item color = "whitesmoke">
           <ion-icon name="call"></ion-icon>
-          <ion-label position="fixed">Mobile Phone: {{users.phone}}</ion-label>
+          <ion-label position="fixed">{{user.phone}}</ion-label>
         </ion-item>
 
         <!-- <ion-item color = "whitesmoke">
@@ -57,26 +61,28 @@
           <ion-label position="fixed">Password</ion-label>
         </ion-item>-->
 
+        <p>Birth Date:
         <ion-item color = "whitesmoke">
           <ion-icon name="calendar"></ion-icon>
-          <ion-label position="fixed">Birth Date: {{users.birthDate}}</ion-label>
+          <ion-label displayFormat="MMM/DD/YYYY" position="fixed">{{user.birthDate}}</ion-label>
         </ion-item>
 
+        <p>Occupation:
         <ion-item color = "whitesmoke">
           <ion-icon name="business"></ion-icon>
-          <ion-label position="fixed">Occupation: {{users.occupation}}</ion-label>
+          <ion-label position="fixed">{{user.occupation}}</ion-label>
         </ion-item>
+
+        <p>Description:
         <ion-card color = "whitesmoke">
           <ion-card-content>
             <ion-icon name="pencil"></ion-icon>
-            Description: {{users.description}}
+             {{user.description}}
           </ion-card-content>
         </ion-card>
 
-        <!-- regMeIn() might come in handy in future so the button feature that has them is commented right below-->
-        <!--<ion-button expand="block" shape="round" [disabled]="!ionicForm.valid" type="submit" (click)="regMeIn()" [disabled]="!isToggled">Register</ion-button>-->
-        <ion-button expand="block" shape="round" type="submit">Edit Profile (?)</ion-button>
-      </div>
+        <ion-button expand="block" shape="round" type="submit" routerLink="/edit-profile">Edit Profile</ion-button>
+      </ion-col>
 
 
     </ion-row>

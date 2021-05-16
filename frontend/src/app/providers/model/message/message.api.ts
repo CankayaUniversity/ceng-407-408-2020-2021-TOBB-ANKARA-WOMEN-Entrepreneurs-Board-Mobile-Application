@@ -1,12 +1,12 @@
 import {BaseApi} from '../../base/base.api';
 import {HttpClient} from '@angular/common/http';
 import {Injectable} from '@angular/core';
-import {User} from './user.model';
+import {Message} from './message.model';
 import {environment} from '../../../../environments/environment';
 
 @Injectable()
-export class UserApi extends BaseApi<User> {
-  protected readonly apiUrl: string = '/user';
+export class MessageApi extends BaseApi<Message> {
+  protected readonly apiUrl: string = '/message';
 
   constructor(http: HttpClient) {
     super(http);
@@ -18,7 +18,7 @@ export class UserApi extends BaseApi<User> {
     this.delete(2);*/
   }
 
-  updateMyProfile(user: User) {
-    return this.http.put<User>(environment.apiUrl + '/api/user/profile', user);
+  updateMyProfile(message: Message) {
+    return this.http.put<Message>(environment.apiUrl + '/api/message', message);
   }
 }

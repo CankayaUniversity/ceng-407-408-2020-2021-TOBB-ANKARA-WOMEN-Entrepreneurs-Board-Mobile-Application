@@ -1,0 +1,87 @@
+<ion-header>
+  <div class="float-child1">
+    <button class = "round" (click)="goBack()"><img src="../../../assets/icon/ok-left.png"></button>
+  </div>
+  <div class="float-child2">
+    <div class="avatar">
+      <img src="../../../assets/women/woman.png" alt="">
+    </div>
+  </div>
+</ion-header>
+<ion-content>
+  <ion-grid>
+    <ion-row class="row1"></ion-row>
+    <ion-row class="row2">
+      <ion-col size="12">
+
+        <form [formGroup]="form" (ngSubmit)="save()"  id="form">
+        <p>First Name:
+          <ion-item color = "whitesmoke" lines="full">
+            <ion-icon name="person-sharp"></ion-icon>
+            <ion-input formControlName="firstName" position="fixed" [value]="user.firstName"></ion-input>
+          </ion-item>
+
+        <p>Last Name:
+          <ion-item color = "whitesmoke">
+            <ion-icon name="person-sharp"></ion-icon>
+            <ion-input formControlName="lastName" position="fixed" [value]="user.lastName"></ion-input>
+          </ion-item>
+
+        <p>E-Mail:
+          <ion-item color = "whitesmoke">
+            <ion-icon name="mail"></ion-icon>
+            <ion-input formControlName="email" position="fixed" [value]="user.email"></ion-input>
+          </ion-item>
+
+        <p>City:
+          <ion-item color = "whitesmoke">
+            <ion-icon name="home"></ion-icon>
+            <ion-select formControlName="city" placeholder="{{user.city}}" [compareWith]="compareWith">
+              <ion-select-option *ngFor="let city of cities" [value]="city">{{city.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+        <p>Registration Number:
+          <ion-item color = "whitesmoke">
+            <ion-icon name="document"></ion-icon>
+            <ion-label position="fixed">{{user.tobbRegisterId}}</ion-label>
+          </ion-item>
+
+        <p>Mobile Phone:
+          <ion-item color = "whitesmoke">
+            <ion-icon name="call"></ion-icon>
+            <ion-input formControlName="phone" position="fixed" [value]="user.phone"></ion-input>
+          </ion-item>
+
+        <p>Birth Date:
+          <ion-item color = "whitesmoke">
+            <ion-icon name="calendar"></ion-icon>
+            <ion-datetime formControlName="birthDate" displayFormat="MMM/DD/YYYY" placeholder="{{user.birthDate}}"></ion-datetime>
+          </ion-item>
+
+        <p>Occupation:
+          <ion-item color = "whitesmoke">
+            <ion-icon name="business"></ion-icon>
+            <ion-select formControlName="occupation" placeholder="{{user.occupation}}" [compareWith]="compareWith">
+              <ion-select-option *ngFor="let occupation of occupations" [value]="occupation">{{occupation.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+
+        <p>Description:
+          <ion-card color = "whitesmoke">
+            <ion-card-content>
+              <ion-icon name="pencil"></ion-icon>
+              <ion-textarea formControlName="description" placeholder="{{user.description}}"></ion-textarea>
+            </ion-card-content>
+          </ion-card>
+
+          <ion-button expand="block" shape="round" type="submit">Save</ion-button>
+        </form>
+      </ion-col>
+
+
+
+    </ion-row>
+    <ion-row class="row3"></ion-row>
+  </ion-grid>
+</ion-content>
