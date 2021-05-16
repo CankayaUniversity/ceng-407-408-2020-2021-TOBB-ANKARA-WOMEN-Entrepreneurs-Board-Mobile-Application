@@ -4,9 +4,5 @@ export interface News {
   publishDate: string;
   newsTitle: string;
   newsBody: string;
-  meeting: boolean;
-  startTime: string;
-  endTime: string;
-  meetingPlace: string;
-  meetingUrl: string;
+  city: string;
 }
