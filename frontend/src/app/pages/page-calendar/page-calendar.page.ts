@@ -51,8 +51,8 @@ export class PageCalendarPage implements OnInit {
     const end = formatDate(event.endTime, 'medium', this.locale);
 
     const alert = await this.alertCtrl.create({
-      header: event.title,
-      subHeader: event.desc,
+      header: event.city,
+      subHeader: event.meetingPlace,
       message: 'From: ' + start + '<br><br>To: ' + end,
       buttons: ['OK'],
     });
@@ -70,9 +70,9 @@ export class PageCalendarPage implements OnInit {
 
     modal.onDidDismiss().then((result) => {
       if (result.data && result.data.event) {
-        let event = result.data.event;
+        const event = result.data.event;
         if (event.allDay) {
-          let start = event.startTime;
+          const start = event.startTime;
           event.startTime = new Date(
             Date.UTC(
               start.getUTCFullYear(),
