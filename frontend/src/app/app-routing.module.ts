@@ -49,9 +49,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/page-calendar/page-calendar.module').then( m => m.PageCalendarPageModule)
   },
   {
-    path: 'page-calendar-event',
+    path: 'calendar-event',
     loadChildren: () => import('./pages/page-calendar-event/page-calendar-event.module').then( m => m.PageCalendarEventPageModule)
   },
+  {
+    path: 'feed-create',
+    loadChildren: () => import('./pages/page-feed-create/page-feed-create.module').then( m => m.PageFeedCreatePageModule)
+  },
+
 
 
   /* For educational purposes, will be enhanced later{
