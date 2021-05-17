@@ -5,7 +5,6 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { PageFeedPage } from './page-feed.page';
-import {PageFeedCreatePageModule} from '../page-feed-create/page-feed-create.module';
 
 const routes: Routes = [
   {
@@ -19,10 +18,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    PageFeedCreatePageModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [PageFeedPage],
-  entryComponents: [PageFeedPage]
+  declarations: [PageFeedPage]
 })
 export class PageFeedPageModule {}
