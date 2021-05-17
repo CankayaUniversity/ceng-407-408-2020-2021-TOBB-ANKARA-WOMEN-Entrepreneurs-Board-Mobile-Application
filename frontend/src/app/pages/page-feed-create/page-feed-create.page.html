@@ -1,0 +1,40 @@
+<ion-header>
+  <button class="round" (click)="goBack()"><img src="../../../assets/icon/ok-left.png"></button>
+</ion-header>
+
+<ion-content class="background">
+  <ion-grid>
+    <ion-row class="row1"></ion-row>
+    <ion-row class="row2">
+      <ion-content>
+        <form [formGroup]="ionicForm" (ngSubmit)="saveNews()" id="form">
+          <ion-item color="whitesmoke">
+            <ion-select formControlName="city" required="true" placeholder="City">
+              <ion-select-option *ngFor="let city of cities" [value]="city">{{city.name}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+          <span class="error ion-padding" *ngIf="submitted && errorCtr.city.errors?.required">
+            City is required.
+          </span>
+          <ion-item color="whitesmoke">
+            <ion-input formControlName="newsTitle" required="true" placeholder="News Title"></ion-input>
+          </ion-item>
+          <span class="error ion-padding" *ngIf="submitted && errorCtr.newsTitle.errors?.required">
+            News Title is required.
+          </span>
+          <ion-item color="whitesmoke">
+            <ion-input formControlName="newsBody" required="true" placeholder="Description"></ion-input>
+          </ion-item>
+          <span class="error ion-padding" *ngIf="submitted && errorCtr.newsBody.errors?.required">
+            Description is required.
+          </span>
+          <ion-button type="submit" (click)="saveNews()">
+            <ion-icon name="checkmark" ></ion-icon>
+          </ion-button>
+        </form>
+      </ion-content>
+    </ion-row>
+
+    <ion-row class="row3"></ion-row>
+  </ion-grid>
+</ion-content>

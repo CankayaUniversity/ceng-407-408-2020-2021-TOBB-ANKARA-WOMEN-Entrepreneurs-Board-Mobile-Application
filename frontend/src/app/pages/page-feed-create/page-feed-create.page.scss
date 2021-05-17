@@ -1,0 +1,38 @@
+ion-header{
+  height: 0px;
+  button{
+    margin-top: 12px;
+    margin-left: 25px;
+    bottom: 5px;
+    right: 15px;
+    border-radius: 50%;
+    padding: 5px;
+    background-color: transparent;
+    width:60px;
+    height:30px;
+  }
+}
+
+.background {
+  --background: url(../../../assets/backgrounds/bigger-left-bubble.png) 0 0/100% 100% no-repeat;
+}
+  ion-grid {
+    height: 100%;
+
+  }
+.row1{
+  height: 12%;
+}
+.row2{
+  padding: 7% 9% 11% 3%;
+  height: 87%;
+}
+.row3{
+  height: 1%;
+}
+
+ion-button{
+  margin-top: 5%;
+  margin-left: 80%;
+}
+
