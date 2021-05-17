@@ -25,6 +25,10 @@ const routes: Routes = [
         path: 'profile',
         loadChildren: () => import('../page-profile/page-profile.module').then(m => m.PageProfilePageModule)
       },
+      {
+        path: 'feed-create',
+        loadChildren: () => import('../page-feed-create/page-feed-create.module').then(m => m.PageFeedCreatePageModule)
+      },
     ]
   },
   {
