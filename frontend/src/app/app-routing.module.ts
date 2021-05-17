@@ -53,10 +53,13 @@ const routes: Routes = [
     loadChildren: () => import('./pages/page-calendar-event/page-calendar-event.module').then( m => m.PageCalendarEventPageModule)
   },
   {
+    path: 'feed-single',
+    loadChildren: () => import('./pages/page-feed-single/page-feed-single.module').then( m => m.PageFeedSinglePageModule)
+  },
+  {
     path: 'feed-create',
     loadChildren: () => import('./pages/page-feed-create/page-feed-create.module').then( m => m.PageFeedCreatePageModule)
   },
-
 
 
   /* For educational purposes, will be enhanced later{
