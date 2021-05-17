@@ -319,13 +319,13 @@ export class PageCalendarEventPage implements AfterViewInit {
     this.submitted = true;
     if (this.ionicForm.invalid) {
       console.log('All fields are required.');
-      this.router.navigate(['/feed']);
+      this.router.navigate(['/tabs/calendar']);
       return false;
     }else{
       console.log(eventData);
       try{
-        await this.http.post(environment.apiUrl + '/api/', eventData).toPromise();
-        this.router.navigate(['/feed']);
+        await this.http.post(environment.apiUrl + '/api/calendar', eventData).toPromise();
+        this.router.navigate(['/tabs/calendar']);
       } catch (e){
         // error
       }
