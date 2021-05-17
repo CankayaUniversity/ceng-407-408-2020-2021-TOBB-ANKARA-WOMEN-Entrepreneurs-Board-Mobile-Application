@@ -22,8 +22,8 @@ ion-header{
     padding-top: 10px;
     padding-left: 60px;
   }
-
 }
+
 .background {
   --background: url(../../../assets/backgrounds/bigger-left-bubble-edited.png) 0 0/100% 100% no-repeat;
 }
@@ -53,14 +53,13 @@ ion-grid {
 
 .card{
   margin-top: 10%;
-  margin-left: 6%;
-  width: 80%;
+  width: 90%;
   height: 63%;
   display:inline-block;
 }
 
 ion-card-content{
-  height: 44%;
+  height: 30%;
 }
 
 .card-image{

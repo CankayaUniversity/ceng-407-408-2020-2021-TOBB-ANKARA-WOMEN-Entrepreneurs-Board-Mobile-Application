@@ -3,7 +3,6 @@
     <div class="column left">
     </div>
     <div class="column right">
-      <ion-icon (click)="addNews()" name="add-circle-outline"></ion-icon>
       <ion-icon (click)="message()" name="paper-plane-sharp"></ion-icon>
     </div>
   </div>
@@ -20,7 +19,7 @@
               <ion-card-content>
                 <ion-card-header>
                   <ion-card-title>{{news.newsTitle}}</ion-card-title>
-                  <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+                  <ion-card-subtitle>{{news.city}}</ion-card-subtitle>
                 </ion-card-header>
                 <p>{{news.newsBody}}</p>
               </ion-card-content>
@@ -36,26 +35,4 @@
     <ion-row class="row3"></ion-row>
   </ion-grid>
 </ion-content>
-
-
-
-<!--<ion-card class="card" style="background-color: darkred">
-  <ion-item class="card-image">
-    <ion-img src="../../../assets/ok-left.png"></ion-img>
-  </ion-item>
-
-  <ion-card-header style="background-color: mediumvioletred">
-    <ion-card-title>Card Title</ion-card-title>
-    <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-  </ion-card-header>
-
-  <ion-card-content style="background-color: indianred">
-    Keep close to Nature's heart... and break clear away, once in awhile,
-    and climb a mountain or spend a week in the woods. Wash your spirit clean.
-  </ion-card-content>
-
-  <ion-item style="background-color: red">
-    <ion-button fill="outline" slot="end">View</ion-button>
-  </ion-item>
-</ion-card>-->
 
