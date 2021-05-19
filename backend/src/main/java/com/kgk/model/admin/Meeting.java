@@ -46,6 +46,10 @@ public class Meeting {
         return meetingId;
     }
 
+    public void setMeetingId(@NonNull String meetingId) {
+        this.meetingId = meetingId;
+    }
+
     @DynamoDBIndexHashKey(globalSecondaryIndexName = "meetingsByCity", attributeName = "city")
     @NonNull
     public String getCity() {
@@ -64,10 +68,6 @@ public class Meeting {
 
     public void setUpdatedAt(@NonNull Long updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public void setMeetingId(@NonNull String meetingId) {
-        this.meetingId = meetingId;
     }
 
     @DynamoDBAttribute(attributeName = "meetingDate")
