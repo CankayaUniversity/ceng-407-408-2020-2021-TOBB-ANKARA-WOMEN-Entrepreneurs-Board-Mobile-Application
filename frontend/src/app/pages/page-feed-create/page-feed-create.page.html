@@ -7,29 +7,37 @@
     <ion-row class="row1"></ion-row>
     <ion-row class="row2">
       <ion-content>
-        <form [formGroup]="ionicForm" (ngSubmit)="saveNews()" id="form">
+        <ion-label class="addNews">Add News</ion-label>
+        <form [formGroup]="ionicForm" id="form">
+          <br>
+          <ion-label class="formVariables">City:</ion-label>
           <ion-item color="whitesmoke">
-            <ion-select formControlName="city" required="true" placeholder="City">
-              <ion-select-option *ngFor="let city of cities" [value]="city">{{city.name}}</ion-select-option>
-            </ion-select>
+            <ion-icon class="formIcons" name="home"></ion-icon>
+              <ion-select formControlName="city" required="true" placeholder="City">
+                <ion-select-option *ngFor="let city of cities" [value]="city">{{city.name}}</ion-select-option>
+              </ion-select>
           </ion-item>
           <span class="error ion-padding" *ngIf="submitted && errorCtr.city.errors?.required">
             City is required.
-          </span>
+          </span><br>
+          <ion-label class="formVariables">Title:</ion-label>
           <ion-item color="whitesmoke">
+            <ion-icon class="formIcons" name="create-outline"></ion-icon>
             <ion-input formControlName="newsTitle" required="true" placeholder="News Title"></ion-input>
           </ion-item>
           <span class="error ion-padding" *ngIf="submitted && errorCtr.newsTitle.errors?.required">
             News Title is required.
-          </span>
+          </span><br>
+          <ion-label class="formVariables">Description:</ion-label>
           <ion-item color="whitesmoke">
-            <ion-input formControlName="newsBody" required="true" placeholder="Description"></ion-input>
+            <ion-icon class="formIcons" name="reorder-four-outline"></ion-icon>
+            <ion-textarea formControlName="newsBody" required="true" placeholder="Description"></ion-textarea>
           </ion-item>
           <span class="error ion-padding" *ngIf="submitted && errorCtr.newsBody.errors?.required">
             Description is required.
           </span>
           <ion-button type="submit" (click)="saveNews()">
-            <ion-icon name="checkmark" ></ion-icon>
+            <ion-icon class="checkmark" name="checkmark" ></ion-icon>
           </ion-button>
         </form>
       </ion-content>

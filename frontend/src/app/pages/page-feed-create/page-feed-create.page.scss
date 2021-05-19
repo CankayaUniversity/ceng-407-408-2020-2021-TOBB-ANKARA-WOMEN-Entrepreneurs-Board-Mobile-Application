@@ -13,6 +13,10 @@ ion-header{
   }
 }
 
+ion-select{
+  width: 85%;
+}
+
 .background {
   --background: url(../../../assets/backgrounds/bigger-left-bubble.png) 0 0/100% 100% no-repeat;
 }
@@ -25,14 +29,45 @@ ion-header{
 }
 .row2{
   padding: 7% 9% 11% 3%;
-  height: 87%;
+  height: 70%;
+}
+
+.formIcons{
+  color: #3e4999;
+  padding-right: 10px;
+}
+
+form{
+  margin-top: 6%;
+  // background-color: #3e4999;
 }
 .row3{
-  height: 1%;
+  height: 18%;
 }
 
 ion-button{
   margin-top: 5%;
   margin-left: 80%;
+}
+
+.addNews{
+  padding-left: 35%;
+  font-size: 20px;
+  color: #3e4999;
+}
+
+.formVariables{
+  padding-left: 6%;
+  font-size: 18px;
+  color: #3e4999;
+}
+
+ion-item{
+  border-radius: 10%;
+  color: #0d0d0d;
+}
+
+.checkmark{
+  padding-left: 0;
 }
 
