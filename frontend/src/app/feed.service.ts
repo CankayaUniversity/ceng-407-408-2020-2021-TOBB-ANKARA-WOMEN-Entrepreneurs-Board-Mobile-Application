@@ -8,10 +8,10 @@ const API_URL = environment.apiUrl;
   providedIn: 'root'
 })
 export class FeedService {
-  currentNews: any;
+  currentNews;
   constructor(private http: HttpClient) {}
 
-  getFeed(apiUrl: string): Observable<object>{
+  getFeed(apiUrl: string){
     return this.http.get(`${API_URL}/api/feed`);
   }
 }
