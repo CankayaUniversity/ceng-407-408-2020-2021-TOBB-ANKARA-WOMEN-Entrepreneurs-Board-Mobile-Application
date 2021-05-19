@@ -6,4 +6,5 @@ export interface CalendarEvent {
   meetingUrl: string;
   publishDate: string;
   startTime: string;
+  meetingDate: string;
 }
