@@ -1,6 +1,6 @@
 <ion-toolbar color="primary">
   <ion-buttons slot="start">
-    <ion-button (click)="close()">
+    <ion-button style="margin-left: 0" (click)="close()">
       <ion-icon name="close" slot="icon-only"></ion-icon>
     </ion-button>
   </ion-buttons>
@@ -8,8 +8,11 @@
 </ion-toolbar>
 
 <ion-content>
-  <form [formGroup]="ionicForm" (ngSubmit)="saveEvent()" id="form">
+  <form [formGroup]="ionicForm" id="form">
+    <br>
+    <ion-label class="formVariables">City:</ion-label>
     <ion-item color="whitesmoke">
+      <ion-icon class="formIcons" name="business-outline"></ion-icon>
       <ion-select formControlName="city" required="true" placeholder="City">
         <ion-select-option *ngFor="let city of cities" [value]="city">{{city.name}}</ion-select-option>
       </ion-select>
@@ -17,42 +20,54 @@
     <span class="error ion-padding" *ngIf="submitted && errorCtr.city.errors?.required">
       City is required.
     </span>
+    <br>
+    <ion-label class="formVariables">Meeting Place:</ion-label>
     <ion-item color="whitesmoke">
+      <ion-icon class="formIcons" name="earth-outline"></ion-icon>
       <ion-input formControlName="meetingPlace" required="true" placeholder="Meeting Place"></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="submitted && errorCtr.meetingPlace.errors?.required">
       Meeting Place is required.
     </span>
+    <br>
+    <ion-label class="formVariables">Meeting Url:</ion-label>
     <ion-item color="whitesmoke">
+      <ion-icon class="formIcons" name="videocam-outline"></ion-icon>
       <ion-input formControlName="meetingUrl" required="true" placeholder="Meeting Url"></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="submitted && errorCtr.meetingUrl.errors?.required">
       Meeting Url is required.
     </span>
+    <br>
+    <ion-label class="formVariables">Meeting Date:</ion-label>
     <ion-item color="whitesmoke">
-      <ion-input formControlName="startTime" required="true" placeholder="Start Time"></ion-input>
+      <ion-icon class="formIcons" name="today-outline"></ion-icon>
+      <ion-input formControlName="meetingDate" required="true" placeholder="Meeting Date"></ion-input>
+    </ion-item>
+    <span class="error ion-padding" *ngIf="submitted && errorCtr.meetingDate.errors?.required">
+      Meeting Date is required.
+    </span>
+    <br>
+    <ion-label class="formVariables">Start Time:</ion-label>
+    <ion-item color="whitesmoke">
+      <ion-icon class="formIcons" name="time-outline"></ion-icon>
+      <ion-input type="time" formControlName="startTime" required="true" placeholder="Start Time"></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="submitted && errorCtr.startTime.errors?.required">
       Start Time is required.
     </span>
+    <br>
+    <ion-label class="formVariables">End Time:</ion-label>
     <ion-item color="whitesmoke">
-      <ion-input formControlName="endTime" required="true" placeholder="End Time"></ion-input>
+      <ion-icon class="formIcons" name="time-outline"></ion-icon>
+      <ion-input type="time" formControlName="endTime" required="true" placeholder="End Time"></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="submitted && errorCtr.endTime.errors?.required">
       End Time is required.
     </span>
+    <br>
     <ion-button type="submit" (click)="saveEvent()">
       <ion-icon name="checkmark" ></ion-icon>
     </ion-button>
   </form>
-
-  <calendar
-    *ngIf="modalReady"
-    [calendarMode]="calendar.mode"
-    [currentDate]="calendar.currentDate"
-    (onTitleChanged)="onViewTitleChanged($event)"
-    (onTimeSelected)="onTimeSelected($event)"
-    lockSwipes="true"
-  >
-  </calendar>
 </ion-content>
