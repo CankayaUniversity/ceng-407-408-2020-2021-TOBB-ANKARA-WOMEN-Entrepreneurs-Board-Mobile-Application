@@ -1,8 +1,12 @@
 import {Component, Inject, LOCALE_ID, OnInit, ViewChild} from '@angular/core';
 import {CalendarComponent} from 'ionic2-calendar';
+import { CalendarService } from 'src/app/providers/service/calendar.service';
 import {AlertController, ModalController} from '@ionic/angular';
 import {formatDate} from '@angular/common';
 import {PageCalendarEventPage} from '../page-calendar-event/page-calendar-event.page';
+import { Router } from '@angular/router';
+import {User} from '../../providers/model/user/user.model';
+import {AuthService} from 'src/app/providers/service/auth.service';
 
 @Component({
   selector: 'app-page-calendar',
@@ -10,8 +14,11 @@ import {PageCalendarEventPage} from '../page-calendar-event/page-calendar-event.
   styleUrls: ['./page-calendar.page.scss'],
 })
 export class PageCalendarPage implements OnInit {
+  calendarData: any;
+  page = 1;
   eventSource = []; // events that will be displayed
   viewTitle: string; // month, week or day name
+  user: User;
 
   calendar = {
     mode: 'month',
@@ -24,23 +31,32 @@ export class PageCalendarPage implements OnInit {
   constructor(
     private alertCtrl: AlertController,
     @Inject(LOCALE_ID) private locale: string,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private calendarService: CalendarService,
+    private router: Router,
+    private authService: AuthService,
   ) { }
 
   ngOnInit() {
+    this.calendarService.getEvents('/api/calendar')
+      .subscribe(data => {
+        console.log(data);
+        this.calendarData = data;
+      });
+    this.user = this.authService.getUser().value;
   }
 
   // Change current month/week/day
-  next() {
+  /*next() {
     this.myCal.slideNext();
   }
 
   back() {
     this.myCal.slidePrev();
-  }
+  }*/
 
   // Selected date reange and hence title changed
-  onViewTitleChanged(title) {
+  /*onViewTitleChanged(title) {
     this.viewTitle = title;
   }
 
@@ -57,6 +73,10 @@ export class PageCalendarPage implements OnInit {
       buttons: ['OK'],
     });
     alert.present();
+  }*/
+
+  toAddMeeting(){
+    this.router.navigate(['/calendar-event']);
   }
 
   async openCalModal() {
@@ -68,7 +88,7 @@ export class PageCalendarPage implements OnInit {
 
     await modal.present();
 
-    modal.onDidDismiss().then((result) => {
+    /*modal.onDidDismiss().then((result) => {
       if (result.data && result.data.event) {
         const event = result.data.event;
         if (event.allDay) {
@@ -91,6 +111,6 @@ export class PageCalendarPage implements OnInit {
         this.eventSource.push(result.data.event);
         this.myCal.loadEvents();
       }
-    });
+    });*/
   }
 }
