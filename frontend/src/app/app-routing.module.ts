@@ -45,6 +45,10 @@ const routes: Routes = [
     canActivate: [LoginGuard],
   },
   {
+    path: 'feed-single',
+    loadChildren: () => import('./pages/page-feed-single/page-feed-single.module').then( m => m.PageFeedSinglePageModule)
+  },
+  {
     path: 'calendar',
     loadChildren: () => import('./pages/page-calendar/page-calendar.module').then( m => m.PageCalendarPageModule)
   },
@@ -53,13 +57,13 @@ const routes: Routes = [
     loadChildren: () => import('./pages/page-calendar-event/page-calendar-event.module').then( m => m.PageCalendarEventPageModule)
   },
   {
-    path: 'feed-single',
-    loadChildren: () => import('./pages/page-feed-single/page-feed-single.module').then( m => m.PageFeedSinglePageModule)
-  },
-  {
     path: 'feed-create',
     loadChildren: () => import('./pages/page-feed-create/page-feed-create.module').then( m => m.PageFeedCreatePageModule)
+  },  {
+    path: 'page-search',
+    loadChildren: () => import('./pages/page-search/page-search.module').then( m => m.PageSearchPageModule)
   },
+
 
 
   /* For educational purposes, will be enhanced later{
