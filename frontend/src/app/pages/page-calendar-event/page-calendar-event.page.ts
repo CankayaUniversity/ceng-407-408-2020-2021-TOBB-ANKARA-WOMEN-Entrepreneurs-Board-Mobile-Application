@@ -3,7 +3,7 @@ import {ModalController} from '@ionic/angular';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HttpClient} from '@angular/common/http';
 import {Router} from '@angular/router';
-import {CalendarEvent} from '../../providers/model/calendar-event/calendar-event.type';
+import {CalendarEvent} from '../../providers/model/calendar-event/calendar-event.model';
 import {environment} from '../../../environments/environment';
 
 interface City{
@@ -19,6 +19,16 @@ export class PageCalendarEventPage implements AfterViewInit {
     mode: 'month',
     currentDate: new Date()
   };
+
+  event = {
+    city: '',
+    meetingPlace: '',
+    meetingUrl: '',
+    endTime: '',
+    startTime: '',
+    meetingDate: '',
+  };
+
   viewTitle: string;
   ionicForm: FormGroup;
   submitted;
@@ -330,19 +340,11 @@ export class PageCalendarEventPage implements AfterViewInit {
         // error
       }
     }
-    // this.modalCtrl.dismiss({event: this.event});
+    this.modalCtrl.dismiss({event: this.event});
   }
 
   get errorCtr() {
     return this.ionicForm.controls;
-  }
-
-  onViewTitleChanged(title) {
-    this.viewTitle = title;
-  }
-
-  onTimeSelected(ev) {
-    // this.event.startTime = new Date(ev.selectedTime);
   }
 
   close() {
