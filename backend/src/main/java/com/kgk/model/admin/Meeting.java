@@ -22,6 +22,9 @@ public class Meeting {
     private Long updatedAt;  //gsi - range key
 
     @NonNull
+    private String meetingDate;
+
+    @NonNull
     private String startTime;
 
     @NonNull
@@ -65,6 +68,16 @@ public class Meeting {
 
     public void setMeetingId(@NonNull String meetingId) {
         this.meetingId = meetingId;
+    }
+
+    @DynamoDBAttribute(attributeName = "meetingDate")
+    @NonNull
+    public String getMeetingDate() {
+        return meetingDate;
+    }
+
+    public void setMeetingDate(@NonNull String meetingDate) {
+        this.meetingDate = meetingDate;
     }
 
     @DynamoDBAttribute(attributeName = "startTime")
