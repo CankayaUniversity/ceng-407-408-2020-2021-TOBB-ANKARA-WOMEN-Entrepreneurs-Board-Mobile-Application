@@ -37,7 +37,7 @@ export class PageFeedPage implements OnInit {
     });*/
   }
 
-  onGoToNewsSingle(news){
+  onGoToFeedSingle(news){
     this.feedService.currentNews = news;
     this.router.navigate(['/feed-single']);
   }

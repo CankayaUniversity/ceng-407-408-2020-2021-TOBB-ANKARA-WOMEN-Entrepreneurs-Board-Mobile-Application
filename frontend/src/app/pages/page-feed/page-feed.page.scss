@@ -36,12 +36,15 @@ ion-grid {
   height: 12%;
 }
 .row2{
-  padding: 7% 9% 11% 3%;
+  padding: 5% 9% 11% 3%;
   height: 87%;
+  margin-bottom: 10%;
 }
+
 .row3{
   height: 1%;
 }
+
 
 .feed{
   font-size: 30px;
@@ -52,14 +55,14 @@ ion-grid {
 }
 
 .card{
-  margin-top: 10%;
   width: 90%;
   height: 63%;
   display:inline-block;
+  padding: 0;
 }
 
 ion-card-content{
-  height: 30%;
+  height: 50%;
 }
 
 .card-image{
