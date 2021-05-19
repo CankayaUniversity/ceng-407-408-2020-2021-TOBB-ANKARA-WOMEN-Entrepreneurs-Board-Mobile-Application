@@ -11,7 +11,7 @@ export class PageFeedSinglePage implements OnInit {
   constructor(private feedService: FeedService) { }
 
   ngOnInit() {
-    this.news = this.feedService.currentNews
+    this.news = this.feedService.currentNews;
     console.log(this.feedService.currentNews);
   }
 
