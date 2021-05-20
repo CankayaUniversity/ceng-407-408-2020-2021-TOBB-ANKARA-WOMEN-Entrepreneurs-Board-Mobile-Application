@@ -59,12 +59,11 @@ const routes: Routes = [
   {
     path: 'feed-create',
     loadChildren: () => import('./pages/page-feed-create/page-feed-create.module').then( m => m.PageFeedCreatePageModule)
-  },  {
-    path: 'page-search',
+  },
+  {
+    path: 'search',
     loadChildren: () => import('./pages/page-search/page-search.module').then( m => m.PageSearchPageModule)
   },
-
-
 
   /* For educational purposes, will be enhanced later{
     path: 'user/:id',
