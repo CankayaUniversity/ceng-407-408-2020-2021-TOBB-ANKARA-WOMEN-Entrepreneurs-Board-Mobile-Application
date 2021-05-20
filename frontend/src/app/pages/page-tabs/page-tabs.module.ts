@@ -29,6 +29,10 @@ const routes: Routes = [
         path: 'feed-create',
         loadChildren: () => import('../page-feed-create/page-feed-create.module').then(m => m.PageFeedCreatePageModule)
       },
+      {
+        path: 'search',
+        loadChildren: () => import('../page-search/page-search.module').then(m => m.PageSearchPageModule)
+      },
     ]
   },
   {
