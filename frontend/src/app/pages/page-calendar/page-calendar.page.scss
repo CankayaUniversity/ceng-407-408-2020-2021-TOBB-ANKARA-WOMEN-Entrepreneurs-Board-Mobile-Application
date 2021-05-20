@@ -38,6 +38,7 @@ ion-grid {
 .row2{
   padding: 7% 9% 11% 16%;
   height: 87%;
+  --ion-background-color: transparent !important;
 }
 .row3{
   height: 1%;
@@ -57,6 +58,15 @@ ion-icon{
   width: 20px;
   height: 20px;
 }
+
+ion-card-title{
+  color: white;
+}
+
+ion-card-subtitle{
+  color: white;
+}
+
 /*
 .background {
   --background: url(../../../assets/backgrounds/bigger-left-bubble.png) 0 0/100% 100% no-repeat;

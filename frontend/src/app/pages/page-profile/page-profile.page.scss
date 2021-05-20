@@ -97,6 +97,7 @@ ion-content {
     box-shadow: 1px 8px 8px 0px rgba(0, 0, 0, 0.08);
     --highlight-height: 0px;
     justify-content: center;
+    --border-style: hidden;
     margin-left: 15px;
     ion-input {
       font-size: 18px;
@@ -113,6 +114,7 @@ ion-content {
       --padding-top: 20px;
       --padding-bottom: 15px;
       --padding-start: 5px;
+      --border-style: hidden;
     }
     ion-select {
       font-size: 18px;
