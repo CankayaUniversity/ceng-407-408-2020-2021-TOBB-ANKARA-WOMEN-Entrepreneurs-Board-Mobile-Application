@@ -1,5 +1,6 @@
 package com.kgk.web.admin;
 
+import com.kgk.model.admin.Role;
 import com.kgk.model.user.User;
 import com.kgk.repository.admin.PermissionRepository;
 import io.micronaut.http.annotation.Controller;
@@ -7,10 +8,14 @@ import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.Get;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/api/permission")
 public class PermissionController {
 
@@ -21,13 +26,13 @@ public class PermissionController {
     }
 
     @Get
-    public List<User> listAll(){
-        return userRolesRepository.listAllUserRoles();
+    public List<User> listAll(Principal principal){
+        return userRolesRepository.listAllUserRoles(principal.getName());
     }
 
     @Get("/by-role-id/{roleId}")
-    public List<User> findAllUsersByRoleId(@PathVariable("roleId") String roleId) {
-        return userRolesRepository.findAllUsersByRoleId(roleId);
+    public List<User> findAllUsersByRoleId(Principal principal, @PathVariable("roleId") String roleId) {
+        return userRolesRepository.findAllUsersByRoleId(principal.getName(), roleId);
     }
 
     @Get("/{userId}")
@@ -36,8 +41,8 @@ public class PermissionController {
     }
 
     @Put("/{userId}")
-    public User update(@PathVariable("userId") String userId, @Valid @Body User user) {
-        return userRolesRepository.changeUserRole(userId, user);
+    public User update(@PathVariable("userId") String userId, @Valid @Body Role role) {
+        return userRolesRepository.changeUserRole(userId, role);
     }
 
 }

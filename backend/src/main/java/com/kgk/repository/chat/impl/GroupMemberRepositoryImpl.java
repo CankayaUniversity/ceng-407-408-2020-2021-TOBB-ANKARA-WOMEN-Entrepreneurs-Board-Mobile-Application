@@ -92,9 +92,7 @@ public class GroupMemberRepositoryImpl implements GroupMemberRepository {
         deletedMember.setOriginalId(groupMember.getUserId());
 
         try {
-            //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
-            //Converting the Object to JSONString
             String json = om.writeValueAsString(groupMember);
             deletedMember.setJson(json);
         } catch (Exception e) {

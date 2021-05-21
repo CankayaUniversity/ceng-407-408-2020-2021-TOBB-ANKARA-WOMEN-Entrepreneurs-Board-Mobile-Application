@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface MembershipRepository {
 
-    List<RegisterForm> listAllUnapprovedRegisterForms(); //lists all unapproved register forms
+    List<RegisterForm> listAllUnapprovedRegisterForms(String userId); //lists all unapproved register forms
 
     RegisterForm findRegisterFormById(String registerFormId); //returns a specific register form
 

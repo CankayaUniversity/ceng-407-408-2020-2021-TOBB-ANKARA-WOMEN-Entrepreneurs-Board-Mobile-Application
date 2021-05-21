@@ -21,7 +21,6 @@
         <micronaut.version>2.3.1</micronaut.version>
         <exec.mainClass>com.kgk.Application</exec.mainClass>
         <micronaut.runtime>lambda</micronaut.runtime>
-        <micronaut.runtime>netty</micronaut.runtime>
     </properties>
 
     <repositories>
@@ -48,16 +47,6 @@
         </dependency>
         <dependency>
             <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-http-server-netty</artifactId>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut</groupId>
-            <artifactId>micronaut-http-client</artifactId>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>io.micronaut</groupId>
             <artifactId>micronaut-runtime</artifactId>
             <scope>compile</scope>
         </dependency>
@@ -78,9 +67,13 @@
             <scope>compile</scope>
         </dependency>
         <dependency>
-            <groupId>io.micronaut.aws</groupId>
-            <artifactId>micronaut-function-aws-api-proxy-test</artifactId>
-            <scope>test</scope>
+            <groupId>io.micronaut.security</groupId>
+            <artifactId>micronaut-security-jwt</artifactId>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut.security</groupId>
+            <artifactId>micronaut-security-annotations</artifactId>
         </dependency>
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -102,6 +95,16 @@
             <artifactId>micronaut-test-junit5</artifactId>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-http-server-netty</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>io.micronaut</groupId>
+            <artifactId>micronaut-http-client</artifactId>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
     <build>
@@ -117,6 +120,21 @@
                     <!-- Uncomment to enable incremental compilation -->
                     <!-- <useIncrementalCompilation>false</useIncrementalCompilation> -->
                     <annotationProcessorPaths combine.children="append">
+                        <path>
+                            <groupId>io.micronaut</groupId>
+                            <artifactId>micronaut-inject-java</artifactId>
+                            <version>2.3.1</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut</groupId>
+                            <artifactId>micronaut-validation</artifactId>
+                            <version>2.3.1</version>
+                        </path>
+                        <path>
+                            <groupId>io.micronaut.security</groupId>
+                            <artifactId>micronaut-security-annotations</artifactId>
+                            <version>2.3.0</version>
+                        </path>
                     </annotationProcessorPaths>
                     <compilerArgs>
                         <arg>-Amicronaut.processing.group=com.kgk</arg>

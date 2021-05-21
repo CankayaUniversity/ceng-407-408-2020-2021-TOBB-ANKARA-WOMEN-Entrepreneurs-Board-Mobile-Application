@@ -3,7 +3,6 @@ package com.kgk.model.user;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexRangeKey;
 import edu.umd.cs.findbugs.annotations.NonNull;
@@ -13,7 +12,9 @@ import io.micronaut.core.util.StringUtils;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @Introspected
 @DynamoDBTable(tableName = "Users")
@@ -23,7 +24,6 @@ public class User {
     private String userId; //hash key
 
     @NonNull
-    @NotBlank
     private String city;   //gsi - hash key
 
     @NonNull
@@ -40,10 +40,10 @@ public class User {
     @NonNull
     @NotBlank
     @Email
-    private String email;
+    private String email; //gsi - hash key
 
-    @NonNull
-    @NotBlank
+    //@NonNull
+    //@NotBlank
     private String password;
 
     @NonNull
@@ -59,7 +59,7 @@ public class User {
 
     private String photo;
 
-    private Long birthDate;
+    private String birthDate;
 
     private String description;
 
@@ -118,7 +118,7 @@ public class User {
       this.lastName = lastName;
     }
 
-    @DynamoDBAttribute(attributeName = "email")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "userByEmail", attributeName = "email")
     @NonNull
     public String getEmail() {
       return email;
@@ -129,12 +129,12 @@ public class User {
     }
 
     @DynamoDBAttribute(attributeName = "password")
-    @NonNull
+    //@NonNull
     public String getPassword() {
       return password;
     }
 
-    public void setPassword(@NonNull String password) { this.password = password; }
+    public void setPassword(/*@NonNull*/ String password) { this.password = password; }
 
     @DynamoDBAttribute(attributeName = "photo")
     public String getPhoto() {
@@ -146,11 +146,11 @@ public class User {
     }
 
     @DynamoDBAttribute(attributeName = "birthDate")
-    public Long getBirthDate() {
+    public String getBirthDate() {
       return birthDate;
     }
 
-    public void setBirthDate(Long birthDate) {
+    public void setBirthDate(String birthDate) {
       this.birthDate = birthDate;
     }
 
@@ -202,15 +202,26 @@ public class User {
     }
 
     public void copyFrom(User user) {
-        //this.setUserId(user.getUserId());
-        this.setCity(user.city);
-        this.setFirstName(user.getFirstName());
-        this.setLastName(user.getLastName());
-        this.setEmail(user.getEmail());
-        this.setPassword(user.getPassword());
-        this.setTobbRegisterId(user.getTobbRegisterId());
-        this.setOccupation(user.getOccupation());
-        this.setPhone(user.getPhone());
+        if (StringUtils.isNotEmpty(user.getCity()))
+            this.setCity(user.getCity());
+
+        if (StringUtils.isNotEmpty(user.getFirstName()))
+            this.setFirstName(user.getFirstName());
+
+        if (StringUtils.isNotEmpty(user.getLastName()))
+            this.setLastName(user.getLastName());
+
+        if (StringUtils.isNotEmpty(user.getEmail()))
+            this.setEmail(user.getEmail());
+
+        if (StringUtils.isNotEmpty(user.getTobbRegisterId()))
+            this.setTobbRegisterId(user.getTobbRegisterId());
+
+        if (StringUtils.isNotEmpty(user.getOccupation()))
+            this.setOccupation(user.getOccupation());
+
+        if (StringUtils.isNotEmpty(user.getPhone()))
+            this.setPhone(user.getPhone());
 
         if (StringUtils.isNotEmpty(user.getRoleId()))
             this.setRoleId(user.getRoleId());
@@ -218,12 +229,30 @@ public class User {
         if (StringUtils.isNotEmpty(user.getPhoto()))
             this.setPhone(user.getPhone());
 
-        if (user.getBirthDate() != null)
+        if (StringUtils.isNotEmpty(user.getBirthDate()))
             this.setBirthDate(user.getBirthDate());
 
         if (StringUtils.isNotEmpty(user.getDescription()))
             this.setDescription(user.getDescription());
 
     }
+
+    /*public Map<String, Object> toAttributeMap() {
+        Map<String, Object> attributes = new LinkedHashMap<>();
+        attributes.put("userId", userId);
+        attributes.put("city", city);
+        attributes.put("roleId", roleId);
+        attributes.put("firstName", firstName);
+        attributes.put("lastName", lastName);
+        attributes.put("email", email);
+        attributes.put("tobbRegisterId", tobbRegisterId);
+        attributes.put("phone", phone);
+        attributes.put("occupation", occupation);
+        attributes.put("birthDate", birthDate);
+        attributes.put("description", description);
+        attributes.put("catalogList", catalogList);
+
+        return attributes;
+    }*/
     
 }

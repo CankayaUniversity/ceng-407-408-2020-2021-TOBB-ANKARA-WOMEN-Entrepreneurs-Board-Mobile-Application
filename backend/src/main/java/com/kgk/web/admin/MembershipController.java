@@ -8,10 +8,14 @@ import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/api/membership")
 public class MembershipController {
 
@@ -22,8 +26,8 @@ public class MembershipController {
     }
 
     @Get
-    public List<RegisterForm> listAll(){
-        return membershipRepository.listAllUnapprovedRegisterForms();
+    public List<RegisterForm> listAll(Principal principal){
+        return membershipRepository.listAllUnapprovedRegisterForms(principal.getName());
     }
 
     @Get("/{registerId}")

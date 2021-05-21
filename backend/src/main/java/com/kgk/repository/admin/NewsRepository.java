@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface NewsRepository {
 
-    List<News> listAllNews();
+    List<News> listAllNews(/*String userId*/);
 
     News findNewsByNewsId(String newsId);
 

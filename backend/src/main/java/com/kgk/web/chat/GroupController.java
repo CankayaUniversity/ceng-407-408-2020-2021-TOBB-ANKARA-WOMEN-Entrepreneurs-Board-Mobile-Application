@@ -15,10 +15,14 @@ import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/api/group")
 public class GroupController {
 
@@ -38,19 +42,19 @@ public class GroupController {
         this.userRepository = userRepository;
     }
 
-    @Get("/created-groups/{createdBy}")
-    public List<Group> listAllCreatedGroupsByUser(@PathVariable("createdBy") String createdBy) {
-        return groupRepository.listAllCreatedGroupsByUser(createdBy);
+    @Get
+    public List<Group> listAllCreatedGroupsByUser(Principal principal) {
+        return groupRepository.listAllCreatedGroupsByUser(principal.getName());
     }
 
     @Get("/{groupId}")
-    public Group showGroup(@PathVariable("groupId") String groupId) {
+    public Group findGroup(@PathVariable("groupId") String groupId) {
         return groupRepository.findGroupByGroupId(groupId);
     }
 
     @Post
-    public Group createGroup(@Valid @Body Group group) {
-        return groupRepository.createGroup(group);
+    public Group createGroup(Principal principal, @Valid @Body Group group) {
+        return groupRepository.createGroup(principal.getName(), group);
     }
 
     @Put("/{groupId}")
@@ -95,10 +99,9 @@ public class GroupController {
         return groupMessageRepository.listAllMessagesByGroupId(groupId);
     }
 
-    //FIXME: Required body not specified error
     @Post("/messages/{groupId}")
-    public GroupMessage sendMessage(@PathVariable("groupId") String groupId, @Valid @Body GroupMessage groupMessage) {
-        return groupMessageRepository.saveMessage(groupId, groupMessage);
+    public GroupMessage sendMessage(Principal principal, @PathVariable("groupId") String groupId, @Valid @Body GroupMessage groupMessage) {
+        return groupMessageRepository.saveMessage(principal.getName(), groupId, groupMessage);
     }
 
     @Delete("/messages/{groupId}/{messageId}")

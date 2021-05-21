@@ -11,10 +11,14 @@ import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.PathVariable;
 import io.micronaut.http.annotation.Body;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/api/user")
 public class UserController {
 
@@ -32,28 +36,35 @@ public class UserController {
         return userRepository.listAllUsers();
     }
 
+    // show user's own profile page
+    @Get("/profile")
+    public User findUsersOwnProfile(Principal principal) {
+        return userRepository.findUserById(principal.getName());
+    }
+
+    //show other user's profile page
     @Get("/{userId}")
-    public User showUserProfile(@PathVariable("userId") String userId) {
+    public User findUserProfile(@PathVariable("userId") String userId) {
         return userRepository.findUserById(userId);
     }
 
-    @Get("/{userId}/{catalogId}")
-    public Catalog showCatalog(@PathVariable("userId") String userId, @PathVariable("catalogId") String catalogId) {
-        return catalogRepository.findCatalogByCatalogId(userId, catalogId);
+    @Get("/profile/{catalogId}")
+    public Catalog findCatalog(Principal principal, @PathVariable("catalogId") String catalogId) {
+        return catalogRepository.findCatalogByCatalogId(principal.getName(), catalogId);
     }
 
-    @Put("/{userId}")
-    public User update(@PathVariable("userId") String userId, @Valid @Body User user) {
-      return userRepository.updateUser(userId, user);
+    @Put("/profile")
+    public User update(Principal principal, @Valid @Body User user) {
+      return userRepository.updateUser(principal.getName(), user);
     }
 
-    @Put("/change-password/{userId}")
-    public User changePassword(@PathVariable("userId") String userId,
+    @Put("/profile/change-password")
+    public User changePassword(Principal principal,
                                @Valid @Body Password changedPassword) {
-        return userRepository.changePassword(userId, changedPassword);
+        return userRepository.changePassword(principal.getName(), changedPassword);
     }
 
-    @Delete("/{userId}")
-    public void delete(@PathVariable("userId") String userId){ userRepository.deleteUser(userId); }
+    @Delete("/profile")
+    public void delete(Principal principal){ userRepository.deleteUser(principal.getName()); }
 
 }

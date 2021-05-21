@@ -7,9 +7,12 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgk.model.DeletedItem;
 import com.kgk.model.admin.Meeting;
+import com.kgk.model.user.User;
 import com.kgk.repository.admin.MeetingRepository;
+import com.kgk.repository.user.UserRepository;
 
 import javax.inject.Singleton;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,13 +29,19 @@ public class MeetingRepositoryImpl implements MeetingRepository {
 
     private final DynamoDBMapperConfig config;
 
-    public MeetingRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config) {
+    private final UserRepository userRepository;
+
+    public MeetingRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config,
+                                 UserRepository userRepository) {
         this.mapper = mapper;
         this.config = config;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public List<Meeting> listAllMeetings() {
+    public List<Meeting> listAllMeetings(/*String userId*/) {
+        //User currentUser = userRepository.findUserById(userId);
+
         Map<String, AttributeValue> eav = new HashMap<>();
         //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
         eav.put(":city", new AttributeValue().withS("Ankara"));
@@ -70,6 +79,7 @@ public class MeetingRepositoryImpl implements MeetingRepository {
         retrievedMeeting.setCity(meeting.getCity());
         retrievedMeeting.setMeetingUrl(meeting.getMeetingUrl());
         retrievedMeeting.setMeetingPlace(meeting.getMeetingPlace());
+        //retrievedMeeting.setMeetingDate(meeting.getMeetingDate());
         retrievedMeeting.setStartTime(meeting.getStartTime());
         retrievedMeeting.setEndTime(meeting.getEndTime());
         retrievedMeeting.setUpdatedAt(System.currentTimeMillis());
@@ -89,9 +99,7 @@ public class MeetingRepositoryImpl implements MeetingRepository {
         deletedMeeting.setOriginalId(meeting.getMeetingId());
 
         try {
-            //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
-            //Converting the Object to JSONString
             String json = om.writeValueAsString(meeting);
             deletedMeeting.setJson(json);
         } catch (Exception e) {

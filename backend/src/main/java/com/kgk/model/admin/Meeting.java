@@ -21,11 +21,14 @@ public class Meeting {
     @NonNull
     private Long updatedAt;  //gsi - range key
 
-    @NonNull
-    private Long startTime;
+    //@NonNull
+    //private String meetingDate;
 
     @NonNull
-    private Long endTime;
+    private String startTime;
+
+    @NonNull
+    private String endTime;
 
     @NonNull
     private String meetingPlace;
@@ -41,6 +44,10 @@ public class Meeting {
     @NonNull
     public String getMeetingId() {
         return meetingId;
+    }
+
+    public void setMeetingId(@NonNull String meetingId) {
+        this.meetingId = meetingId;
     }
 
     @DynamoDBIndexHashKey(globalSecondaryIndexName = "meetingsByCity", attributeName = "city")
@@ -63,27 +70,33 @@ public class Meeting {
         this.updatedAt = updatedAt;
     }
 
-    public void setMeetingId(@NonNull String meetingId) {
-        this.meetingId = meetingId;
+    /*@DynamoDBAttribute(attributeName = "meetingDate")
+    @NonNull
+    public String getMeetingDate() {
+        return meetingDate;
     }
+
+    public void setMeetingDate(@NonNull String meetingDate) {
+        this.meetingDate = meetingDate;
+    }*/
 
     @DynamoDBAttribute(attributeName = "startTime")
     @NonNull
-    public Long getStartTime() {
+    public String getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(@NonNull Long startTime) {
+    public void setStartTime(@NonNull String startTime) {
         this.startTime = startTime;
     }
 
     @DynamoDBAttribute(attributeName = "endTime")
     @NonNull
-    public Long getEndTime() {
+    public String getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(@NonNull Long endTime) {
+    public void setEndTime(@NonNull String endTime) {
         this.endTime = endTime;
     }
 

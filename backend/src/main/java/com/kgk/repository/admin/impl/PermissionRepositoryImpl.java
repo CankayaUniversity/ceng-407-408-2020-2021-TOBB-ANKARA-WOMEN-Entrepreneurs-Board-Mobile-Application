@@ -1,9 +1,9 @@
 package com.kgk.repository.admin.impl;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapperConfig;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.kgk.model.admin.Role;
 import com.kgk.model.user.User;
 import com.kgk.repository.user.UserRepository;
 import com.kgk.repository.admin.PermissionRepository;
@@ -22,21 +22,19 @@ public class PermissionRepositoryImpl implements PermissionRepository {
 
     private final DynamoDBMapper mapper;
 
-    private final DynamoDBMapperConfig config;
-
     private final UserRepository userRepository;
 
-    public PermissionRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config, UserRepository userRepository) {
+    public PermissionRepositoryImpl(DynamoDBMapper mapper, UserRepository userRepository) {
         this.mapper = mapper;
-        this.config = config;
         this.userRepository = userRepository;
     }
 
     @Override
-    public List<User> listAllUserRoles() {
+    public List<User> listAllUserRoles(String userId) {
+        User currentUser = userRepository.findUserById(userId);
+
         Map<String, AttributeValue> eav = new HashMap<>();
-        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        eav.put(":city", new AttributeValue().withS("Ankara"));
+        eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
 
         DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
                 .withIndexName(CITY_GSI_NAME)
@@ -48,10 +46,11 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     }
 
     @Override
-    public List<User> findAllUsersByRoleId(String roleId) {
+    public List<User> findAllUsersByRoleId(String userId, String roleId) {
+        User currentUser = userRepository.findUserById(userId);
+
         Map<String, AttributeValue> eav = new HashMap<>();
-        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        eav.put(":city", new AttributeValue().withS("Ankara"));
+        eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
         eav.put(":roleId", new AttributeValue().withS(roleId));
 
         DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
@@ -69,13 +68,14 @@ public class PermissionRepositoryImpl implements PermissionRepository {
     }
 
     @Override
-    public User changeUserRole(String userId, User user) {
+    public User changeUserRole(String userId, Role role) {
         User userRetrieved = findUserRoleByUserId(userId);
-        userRetrieved.setRoleId(user.getRoleId());
+        userRetrieved.setRoleId(role.getRoleName());
+
         mapper.save(userRetrieved);
         System.out.println("[USER ROLE REPO] User's role is changed");
 
-        return user;
+        return userRetrieved;
     }
 
 }

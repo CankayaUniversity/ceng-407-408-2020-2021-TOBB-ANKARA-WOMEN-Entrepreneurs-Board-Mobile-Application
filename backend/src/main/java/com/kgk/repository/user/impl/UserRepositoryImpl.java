@@ -19,6 +19,7 @@ import javax.inject.Singleton;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Singleton
@@ -26,7 +27,7 @@ public class UserRepositoryImpl implements UserRepository {
 
     private static final String TABLE_NAME = "Users";
 
-    private static final String GSI_NAME = "usersByRoleId";
+    private static final String GSI_NAME = "userByEmail";
 
     private final DynamoDBMapper mapper;
 
@@ -40,6 +41,7 @@ public class UserRepositoryImpl implements UserRepository {
         this.catalogRepository = catalogRepository;
     }
 
+    @Override
     public List<User> listAllUsers() {
         DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
         List<User> users = mapper.scan(User.class, scanExpression).stream().collect(Collectors.toList());
@@ -50,19 +52,18 @@ public class UserRepositoryImpl implements UserRepository {
         return users;
     }
 
-    public List<User> findUsersByRoleId(String roleId, String city) {
-        //TODO: check if it works
+    @Override
+    public Optional<User> findUserByEmail(String email) {
         Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":city", new AttributeValue().withS(city));
-        eav.put(":roleId", new AttributeValue().withS(roleId));
+        eav.put(":email", new AttributeValue().withS(email));
 
         DynamoDBQueryExpression<User> queryExpression = new DynamoDBQueryExpression<User>()
+                .withKeyConditionExpression("email = :email")
                 .withIndexName(GSI_NAME)
-                .withKeyConditionExpression("city = :city and roleId = :roleId")
                 .withExpressionAttributeValues(eav)
                 .withConsistentRead(false);
 
-        return mapper.query(User.class, queryExpression);
+        return mapper.query(User.class, queryExpression).stream().findFirst();
     }
 
     @Override
@@ -73,6 +74,7 @@ public class UserRepositoryImpl implements UserRepository {
         return user;
     }
 
+    @Override
     public User updateUser(String userId, User user) {
         User userRetrieved = mapper.load(User.class, userId, config);
         userRetrieved.copyFrom(user);
@@ -101,6 +103,7 @@ public class UserRepositoryImpl implements UserRepository {
         return userRetrieved;
     }
 
+    @Override
     public User changePassword(String userId, Password changedPassword) {
         User user = findUserById(userId);
 
@@ -119,6 +122,7 @@ public class UserRepositoryImpl implements UserRepository {
         return null;
     }
 
+    @Override
     public void deleteUser(String userId) {
         User user = findUserById(userId);
         List<Catalog> catalogs = catalogRepository.listCatalogsByUserId(userId);
@@ -136,9 +140,7 @@ public class UserRepositoryImpl implements UserRepository {
         deletedUser.setOriginalId(user.getUserId());
 
         try {
-            //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
-            //Converting the Object to JSONString
             String json = om.writeValueAsString(user);
             deletedUser.setJson(json);
         } catch (Exception e) {

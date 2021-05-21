@@ -7,10 +7,9 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgk.model.DeletedItem;
 import com.kgk.model.admin.RegisterForm;
-import com.kgk.model.admin.Role;
-import com.kgk.model.admin.RoleType;
 import com.kgk.model.user.User;
 import com.kgk.repository.admin.MembershipRepository;
+import com.kgk.repository.user.UserRepository;
 
 import javax.inject.Singleton;
 import java.util.HashMap;
@@ -29,18 +28,22 @@ public class MembershipRepositoryImpl implements MembershipRepository {
 
     private final DynamoDBMapperConfig config;
 
-    public MembershipRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config) {
+    private final UserRepository userRepository;
+
+    public MembershipRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config,
+                                    UserRepository userRepository) {
         this.mapper = mapper;
         this.config = config;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public List<RegisterForm> listAllUnapprovedRegisterForms() {
-        //TODO: CurrentUser's city info must pulled
+    public List<RegisterForm> listAllUnapprovedRegisterForms(String userId) {
+        User currentUser = userRepository.findUserById(userId);
+
         Map<String, AttributeValue> eav = new HashMap<>();
         eav.put(":approved", new AttributeValue().withS("false"));
-        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        eav.put(":city", new AttributeValue().withS("Ankara"));
+        eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
 
         DynamoDBQueryExpression<RegisterForm> queryExpression = new DynamoDBQueryExpression<RegisterForm>()
                 .withKeyConditionExpression("approved = :approved and city = :city")
@@ -62,10 +65,10 @@ public class MembershipRepositoryImpl implements MembershipRepository {
 
         RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, config);
         retrievedForm.setApproved("true");
+        retrievedForm.setRoleId("MEMBER");
 
-        Role role = mapper.load(Role.class, RoleType.MEMBER.toString(), "101", config);
         user.setUserId(UUID.randomUUID().toString());
-        user.setRoleId(role.getRoleId());
+        user.setRoleId("MEMBER");
         user.setFirstName(retrievedForm.getFirstName());
         user.setLastName(retrievedForm.getLastName());
         user.setEmail(retrievedForm.getEmail());
@@ -93,9 +96,7 @@ public class MembershipRepositoryImpl implements MembershipRepository {
         deletedRegisterForm.setOriginalId(retrievedForm.getRegisterId());
 
         try {
-            //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
-            //Converting the Object to JSONString
             String json = om.writeValueAsString(retrievedForm);
             deletedRegisterForm.setJson(json);
         } catch (Exception e) {

@@ -9,9 +9,14 @@ import io.micronaut.http.annotation.Put;
 import io.micronaut.http.annotation.Delete;
 import io.micronaut.http.annotation.Body;
 import io.micronaut.http.annotation.PathVariable;
+import io.micronaut.security.annotation.Secured;
+import io.micronaut.security.rules.SecurityRule;
+
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
+@Secured(SecurityRule.IS_ANONYMOUS)
 @Controller("/api/calendar")
 public class CalendarController {
 
@@ -22,8 +27,8 @@ public class CalendarController {
     }
 
     @Get
-    public List<Meeting> listAllMeetings() {
-        return meetingRepository.listAllMeetings();
+    public List<Meeting> listAllMeetings(/*Principal principal*/) {
+        return meetingRepository.listAllMeetings(/*principal.getName()*/);
     }
 
     @Get("/{meetingId}")

@@ -63,10 +63,21 @@ resources:
             AttributeType: S
           - AttributeName: roleId
             AttributeType: S
+          - AttributeName: email
+            AttributeType: S
         KeySchema:
           - AttributeName: userId
             KeyType: HASH
         GlobalSecondaryIndexes:
+          - IndexName: userByEmail
+            KeySchema:
+              - AttributeName: email
+                KeyType: HASH
+            Projection:
+              ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
           - IndexName: usersByCity
             KeySchema:
               - AttributeName: city
@@ -224,18 +235,16 @@ resources:
       Properties:
         TableName: GroupMessages
         AttributeDefinitions:
-          - AttributeName: groupId
-            AttributeType: S
           - AttributeName: messageId
+            AttributeType: S
+          - AttributeName: groupId
             AttributeType: S
           - AttributeName: sendAt
             AttributeType: N
         KeySchema:
-          - AttributeName: groupId
-            KeyType: HASH
           - AttributeName: messageId
-            KeyType: RANGE
-        LocalSecondaryIndexes:
+            KeyType: HASH
+        GlobalSecondaryIndexes:
           - IndexName: messagesByGroupId
             KeySchema:
               - AttributeName: groupId
@@ -244,6 +253,9 @@ resources:
                 KeyType: RANGE
             Projection:
               ProjectionType: ALL
+            ProvisionedThroughput:
+              ReadCapacityUnits: 5
+              WriteCapacityUnits: 5
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
@@ -283,13 +295,9 @@ resources:
         AttributeDefinitions:
           - AttributeName: roleName
             AttributeType: S
-          - AttributeName: roleId
-            AttributeType: S
         KeySchema:
           - AttributeName: roleName
             KeyType: HASH
-          - AttributeName: roleId
-            KeyType: RANGE
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5

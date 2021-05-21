@@ -9,9 +9,11 @@ import com.kgk.model.DeletedItem;
 import com.kgk.model.chat.Group;
 import com.kgk.model.chat.GroupMember;
 import com.kgk.model.chat.GroupMessage;
+import com.kgk.model.user.User;
 import com.kgk.repository.chat.GroupMemberRepository;
 import com.kgk.repository.chat.GroupMessageRepository;
 import com.kgk.repository.chat.GroupRepository;
+import com.kgk.repository.user.UserRepository;
 
 import javax.inject.Singleton;
 import java.util.HashMap;
@@ -30,15 +32,18 @@ public class GroupRepositoryImpl implements GroupRepository {
 
     private final DynamoDBMapperConfig config;
 
-    //private final GroupMessageRepository groupMessageRepository;
+    private final UserRepository userRepository;
 
-    //private final GroupMemberRepository groupMemberRepository;
+    private final GroupMessageRepository groupMessageRepository;
 
-    public GroupRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config/*, GroupMessageRepository groupMessageRepository, GroupMemberRepository groupMemberRepository*/) {
+    private final GroupMemberRepository groupMemberRepository;
+
+    public GroupRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config, UserRepository userRepository) {
         this.mapper = mapper;
         this.config = config;
-        //this.groupMessageRepository = groupMessageRepository;
-        //this.groupMemberRepository = groupMemberRepository;
+        this.userRepository = userRepository;
+        this.groupMessageRepository = new GroupMessageRepositoryImpl(this.mapper, this.config);
+        this.groupMemberRepository = new GroupMemberRepositoryImpl(this.mapper, this.config, this);
     }
 
     @Override
@@ -47,11 +52,12 @@ public class GroupRepositoryImpl implements GroupRepository {
     }
 
     @Override
-    public List<Group> listAllCreatedGroupsByUser(String createdBy) {
+    public List<Group> listAllCreatedGroupsByUser(String userId) {
+        User currentUser = userRepository.findUserById(userId);
+
         Map<String, AttributeValue> eav = new HashMap<>();
-        eav.put(":createdBy", new AttributeValue().withS(createdBy));
-        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        eav.put(":city", new AttributeValue().withS("Ankara"));
+        eav.put(":createdBy", new AttributeValue().withS(currentUser.getUserId()));
+        eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
 
         DynamoDBQueryExpression<Group> queryExpression = new DynamoDBQueryExpression<Group>()
                 .withIndexName(GSI_NAME)
@@ -63,13 +69,13 @@ public class GroupRepositoryImpl implements GroupRepository {
     }
 
     @Override
-    public Group createGroup(Group group) {
+    public Group createGroup(String userId, Group group) {
+        User currentUser = userRepository.findUserById(userId);
+
         group.setGroupId(UUID.randomUUID().toString());
         group.setCreatedAt(System.currentTimeMillis());
-        //group.setCreatedBy(currentUser.getUserId());
-        //group.setCity(currentUser.getCity());
-        group.setCreatedBy("036d512f-5b57-4cc3-a050-ffd907b10496");
-        group.setCity("Ankara");
+        group.setCreatedBy(currentUser.getUserId());
+        group.setCity(currentUser.getCity());
         mapper.save(group);
 
         return group;
@@ -89,7 +95,7 @@ public class GroupRepositoryImpl implements GroupRepository {
     public void deleteGroup(String groupId) {
         Group group = mapper.load(Group.class, groupId, config);
 
-        /*List<GroupMember> groupMembers = groupMemberRepository.listAllUsersByGroupId(groupId);
+        List<GroupMember> groupMembers = groupMemberRepository.listAllUsersByGroupId(groupId);
         groupMembers.forEach(
                 groupMember -> groupMemberRepository.removeUser(groupMember.getUserId())
         );
@@ -97,7 +103,7 @@ public class GroupRepositoryImpl implements GroupRepository {
         List<GroupMessage> groupMessages = groupMessageRepository.listAllMessagesByGroupId(groupId);
         groupMessages.forEach(
                 groupMessage -> groupMessageRepository.deleteMessage(groupId, groupMessage.getMessageId())
-        );*/
+        );
 
         DeletedItem deletedGroup = new DeletedItem();
         deletedGroup.setDeletedTime(System.currentTimeMillis());
@@ -105,9 +111,7 @@ public class GroupRepositoryImpl implements GroupRepository {
         deletedGroup.setOriginalId(group.getGroupId());
 
         try {
-            //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
-            //Converting the Object to JSONString
             String json = om.writeValueAsString(group);
             deletedGroup.setJson(json);
         } catch (Exception e) {

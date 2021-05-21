@@ -7,12 +7,14 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgk.model.DeletedItem;
 import com.kgk.model.admin.News;
+import com.kgk.model.user.User;
 import com.kgk.repository.admin.NewsRepository;
+import com.kgk.repository.user.UserRepository;
 
 import javax.inject.Singleton;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.HashMap;
 import java.util.UUID;
 
 @Singleton
@@ -26,13 +28,19 @@ public class NewsRepositoryImpl implements NewsRepository {
 
     private final DynamoDBMapperConfig config;
 
-    public NewsRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config) {
+    private final UserRepository userRepository;
+
+    public NewsRepositoryImpl(DynamoDBMapper mapper, DynamoDBMapperConfig config,
+                              UserRepository userRepository) {
         this.mapper = mapper;
         this.config = config;
+        this.userRepository = userRepository;
     }
 
     @Override
-    public List<News> listAllNews() {
+    public List<News> listAllNews(/*String userId*/) {
+        //User currentUser = userRepository.findUserById(userId);
+
         Map<String, AttributeValue> eav = new HashMap<>();
         //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
         eav.put(":city", new AttributeValue().withS("Ankara"));
@@ -87,9 +95,7 @@ public class NewsRepositoryImpl implements NewsRepository {
         deletedNews.setOriginalId(news.getNewsId());
 
         try {
-            //Creating the ObjectMapper object
             ObjectMapper om = new ObjectMapper();
-            //Converting the Object to JSONString
             String json = om.writeValueAsString(news);
             deletedNews.setJson(json);
         } catch (Exception e) {
