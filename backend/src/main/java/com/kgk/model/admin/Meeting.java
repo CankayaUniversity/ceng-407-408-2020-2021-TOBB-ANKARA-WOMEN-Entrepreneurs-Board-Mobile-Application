@@ -21,14 +21,11 @@ public class Meeting {
     @NonNull
     private Long updatedAt;  //gsi - range key
 
-    //@NonNull
-    //private String meetingDate;
+    @NonNull
+    private Long startTime;
 
     @NonNull
-    private String startTime;
-
-    @NonNull
-    private String endTime;
+    private Long endTime;
 
     @NonNull
     private String meetingPlace;
@@ -70,33 +67,23 @@ public class Meeting {
         this.updatedAt = updatedAt;
     }
 
-    /*@DynamoDBAttribute(attributeName = "meetingDate")
-    @NonNull
-    public String getMeetingDate() {
-        return meetingDate;
-    }
-
-    public void setMeetingDate(@NonNull String meetingDate) {
-        this.meetingDate = meetingDate;
-    }*/
-
     @DynamoDBAttribute(attributeName = "startTime")
     @NonNull
-    public String getStartTime() {
+    public Long getStartTime() {
         return startTime;
     }
 
-    public void setStartTime(@NonNull String startTime) {
+    public void setStartTime(@NonNull Long startTime) {
         this.startTime = startTime;
     }
 
     @DynamoDBAttribute(attributeName = "endTime")
     @NonNull
-    public String getEndTime() {
+    public Long getEndTime() {
         return endTime;
     }
 
-    public void setEndTime(@NonNull String endTime) {
+    public void setEndTime(@NonNull Long endTime) {
         this.endTime = endTime;
     }
 

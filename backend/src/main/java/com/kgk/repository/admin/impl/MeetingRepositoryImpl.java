@@ -79,7 +79,6 @@ public class MeetingRepositoryImpl implements MeetingRepository {
         retrievedMeeting.setCity(meeting.getCity());
         retrievedMeeting.setMeetingUrl(meeting.getMeetingUrl());
         retrievedMeeting.setMeetingPlace(meeting.getMeetingPlace());
-        //retrievedMeeting.setMeetingDate(meeting.getMeetingDate());
         retrievedMeeting.setStartTime(meeting.getStartTime());
         retrievedMeeting.setEndTime(meeting.getEndTime());
         retrievedMeeting.setUpdatedAt(System.currentTimeMillis());
