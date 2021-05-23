@@ -2,19 +2,29 @@ ion-header{
   height: 0px;
   .column {
     float: left;
+    &.left {
+      display: flex;
+      font-size: 35px;
+      align-items: flex-end;
+      justify-content: center;
+      height: 87px;
+      padding-left: 0;
+    }
+    &.right {
+      display: flex;
+    }
+    ion-icon:first-child {
+      margin-left: auto;
+    }
   }
   ion-icon{
     width: 30%;
     color: whitesmoke;
-    margin-top: 10%;
     text-align: center;
-    display:inline-block;
     vertical-align:middle;
-    margin-left: auto;
     display: flex;
     height: 45%;
-    padding-left: 50px;
-    margin-right: auto;
+    padding: 10px;
   }
   .left, .right {
     width: 50%;
@@ -23,15 +33,12 @@ ion-header{
     padding-left: 60px;
   }
 }
-
 .background {
   --background: url(../../../assets/backgrounds/bigger-left-bubble-edited.png) 0 0/100% 100% no-repeat;
 }
-
 ion-grid {
   height: 100%;
 }
-
 .row1{
   height: 12%;
 }
@@ -41,7 +48,6 @@ ion-grid {
   margin-bottom: 10%;
   --ion-background-color: transparent !important;
 }
-
 .row3{
   height: 1%;
 }
@@ -52,7 +58,6 @@ ion-grid {
   width: 20px;
   height: 20px;
 }
-
 .feed{
   font-size: 30px;
   display:inline-block;
@@ -60,29 +65,24 @@ ion-grid {
   padding-left: 50px;
   padding-top: 47px;
 }
-
 .card{
   width: 90%;
   height: 63%;
   display:inline-block;
   padding: 0;
 }
-
 ion-card-content{
   height: 50%;
 }
-
 .card-image{
   width: 80%;
   height: 35%;
   display: inline-block;
   margin: 3%;
 }
-
 ion-card-subtitle{
   color: white;
 }
-
 ion-card-title{
   color: white;
 }

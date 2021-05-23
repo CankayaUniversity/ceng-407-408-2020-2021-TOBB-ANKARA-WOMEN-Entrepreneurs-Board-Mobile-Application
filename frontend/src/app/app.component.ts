@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {FeedService} from './feed.service';
 import {environment} from '../environments/environment';
 
@@ -9,7 +9,8 @@ import {environment} from '../environments/environment';
 })
 export class AppComponent {
   feed;
-  constructor(private feedService: FeedService) {}
+  constructor(private feedService: FeedService) {
+  }
 
   getFeed(apiUrl: string){
     this.feed = this.feedService.getFeed(environment.apiUrl);

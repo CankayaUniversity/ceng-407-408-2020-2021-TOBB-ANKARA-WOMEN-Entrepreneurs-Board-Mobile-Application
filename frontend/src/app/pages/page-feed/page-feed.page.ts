@@ -5,6 +5,7 @@ import {environment} from '../../../environments/environment';
 import {AuthService} from '../../providers/service/auth.service';
 import {User} from '../../providers/model/user/user.model';
 import {AlertController, IonContent} from '@ionic/angular';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-page-feed',
@@ -22,8 +23,11 @@ export class PageFeedPage implements OnInit {
     private feedService: FeedService,
     private router: Router,
     private authService: AuthService,
+    public translate: TranslateService,
     @Inject(LOCALE_ID) private locale: string,
-  ) {}
+  ) {
+    console.log(translate.currentLang)
+  }
 
   ngOnInit() {
     this.feedService.getFeed('/api/feed')
@@ -58,5 +62,9 @@ export class PageFeedPage implements OnInit {
   }
   message(){
     this.router.navigate(['/message']);
+  }
+
+  changeLang(lang: string) {
+    this.translate.setDefaultLang(lang);
   }
 }

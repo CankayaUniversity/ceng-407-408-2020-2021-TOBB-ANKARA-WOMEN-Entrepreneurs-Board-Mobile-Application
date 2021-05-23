@@ -1,8 +1,12 @@
 <ion-header>
   <div class="row">
     <div class="column left">
+      {{'Feed' | translate}}
+      <button *ngIf="translate.currentLang === 'en' || translate.defaultLang === 'en'" (click)="changeLang('tr')">TR</button>
+      <button *ngIf="translate.currentLang === 'tr' || translate.defaultLang === 'tr'" (click)="changeLang('en')">EN</button>
     </div>
     <div class="column right">
+      <ion-icon *ngIf="user.roleId === 'MEMBER' || user.roleId === 'FULL_ADMIN'" routerLink="/admin" name="paper-plane-sharp"></ion-icon>
       <ion-icon (click)="message()" name="paper-plane-sharp"></ion-icon>
     </div>
   </div>
@@ -11,27 +15,22 @@
   <ion-grid>
     <ion-row class="row1"></ion-row>
     <ion-row class="row2">
-        <ion-content>
-          <div>
-            <ion-card class="card" *ngFor="let news of data" (click)="onGoToFeedSingle(news)">
-              <!-- <ion-img [src]="news.urlToImage"></ion-img> -->
-
-              <ion-card-content>
-                  <ion-card-subtitle><ion-icon name="golf" class="meetingIcons"></ion-icon>{{news.city}}</ion-card-subtitle>
-                  <ion-card-title>{{news.newsTitle}}</ion-card-title>
-
-                <p>{{news.newsBody}}</p>
-              </ion-card-content>
-            </ion-card>
-
-            <ion-infinite-scroll>
-              <ion-infinite-scroll-content loadingSpinner="bubble" style="color: #0d0d0d" loadingText=""></ion-infinite-scroll-content>
-            </ion-infinite-scroll>
-          </div>
-        </ion-content>
+      <ion-content>
+        <div>
+          <ion-card class="card" *ngFor="let news of data" (click)="onGoToFeedSingle(news)">
+            <!-- <ion-img [src]="news.urlToImage"></ion-img> -->
+            <ion-card-content>
+              <ion-card-subtitle><ion-icon name="golf" class="meetingIcons"></ion-icon>{{news.city}}</ion-card-subtitle>
+              <ion-card-title>{{news.newsTitle}}</ion-card-title>
+              <p>{{news.newsBody}}</p>
+            </ion-card-content>
+          </ion-card>
+          <ion-infinite-scroll>
+            <ion-infinite-scroll-content loadingSpinner="bubble" style="color: #0d0d0d" loadingText=""></ion-infinite-scroll-content>
+          </ion-infinite-scroll>
+        </div>
+      </ion-content>
     </ion-row>
-
     <ion-row class="row3"></ion-row>
   </ion-grid>
 </ion-content>
-
