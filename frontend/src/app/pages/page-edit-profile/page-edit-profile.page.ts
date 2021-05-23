@@ -374,7 +374,7 @@ export class PageEditProfilePage implements OnInit {
       city: [this.user.city],
       tobbRegisterId: [this.user.tobbRegisterId],
       phone: [this.user.tobbRegisterId],
-      birthDate: [format(new Date(this.user.birthDate), 'yyyy-MM-dd')],
+      birthDate: [this.user.birthDate ? new Date(this.user.birthDate) : null],
       occupation: [this.user.occupation],
       description: [this.user.description],
     });

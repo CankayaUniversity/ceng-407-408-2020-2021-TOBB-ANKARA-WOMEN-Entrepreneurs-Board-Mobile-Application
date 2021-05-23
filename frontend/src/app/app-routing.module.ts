@@ -26,6 +26,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/page-register/page-register.module').then( m => m.PageRegisterPageModule)
   },
   {
+    path: 'profile/:id',
+    loadChildren: () => import('./pages/page-profile/page-profile.module').then( m => m.PageProfilePageModule),
+    canActivate: [LoginGuard],
+  },
+  {
     path: 'profile',
     loadChildren: () => import('./pages/page-profile/page-profile.module').then( m => m.PageProfilePageModule),
     canActivate: [LoginGuard],
@@ -37,7 +42,8 @@ const routes: Routes = [
   },
   {
     path: 'edit-profile',
-    loadChildren: () => import('./pages/page-edit-profile/page-edit-profile.module').then( m => m.PageEditProfilePageModule)
+    loadChildren: () => import('./pages/page-edit-profile/page-edit-profile.module').then( m => m.PageEditProfilePageModule),
+    canActivate: [LoginGuard],
   },
   {
     path: '',

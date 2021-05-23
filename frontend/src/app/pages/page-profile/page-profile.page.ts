@@ -1,11 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
-import {HttpClient} from '@angular/common/http';
-import {environment} from '../../../environments/environment';
 import {UserApi} from '../../providers/model/user/user.api';
 import {User} from '../../providers/model/user/user.model';
 import {AuthService} from '../../providers/service/auth.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {FormGroup} from '@angular/forms';
 import {format} from 'date-fns';
 
 @Component({
@@ -16,15 +14,36 @@ import {format} from 'date-fns';
 export class PageProfilePage implements OnInit {
   user: User;
   form: FormGroup;
+  isOwn: boolean;
 
-  constructor(private router: Router, private authService: AuthService) { }
+  constructor(
+    private router: Router,
+    private authService: AuthService,
+    private route: ActivatedRoute,
+    private userApi: UserApi,
+  ) {
+  }
 
   async ngOnInit() {
-    this.user = this.authService.getUser().value;
-    this.user.birthDate = format(new Date(this.user.birthDate), 'yyyy-MM-dd');
+    this.route.paramMap.subscribe(async paramMap => {
+      const userId = paramMap.get('id');
+      if (userId) {
+        try {
+          this.user = await this.userApi.get(userId).toPromise();
+        } catch (e) {
+          // hata mesajı
+        }
+      } else {
+        this.isOwn = true;
+        this.user = this.authService.getUser().value;
+        // this.user.birthDate = format(new Date(this.user.birthDate), 'yyyy-MM-dd');
+      }
+    });
+
   }
+
   // ngOnInit(){}
-  logout(){
+  logout() {
     this.router.navigate(['/login']);
   }
 

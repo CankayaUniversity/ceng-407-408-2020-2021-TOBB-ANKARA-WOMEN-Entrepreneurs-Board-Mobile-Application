@@ -12,9 +12,10 @@
         </ion-toolbar>
           <br>
         <ion-list>
-          <ion-item *ngFor="let users of userData | filter:filterTerm">
-            <ion-label>{{users.firstName}}</ion-label>
-            <ion-label>{{users.lastName}}</ion-label>
+          <ion-item *ngFor="let user of userData | filter:filterTerm" [routerLink]="['/profile', user.userId]">
+            <ion-label>{{user.firstName}}</ion-label>
+            <ion-label>{{user.lastName}}</ion-label>
+<!--            <button (click)="delete(user.userId)">Sil</button>-->
           </ion-item>
           <br>
         </ion-list>

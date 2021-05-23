@@ -27,5 +27,9 @@ export class PageSearchPage implements OnInit {
       });
   }
 
+  /*delete(userId: string) {
+
+  }*/
+
 }
 
