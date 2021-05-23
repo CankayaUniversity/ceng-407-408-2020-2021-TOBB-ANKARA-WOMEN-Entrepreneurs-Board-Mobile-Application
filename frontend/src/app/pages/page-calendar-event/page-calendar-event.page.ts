@@ -6,9 +6,10 @@ import {Router} from '@angular/router';
 import {CalendarEvent} from '../../providers/model/calendar-event/calendar-event.model';
 import {environment} from '../../../environments/environment';
 
-interface City{
+interface City {
   name: string;
 }
+
 @Component({
   selector: 'app-page-calendar-event',
   templateUrl: './page-calendar-event.page.html',
@@ -55,14 +56,20 @@ export class PageCalendarEventPage implements AfterViewInit {
           Validators.required
         ])
       ],
+      meetingDate: [
+        null,
+        Validators.compose([
+          Validators.required
+        ])
+      ],
       startTime: [
-        '',
+        null,
         Validators.compose([
           Validators.required
         ])
       ],
       endTime: [
-        '',
+        null,
         Validators.compose([
           Validators.required
         ])
@@ -326,17 +333,35 @@ export class PageCalendarEventPage implements AfterViewInit {
     const eventData: CalendarEvent = {...this.ionicForm.value};
     eventData.city = (eventData.city as any).name;
 
+    const meetingDate = new Date(eventData.meetingDate);
+
+    const startTime = new Date(eventData.startTime);
+    startTime.setFullYear(
+      meetingDate.getFullYear(),
+      meetingDate.getMonth(),
+      meetingDate.getDate(),
+    );
+    const endTime = new Date(eventData.endTime);
+    endTime.setFullYear(
+      meetingDate.getFullYear(),
+      meetingDate.getMonth(),
+      meetingDate.getDate(),
+    );
+
+    eventData.startTime = startTime.getTime() as any;
+    eventData.endTime = endTime.getTime() as any;
+
     this.submitted = true;
     if (this.ionicForm.invalid) {
       console.log('All fields are required.');
       this.router.navigate(['/tabs/calendar']);
       return false;
-    }else{
+    } else {
       console.log(eventData);
-      try{
+      try {
         await this.http.post(environment.apiUrl + '/api/calendar', eventData).toPromise();
         this.router.navigate(['/tabs/calendar']);
-      } catch (e){
+      } catch (e) {
         // error
       }
     }

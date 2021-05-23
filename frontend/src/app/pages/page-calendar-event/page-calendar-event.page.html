@@ -39,19 +39,19 @@
       Meeting Url is required.
     </span>
     <br>
-    <!--<ion-label class="formVariables">Meeting Date:</ion-label>
+    <ion-label class="formVariables">Meeting Date:</ion-label>
     <ion-item color="whitesmoke">
       <ion-icon class="formIcons" name="today-outline"></ion-icon>
-      <ion-input formControlName="meetingDate" required="true" placeholder="Meeting Date"></ion-input>
+      <ion-datetime formControlName="meetingDate" required="true" displayFormat="MMM/DD/YYYY"></ion-datetime>
     </ion-item>
     <span class="error ion-padding" *ngIf="submitted && errorCtr.meetingDate.errors?.required">
       Meeting Date is required.
     </span>
-    <br>-->
+    <br>
     <ion-label class="formVariables">Start Time:</ion-label>
     <ion-item color="whitesmoke">
       <ion-icon class="formIcons" name="time-outline"></ion-icon>
-      <ion-input type="time" formControlName="startTime" required="true" placeholder="Start Time"></ion-input>
+      <ion-datetime type="time" formControlName="startTime" required="true" displayFormat="HH:mm"></ion-datetime>
     </ion-item>
     <span class="error ion-padding" *ngIf="submitted && errorCtr.startTime.errors?.required">
       Start Time is required.
@@ -60,7 +60,7 @@
     <ion-label class="formVariables">End Time:</ion-label>
     <ion-item color="whitesmoke">
       <ion-icon class="formIcons" name="time-outline"></ion-icon>
-      <ion-input type="time" formControlName="endTime" required="true" placeholder="End Time"></ion-input>
+      <ion-datetime type="time" formControlName="endTime" required="true" displayFormat="HH:mm"></ion-datetime>
     </ion-item>
     <span class="error ion-padding" *ngIf="submitted && errorCtr.endTime.errors?.required">
       End Time is required.

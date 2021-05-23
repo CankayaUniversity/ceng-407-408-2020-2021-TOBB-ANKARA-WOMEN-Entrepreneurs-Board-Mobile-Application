@@ -15,8 +15,8 @@
                 <ion-icon name="golf" class="meetingIcons"></ion-icon>{{events.city}}
               </ion-card-subtitle>
               <ion-card-title>{{events.meetingPlace}}</ion-card-title>
-<!--              <p>{{events.meetingDate}}</p>-->
-              <p>{{events.startTime}} - {{events.endTime}}</p>
+              <p>{{events.startTime | date : 'MMM/dd/yyyy'}}</p>
+              <p>{{events.startTime | date : 'HH:mm'}} - {{events.endTime | date : 'HH:mm'}}</p>
               <a><p (click)="redirect(events.meetingUrl)" id="name">Meeting Link</p></a>
             </ion-card-content>
           </ion-card>
@@ -30,5 +30,12 @@
   </ion-grid>
 </ion-content>
 
+
+
+
+
+<!--ionic cordova platform add android
+ionic cordova build android
+// ionic cordova build android &#45;&#45;release-->
 
 
