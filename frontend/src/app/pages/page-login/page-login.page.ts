@@ -9,6 +9,7 @@ import {LoginForm} from '../../providers/model/login-form.type';
 import {User} from '../../providers/model/user/user.model';
 import {AuthService} from '../../providers/service/auth.service';
 import {Credential} from '../../providers/model/user/credential.model';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-page-login',
@@ -25,6 +26,7 @@ export class PageLoginPage implements OnInit {
     private router: Router,
     private http: HttpClient,
     private route: ActivatedRoute,
+    public translate: TranslateService,
     private authService: AuthService,
     ) {
 
@@ -78,6 +80,9 @@ export class PageLoginPage implements OnInit {
   }
   regMeIn(){
     this.router.navigate(['/register']);
+  }
+  changeLang(lang: string) {
+    this.translate.setDefaultLang(lang);
   }
 
 
