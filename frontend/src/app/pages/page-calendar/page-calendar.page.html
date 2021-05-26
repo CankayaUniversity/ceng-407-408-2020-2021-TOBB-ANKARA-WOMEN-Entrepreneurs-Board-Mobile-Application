@@ -1,5 +1,12 @@
 <ion-header>
-  <ion-icon (click)="openCalModal()" name="add-circle"></ion-icon>
+  <div class="row">
+    <div class="column left">
+      <ion-icon (click)="openCalModal()" name="add-circle"></ion-icon>
+    </div>
+    <div class="column right">
+      {{'Meetings' | translate}}
+    </div>
+  </div>
 </ion-header>
 
 <ion-content class="background">

@@ -1,3 +1,31 @@
+ion-header{
+  height: 0px;
+  .column {
+    float: left;
+    &.left {
+      margin-top: 19px;
+      margin-left: 20px;
+      bottom: 5px;
+      right: 15px;
+      border-radius: 50%;
+      padding: 5px;
+      background-color: transparent;
+      width:60px;
+      height:30px;
+    }
+    &.right {
+      display: flex;
+      font-size: 30px;
+      align-items: flex-end;
+      justify-content: center;
+      height: 81px;
+      padding-left: 100px;
+    }
+    ion-icon:first-child {
+      margin-left: auto;
+    }
+  }
+}
 .background {
   --background: url(../../../assets/backgrounds/bigger-right-bubble-meeting.png) 0 0/100% 100% no-repeat;
 }
