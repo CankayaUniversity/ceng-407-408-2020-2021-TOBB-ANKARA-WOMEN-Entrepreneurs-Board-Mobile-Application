@@ -6,7 +6,7 @@
       <button *ngIf="translate.currentLang === 'tr' || translate.defaultLang === 'tr'" (click)="changeLang('en')">EN</button>
     </div>
     <div class="column right">
-      <ion-icon *ngIf="user.roleId === 'MEMBER'" routerLink="/membership-admin" name="bag-add-sharp"></ion-icon>
+      <ion-icon *ngIf="user.roleId === 'PERMISSION_ADMIN'" routerLink="/permission-admin" name="bag-add-sharp"></ion-icon>
      <!-- <ion-icon *ngIf="user.roleId === 'MEMBERSHIP_ADMIN' || user.roleId === 'FULL_ADMIN'" routerLink="/admin" name="paper-plane-sharp"></ion-icon>-->
       <ion-icon (click)="message()" name="paper-plane-sharp"></ion-icon>
     </div>
