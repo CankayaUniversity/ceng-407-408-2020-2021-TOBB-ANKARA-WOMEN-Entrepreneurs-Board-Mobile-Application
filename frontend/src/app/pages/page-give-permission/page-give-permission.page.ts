@@ -33,18 +33,18 @@ export class PageGivePermissionPage implements OnInit {
     });
   }
   roles: RoleId[] = [
-    {
+    /*{
       name: 'CV_ADMIN',
     },
     {
       name: 'FULL_ADMIN',
-    },
+    },*/
     {
       name: 'GROUP_ADMIN',
     },
-    {
+    /*{
       name: 'MEETING_ADMIN',
-    },
+    },*/
     {
       name: 'MEMBER',
     },
