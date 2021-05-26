@@ -17,7 +17,7 @@
               <ion-card-title>{{events.meetingPlace}}</ion-card-title>
               <p>{{events.startTime | date : 'MMM/dd/yyyy'}}</p>
               <p>{{events.startTime | date : 'HH:mm'}} - {{events.endTime | date : 'HH:mm'}}</p>
-              <a><p (click)="redirect(events.meetingUrl)" id="name">Meeting Link</p></a>
+              <a><p (click)="redirect(events.meetingUrl)" id="name">{{'Meeting Link' | translate}}</p></a>
             </ion-card-content>
           </ion-card>
         </div>

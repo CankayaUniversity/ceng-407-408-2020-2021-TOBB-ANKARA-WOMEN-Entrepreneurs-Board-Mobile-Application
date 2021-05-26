@@ -15,7 +15,7 @@
       <ion-col size="12">
 
         <form [formGroup]="form" (ngSubmit)="save()"  id="form">
-          <p>Occupation:
+          <p>{{'Occupation:' | translate}}
             <ion-item color = "whitesmoke">
               <ion-icon name="business"></ion-icon>
               <ion-select formControlName="occupation" [compareWith]="compareWith">
@@ -23,25 +23,25 @@
               </ion-select>
             </ion-item>
 
-        <p>First Name:
+        <p>{{'First Name:' | translate}}
           <ion-item color = "whitesmoke" lines="full">
             <ion-icon name="person-sharp"></ion-icon>
             <ion-input formControlName="firstName" position="fixed"></ion-input>
           </ion-item>
 
-        <p>Last Name:
+        <p>{{'Last Name:' | translate}}
           <ion-item color = "whitesmoke">
             <ion-icon name="person-sharp"></ion-icon>
             <ion-input formControlName="lastName" position="fixed"></ion-input>
           </ion-item>
 
-        <p>E-Mail:
+        <p>{{'E-Mail:' | translate}}
           <ion-item color = "whitesmoke">
             <ion-icon name="mail"></ion-icon>
             <ion-input formControlName="email" position="fixed"></ion-input>
           </ion-item>
 
-        <p>City:
+        <p>{{'City:' | translate}}
           <ion-item color = "whitesmoke">
             <ion-icon name="home"></ion-icon>
             <ion-select formControlName="city" [compareWith]="compareWith">
@@ -49,26 +49,26 @@
             </ion-select>
           </ion-item>
 
-        <p>Registration Number:
+        <p>{{'TOBB Registration Number:' | translate}}
           <ion-item color = "whitesmoke">
             <ion-icon name="document"></ion-icon>
             <ion-label position="fixed">{{user?.tobbRegisterId}}</ion-label>
           </ion-item>
 
-        <p>Mobile Phone:
+        <p>{{'Mobile Phone:' | translate}}
           <ion-item color = "whitesmoke">
             <ion-icon name="call"></ion-icon>
             <ion-input formControlName="phone" position="fixed"></ion-input>
           </ion-item>
 
-        <p>Birth Date:
+        <p>{{'Birth Date:' | translate}}
           <ion-item color = "whitesmoke">
             <ion-icon name="calendar"></ion-icon>
             <ion-datetime formControlName="birthDate" displayFormat="MMM/DD/YYYY"></ion-datetime>
           </ion-item>
 
 
-        <p>Description:
+        <p>{{'Description:' | translate}}
           <ion-card color = "whitesmoke">
             <ion-card-content>
               <ion-icon name="pencil"></ion-icon>

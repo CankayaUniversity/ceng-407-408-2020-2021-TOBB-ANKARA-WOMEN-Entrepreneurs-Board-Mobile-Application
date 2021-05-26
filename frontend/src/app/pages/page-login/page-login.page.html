@@ -12,18 +12,18 @@
             <ion-input formControlName="username" required="true" placeholder="E-mail"></ion-input>
           </ion-item>
           <span class="error ion-padding" *ngIf="submitted && errorCtr.email.errors?.required">
-            E-mail is required.
+            {{'E-mail is required.' | translate}}
           </span>
           <ion-item color = "whitesmoke" class="ion-margin-bottom">
             <ion-icon name="lock-closed-sharp"></ion-icon>
             <ion-input formControlName="password" required="true" type="password" placeholder="Password"></ion-input>
           </ion-item>
           <span class="error ion-padding" *ngIf="submitted && errorCtr.password.errors?.required">
-            Password is required.
+            {{'Password is required.' | translate}}
           </span>
           <ion-button expand="block" shape="round" [disabled]="!loginForm.valid" type="submit">Sign in</ion-button>
         </form>
-        <p>Don't have an account?
+        <p>{{'Don\'t have an account?' | translate}}
           <a routerLink="/register"><u>Sign up</u></a>
           <br>
           <button *ngIf="translate.currentLang === 'en' || translate.defaultLang === 'en'" (click)="changeLang('tr')"><img src="../../../assets/flags/turkey.png"></button>

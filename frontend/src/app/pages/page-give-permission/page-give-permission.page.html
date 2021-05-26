@@ -10,7 +10,7 @@
 <ion-content>
   <form [formGroup]="form" (ngSubmit)="save()"  id="form">
     <br>
-    <ion-label class="formVariables">Give Role:</ion-label>
+    <ion-label class="formVariables">{{'Give Role:' | translate}}</ion-label>
     <ion-item color="whitesmoke">
       <ion-icon class="formIcons" name="business-outline"></ion-icon>
       <ion-select formControlName="roleId" required="true" placeholder="Role Name">
