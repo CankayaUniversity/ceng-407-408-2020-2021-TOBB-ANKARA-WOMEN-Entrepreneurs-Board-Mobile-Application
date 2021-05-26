@@ -15,6 +15,14 @@
       <ion-col size="12">
 
         <form [formGroup]="form" (ngSubmit)="save()"  id="form">
+          <p>Occupation:
+            <ion-item color = "whitesmoke">
+              <ion-icon name="business"></ion-icon>
+              <ion-select formControlName="occupation" [compareWith]="compareWith">
+                <ion-select-option *ngFor="let occupation of occupations" [value]="occupation">{{occupation.name}}</ion-select-option>
+              </ion-select>
+            </ion-item>
+
         <p>First Name:
           <ion-item color = "whitesmoke" lines="full">
             <ion-icon name="person-sharp"></ion-icon>
@@ -59,13 +67,6 @@
             <ion-datetime formControlName="birthDate" displayFormat="MMM/DD/YYYY"></ion-datetime>
           </ion-item>
 
-        <p>Occupation:
-          <ion-item color = "whitesmoke">
-            <ion-icon name="business"></ion-icon>
-            <ion-select formControlName="occupation" [compareWith]="compareWith">
-              <ion-select-option *ngFor="let occupation of occupations" [value]="occupation">{{occupation.name}}</ion-select-option>
-            </ion-select>
-          </ion-item>
 
         <p>Description:
           <ion-card color = "whitesmoke">
