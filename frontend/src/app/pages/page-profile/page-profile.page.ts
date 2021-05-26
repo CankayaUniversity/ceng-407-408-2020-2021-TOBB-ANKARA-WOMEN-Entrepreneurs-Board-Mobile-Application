@@ -15,6 +15,7 @@ export class PageProfilePage implements OnInit {
   user: User;
   form: FormGroup;
   isOwn: boolean;
+  goButton: boolean;
 
   constructor(
     private router: Router,
@@ -28,6 +29,7 @@ export class PageProfilePage implements OnInit {
     this.route.paramMap.subscribe(async paramMap => {
       const userId = paramMap.get('id');
       if (userId) {
+        this.goButton = true;
         try {
           this.user = await this.userApi.get(userId).toPromise();
         } catch (e) {
@@ -45,6 +47,9 @@ export class PageProfilePage implements OnInit {
   // ngOnInit(){}
   logout() {
     this.router.navigate(['/login']);
+  }
+  goBack(){
+    this.router.navigate(['/tabs/search']);
   }
 
 }
