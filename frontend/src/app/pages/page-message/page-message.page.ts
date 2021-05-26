@@ -14,12 +14,12 @@ export class PageMessagePage implements OnInit {
 
   messages = [
     {
-      username: 'Group Message Admin 1',
+      username: 'Group Admin',
       createdAt: 1554090856000,
       msg: 'Welcome To W-COOP Mobile Application!'
     },
     {
-      username: 'Group Message Admin 2',
+      username: 'Group Admin',
       createdAt: 1554090856000,
       msg: 'Here, you can find every new announcement about W-COOP and TOBB AKGK!',
     },
