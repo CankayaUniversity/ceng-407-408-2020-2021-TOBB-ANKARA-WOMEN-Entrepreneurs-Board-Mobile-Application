@@ -5,6 +5,7 @@ import { IonicModule } from '@ionic/angular';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { PageSearchPageRoutingModule } from './page-search-routing.module';
 import { PageSearchPage } from './page-search.page';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -12,7 +13,8 @@ import { PageSearchPage } from './page-search.page';
     FormsModule,
     IonicModule,
     Ng2SearchPipeModule,
-    PageSearchPageRoutingModule
+    PageSearchPageRoutingModule,
+    TranslateModule,
   ],
   declarations: [PageSearchPage]
 })

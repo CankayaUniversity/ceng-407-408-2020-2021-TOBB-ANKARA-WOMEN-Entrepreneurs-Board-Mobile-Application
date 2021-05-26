@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PageGivePermissionPageRoutingModule } from './page-give-permission-routing.module';
 
 import { PageGivePermissionPage } from './page-give-permission.page';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,6 +16,7 @@ import { PageGivePermissionPage } from './page-give-permission.page';
     IonicModule,
     PageGivePermissionPageRoutingModule,
     ReactiveFormsModule,
+    TranslateModule,
   ],
   declarations: [PageGivePermissionPage]
 })

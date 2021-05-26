@@ -8,7 +8,7 @@ import { PageLoginPageRoutingModule } from './page-login-routing.module';
 
 import { PageLoginPage } from './page-login.page';
 import {InputModule} from '../../components/input/input.module';
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
