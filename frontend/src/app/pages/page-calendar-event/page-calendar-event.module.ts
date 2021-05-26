@@ -8,6 +8,7 @@ import { PageCalendarEventPageRoutingModule } from './page-calendar-event-routin
 
 import { PageCalendarEventPage } from './page-calendar-event.page';
 import {NgCalendarModule} from 'ionic2-calendar';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -17,6 +18,7 @@ import {NgCalendarModule} from 'ionic2-calendar';
         PageCalendarEventPageRoutingModule,
         NgCalendarModule,
         ReactiveFormsModule,
+        TranslateModule,
     ],
   declarations: [PageCalendarEventPage]
 })

@@ -6,6 +6,7 @@ import { IonicModule } from '@ionic/angular';
 
 import { PageFeedSinglePage } from './page-feed-single.page';
 import {RouterModule, Routes} from '@angular/router';
+import {TranslateModule} from '@ngx-translate/core';
 
 const routes: Routes = [
   {
@@ -19,7 +20,8 @@ const routes: Routes = [
     CommonModule,
     FormsModule,
     IonicModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    TranslateModule,
   ],
   declarations: [PageFeedSinglePage]
 })

@@ -2,12 +2,9 @@
   <div class="row">
     <div class="column left">
       {{'Feed' | translate}}
-      <button *ngIf="translate.currentLang === 'en' || translate.defaultLang === 'en'" (click)="changeLang('tr')">TR</button>
-      <button *ngIf="translate.currentLang === 'tr' || translate.defaultLang === 'tr'" (click)="changeLang('en')">EN</button>
     </div>
     <div class="column right">
-      <ion-icon *ngIf="user.roleId === 'PERMISSION_ADMIN'" routerLink="/permission-admin" name="bag-add-sharp"></ion-icon>
-     <!-- <ion-icon *ngIf="user.roleId === 'MEMBERSHIP_ADMIN' || user.roleId === 'FULL_ADMIN'" routerLink="/admin" name="paper-plane-sharp"></ion-icon>-->
+      <ion-icon *ngIf="user.roleId === 'PERMISSION_ADMIN' || user.roleId === 'FULL_ADMIN'" routerLink="/permission-admin" name="bag-add-sharp"></ion-icon>
       <ion-icon (click)="message()" name="paper-plane-sharp"></ion-icon>
     </div>
   </div>

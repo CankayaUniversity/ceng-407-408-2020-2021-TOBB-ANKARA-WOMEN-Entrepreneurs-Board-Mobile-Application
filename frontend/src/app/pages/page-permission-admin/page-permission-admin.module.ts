@@ -8,6 +8,7 @@ import { PagePermissionAdminPageRoutingModule } from './page-permission-admin-ro
 
 import { PagePermissionAdminPage } from './page-permission-admin.page';
 import {Ng2SearchPipeModule} from 'ng2-search-filter';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import {Ng2SearchPipeModule} from 'ng2-search-filter';
     FormsModule,
     IonicModule,
     Ng2SearchPipeModule,
-    PagePermissionAdminPageRoutingModule
+    PagePermissionAdminPageRoutingModule,
+    TranslateModule,
   ],
   declarations: [PagePermissionAdminPage]
 })

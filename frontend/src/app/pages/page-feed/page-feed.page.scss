@@ -4,11 +4,11 @@ ion-header{
     float: left;
     &.left {
       display: flex;
-      font-size: 35px;
+      font-size: 30px;
       align-items: flex-end;
       justify-content: center;
-      height: 87px;
-      padding-left: 0;
+      height: 81px;
+      padding-left: 15px;
     }
     &.right {
       display: flex;

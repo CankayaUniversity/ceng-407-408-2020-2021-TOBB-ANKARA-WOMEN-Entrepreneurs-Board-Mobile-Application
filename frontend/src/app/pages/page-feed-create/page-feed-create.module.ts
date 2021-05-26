@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { PageFeedCreatePageRoutingModule } from './page-feed-create-routing.module';
 
 import { PageFeedCreatePage } from './page-feed-create.page';
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { PageFeedCreatePage } from './page-feed-create.page';
     FormsModule,
     IonicModule,
     PageFeedCreatePageRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    TranslateModule,
   ],
   declarations: [PageFeedCreatePage]
 })

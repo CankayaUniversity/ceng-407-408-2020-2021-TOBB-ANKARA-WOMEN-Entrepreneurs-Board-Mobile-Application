@@ -9,6 +9,7 @@ import { IonicModule } from '@ionic/angular';
 import { PageRegisterPageRoutingModule } from './page-register-routing.module';
 
 import { PageRegisterPage } from './page-register.page';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 
@@ -19,6 +20,7 @@ import { PageRegisterPage } from './page-register.page';
     IonicModule,
     PageRegisterPageRoutingModule,
     ReactiveFormsModule,
+    TranslateModule,
   ],
   declarations: [PageRegisterPage]
 })

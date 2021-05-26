@@ -6,6 +6,7 @@ import { PageTabsPageRoutingModule } from './page-tabs-routing.module';
 import { PageTabsPage } from './page-tabs.page';
 import { Routes, RouterModule } from '@angular/router';
 import {PageFeedPageModule} from '../page-feed/page-feed.module';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 const routes: Routes = [
@@ -48,7 +49,8 @@ const routes: Routes = [
     IonicModule,
     PageTabsPageRoutingModule,
     PageFeedPageModule,
-    RouterModule.forChild(routes)
+    RouterModule.forChild(routes),
+    TranslateModule,
   ],
   declarations: [PageTabsPage]
 })

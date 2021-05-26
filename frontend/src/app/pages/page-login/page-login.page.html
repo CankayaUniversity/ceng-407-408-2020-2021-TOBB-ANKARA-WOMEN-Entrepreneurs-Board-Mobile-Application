@@ -5,7 +5,7 @@
     <ion-row class="row1"></ion-row>
     <ion-row class="row2">
       <div id="header">
-        <h1>Welcome!</h1>
+        <h1>{{'Welcome!' | translate}}</h1>
         <form [formGroup]="loginForm" (ngSubmit)="submitForm()" id="form">
           <ion-item color = "whitesmoke"class="ion-margin-bottom">
             <ion-icon name="person-sharp"></ion-icon>
@@ -21,11 +21,13 @@
           <span class="error ion-padding" *ngIf="submitted && errorCtr.password.errors?.required">
             Password is required.
           </span>
-          <!-- <ion-button *ngFor="let user of user" (click)="click(user)" expand="block" shape="round" [disabled]="!loginForm.valid" type="submit" (click)="logMeIn()">Sign in</ion-button> -->
           <ion-button expand="block" shape="round" [disabled]="!loginForm.valid" type="submit">Sign in</ion-button>
         </form>
         <p>Don't have an account?
           <a routerLink="/register"><u>Sign up</u></a>
+          <br>
+          <button *ngIf="translate.currentLang === 'en' || translate.defaultLang === 'en'" (click)="changeLang('tr')"><img src="../../../assets/flags/turkey.png"></button>
+          <button *ngIf="translate.currentLang === 'tr' || translate.defaultLang === 'tr'" (click)="changeLang('en')"><img src="../../../assets/flags/usa.png"></button>
       </div>
     </ion-row>
     <ion-row class="row3"></ion-row>
