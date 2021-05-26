@@ -46,6 +46,14 @@ const routes: Routes = [
     canActivate: [LoginGuard],
   },
   {
+    path: 'give-permission',
+    loadChildren: () => import('./pages/page-give-permission/page-give-permission.module').then( m => m.PageGivePermissionPageModule)
+  },
+  {
+    path: 'permission-admin',
+    loadChildren: () => import('./pages/page-permission-admin/page-permission-admin.module').then( m => m.PagePermissionAdminPageModule)
+  },
+ {
     path: '',
     loadChildren: () => import('./pages/page-tabs/page-tabs.module').then( m => m.PageTabsPageModule),
     canActivate: [LoginGuard],
@@ -71,10 +79,11 @@ const routes: Routes = [
     loadChildren: () => import('./pages/page-search/page-search.module').then( m => m.PageSearchPageModule)
   },
 
-  /* For educational purposes, will be enhanced later{
-    path: 'user/:id',
-    loadChildren: () => import('./pages/page-register/page-register.module').then( m => m.PageRegisterPageModule)
-  },*/
+
+
+
+
+
 ];
 
 @NgModule({
