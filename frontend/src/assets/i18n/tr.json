@@ -17,7 +17,7 @@
   "Occupation:" : "Sektör:",
   "First Name:" : "Ad:",
   "Last Name:" : "Soyad:",
-  "E-mail:" : "E-posta:",
+  "E-Mail:" : "E-Posta:",
   "TOBB Registration Number:" : "TOBB Sicil No:",
   "Mobile Phone:": "Telefon No:",
   "Birth Date:" : "Doğum Tarihi:",
@@ -39,6 +39,7 @@
   "Number values allowed." : "Sadece sayı giriniz.",
   "Phone number is required." : "Telefon No giriniz.",
   "I agree with the terms and conditions" : "Şartları okudum ve kabul ediyorum",
-  "Register" : "Kayıt ol"
+  "Register" : "Kayıt ol",
+  "Log out": "Çıkış"
 
 }

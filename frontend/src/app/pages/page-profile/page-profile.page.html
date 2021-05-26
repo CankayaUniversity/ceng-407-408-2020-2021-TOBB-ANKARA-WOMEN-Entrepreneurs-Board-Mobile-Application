@@ -1,7 +1,7 @@
 <ion-header>
   <div class="float-child1">
     <ion-icon (click)="logout()" name="power-sharp" *ngIf="isOwn"></ion-icon>
-    <ion-label *ngIf="isOwn">Log out</ion-label>
+    <ion-label *ngIf="isOwn">{{'Log out' | translate}} </ion-label>
     <button class = "round" (click)="goBack()" *ngIf="goButton"><img src="../../../assets/icon/ok-left.png"></button>
   </div>
   <div class="float-child2">
@@ -74,7 +74,7 @@
           <ion-label position="fixed">{{user?.birthDate | date: 'MMM/dd/YYYY'}}</ion-label>
         </ion-item>
 
-        <p>{{'Description: ' | translate}}
+        <p>{{'Description:' | translate}}
         <ion-card color = "whitesmoke">
           <ion-card-content>
             <ion-icon name="pencil"></ion-icon>
