@@ -10,7 +10,7 @@
 <ion-content>
   <form [formGroup]="ionicForm" id="form">
     <br>
-    <ion-label class="formVariables">City:</ion-label>
+    <ion-label class="formVariables">{{'City:' | translate}}</ion-label>
     <ion-item color="whitesmoke">
       <ion-icon class="formIcons" name="business-outline"></ion-icon>
       <ion-select formControlName="city" required="true" placeholder="City">
@@ -18,52 +18,52 @@
       </ion-select>
     </ion-item>
     <span class="error ion-padding" *ngIf="submitted && errorCtr.city.errors?.required">
-      City is required.
+      {{'City is required.' | translate}}
     </span>
     <br>
-    <ion-label class="formVariables">Meeting Place:</ion-label>
+    <ion-label class="formVariables">{{'Meeting Place:' | translate}}</ion-label>
     <ion-item color="whitesmoke">
       <ion-icon class="formIcons" name="earth-outline"></ion-icon>
       <ion-input formControlName="meetingPlace" required="true" placeholder="Meeting Place"></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="submitted && errorCtr.meetingPlace.errors?.required">
-      Meeting Place is required.
+      {{'Meeting Place is required.' | translate}}
     </span>
     <br>
-    <ion-label class="formVariables">Meeting Url:</ion-label>
+    <ion-label class="formVariables">{{'Meeting Url:' | translate}}</ion-label>
     <ion-item color="whitesmoke">
       <ion-icon class="formIcons" name="videocam-outline"></ion-icon>
       <ion-input formControlName="meetingUrl" required="true" placeholder="Meeting Url"></ion-input>
     </ion-item>
     <span class="error ion-padding" *ngIf="submitted && errorCtr.meetingUrl.errors?.required">
-      Meeting Url is required.
+      {{'Meeting Url is required.' | translate}}
     </span>
     <br>
-    <ion-label class="formVariables">Meeting Date:</ion-label>
+    <ion-label class="formVariables">{{'Meeting Date:' | translate}}</ion-label>
     <ion-item color="whitesmoke">
       <ion-icon class="formIcons" name="today-outline"></ion-icon>
       <ion-datetime formControlName="meetingDate" required="true" displayFormat="MMM/DD/YYYY"></ion-datetime>
     </ion-item>
     <span class="error ion-padding" *ngIf="submitted && errorCtr.meetingDate.errors?.required">
-      Meeting Date is required.
+      {{'Meeting Date is required.' | translate}}
     </span>
     <br>
-    <ion-label class="formVariables">Start Time:</ion-label>
+    <ion-label class="formVariables">{{'Start Time:' | translate}}</ion-label>
     <ion-item color="whitesmoke">
       <ion-icon class="formIcons" name="time-outline"></ion-icon>
       <ion-datetime type="time" formControlName="startTime" required="true" displayFormat="HH:mm"></ion-datetime>
     </ion-item>
     <span class="error ion-padding" *ngIf="submitted && errorCtr.startTime.errors?.required">
-      Start Time is required.
+      {{'Start Time is required.' | translate}}
     </span>
     <br>
-    <ion-label class="formVariables">End Time:</ion-label>
+    <ion-label class="formVariables">{{'End Time:' | translate}}</ion-label>
     <ion-item color="whitesmoke">
       <ion-icon class="formIcons" name="time-outline"></ion-icon>
       <ion-datetime type="time" formControlName="endTime" required="true" displayFormat="HH:mm"></ion-datetime>
     </ion-item>
     <span class="error ion-padding" *ngIf="submitted && errorCtr.endTime.errors?.required">
-      End Time is required.
+      {{'End Time is required.' | translate}}
     </span>
     <br>
     <ion-button type="submit" (click)="saveEvent()">
