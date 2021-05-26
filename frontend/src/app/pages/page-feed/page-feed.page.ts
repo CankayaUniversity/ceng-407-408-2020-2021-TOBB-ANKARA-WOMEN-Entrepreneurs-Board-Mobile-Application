@@ -5,7 +5,7 @@ import {environment} from '../../../environments/environment';
 import {AuthService} from '../../providers/service/auth.service';
 import {User} from '../../providers/model/user/user.model';
 import {AlertController, IonContent} from '@ionic/angular';
-import {TranslateService} from "@ngx-translate/core";
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-page-feed',
@@ -26,7 +26,7 @@ export class PageFeedPage implements OnInit {
     public translate: TranslateService,
     @Inject(LOCALE_ID) private locale: string,
   ) {
-    console.log(translate.currentLang)
+    console.log(translate.currentLang);
   }
 
   ngOnInit() {
