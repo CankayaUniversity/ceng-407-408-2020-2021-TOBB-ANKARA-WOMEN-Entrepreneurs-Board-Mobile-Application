@@ -53,14 +53,14 @@ const routes: Routes = [
     path: 'permission-admin',
     loadChildren: () => import('./pages/page-permission-admin/page-permission-admin.module').then( m => m.PagePermissionAdminPageModule)
   },
+  {
+    path: 'feed-single',
+    loadChildren: () => import('./pages/page-feed-single/page-feed-single.module').then( m => m.PageFeedSinglePageModule)
+  },
  {
     path: '',
     loadChildren: () => import('./pages/page-tabs/page-tabs.module').then( m => m.PageTabsPageModule),
     canActivate: [LoginGuard],
-  },
-  {
-    path: 'feed-single',
-    loadChildren: () => import('./pages/page-feed-single/page-feed-single.module').then( m => m.PageFeedSinglePageModule)
   },
   {
     path: 'calendar',
