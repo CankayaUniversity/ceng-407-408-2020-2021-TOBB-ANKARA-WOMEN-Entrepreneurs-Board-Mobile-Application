@@ -40,6 +40,9 @@
   "Phone number is required." : "Telefon No giriniz.",
   "I agree with the terms and conditions" : "Şartları okudum ve kabul ediyorum",
   "Register" : "Kayıt ol",
-  "Log out": "Çıkış"
-
+  "Log out": "Çıkış",
+  "Sign up" : "Kayıt ol",
+  "Sign in": "Giriş Yap",
+  "Edit Profile": "Profilini Düzenle",
+  "Save": "Kaydet"
 }

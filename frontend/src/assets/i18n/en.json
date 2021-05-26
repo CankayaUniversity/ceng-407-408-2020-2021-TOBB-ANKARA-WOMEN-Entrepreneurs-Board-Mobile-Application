@@ -40,6 +40,10 @@
   "Phone number is required." : "Phone number is required.",
   "I agree with the terms and conditions": "I agree with the terms and conditions",
   "Register" : "Register",
-  "Log out": "Log out"
+  "Log out": "Log out",
+  "Sign up" : "Sign up",
+  "Sign in": "Sign in",
+  "Edit Profile": "Edit Profile",
+  "Save": "Save"
 
 }

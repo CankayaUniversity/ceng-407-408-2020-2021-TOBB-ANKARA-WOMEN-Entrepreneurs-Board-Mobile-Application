@@ -21,10 +21,10 @@
           <span class="error ion-padding" *ngIf="submitted && errorCtr.password.errors?.required">
             {{'Password is required.' | translate}}
           </span>
-          <ion-button expand="block" shape="round" [disabled]="!loginForm.valid" type="submit">Sign in</ion-button>
+          <ion-button expand="block" shape="round" [disabled]="!loginForm.valid" type="submit">{{'Sign in' | translate}}</ion-button>
         </form>
         <p>{{'Don\'t have an account?' | translate}}
-          <a routerLink="/register"><u>Sign up</u></a>
+          <a routerLink="/register"><u>{{'Sign up' | translate}}</u></a>
           <br>
           <button *ngIf="translate.currentLang === 'en' || translate.defaultLang === 'en'" (click)="changeLang('tr')"><img src="../../../assets/flags/turkey.png"></button>
           <button *ngIf="translate.currentLang === 'tr' || translate.defaultLang === 'tr'" (click)="changeLang('en')"><img src="../../../assets/flags/usa.png"></button>
