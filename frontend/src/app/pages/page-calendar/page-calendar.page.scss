@@ -64,12 +64,21 @@ ion-grid {
   height: 12%;
 }
 .row2{
-  padding: 7% 9% 11% 16%;
+  padding: 3% 2% 11% 11%;
   height: 87%;
   --ion-background-color: transparent !important;
 }
+
 .row3{
   height: 1%;
+}
+
+.slide{
+  margin-right: 5%;
+}
+
+.ion-text-center{
+  padding-left: 9%;
 }
 
 ion-icon{
@@ -95,66 +104,4 @@ ion-card-subtitle{
   color: white;
 }
 
-/*
-.background {
-  --background: url(../../../assets/backgrounds/bigger-left-bubble.png) 0 0/100% 100% no-repeat;
-}
 
-ion-header{
-  height: 0;
-  button{
-    margin-top: 12px;
-    margin-left: 25px;
-    bottom: 5px;
-    right: 15px;
-    border-radius: 50%;
-    padding: 5px;
-    background-color: transparent;
-    width:60px;
-    height:30px;
-  }
-}
-
-ion-grid {
-  height: 100%;
-}
-
-.row1{
-  height: 12%;
-}
-.row2{
-  padding: 7% 9% 11% 3%;
-  height: 88%;
-}
-.row3{
-  height: 1%;
-}
-
-.indicator-container {
-  padding-left: 0.5rem;
-  padding-bottom: 0.4rem;
-}
-
-.event-indicator {
-  background: var(--ion-color-success);
-  width: 5px;
-  height: 5px;
-  border-radius: 5px;
-  display: table-cell;
-}
-
-:host ::ng-deep {
-  .monthview-primary-with-event {
-    background-color: white !important;
-  }
-
-  .monthview-selected {
-    background-color: var(--ion-color-success) !important;
-  }
-}
-
-.with-event {
-  background-color: var(--ion-color-primary);
-  border-radius: 15px;
-}
-*/

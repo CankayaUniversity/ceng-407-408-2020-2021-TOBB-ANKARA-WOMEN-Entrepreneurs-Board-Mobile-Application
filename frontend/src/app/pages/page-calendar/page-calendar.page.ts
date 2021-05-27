@@ -2,7 +2,6 @@ import {Component, Inject, LOCALE_ID, OnInit, ViewChild} from '@angular/core';
 import {CalendarComponent} from 'ionic2-calendar';
 import { CalendarService } from 'src/app/providers/service/calendar.service';
 import {AlertController, ModalController} from '@ionic/angular';
-import {formatDate} from '@angular/common';
 import {PageCalendarEventPage} from '../page-calendar-event/page-calendar-event.page';
 import { Router } from '@angular/router';
 import {User} from '../../providers/model/user/user.model';
@@ -18,9 +17,15 @@ export class PageCalendarPage implements OnInit {
   page = 1;
   eventSource = []; // events that will be displayed
   viewTitle: string; // month, week or day name
+
   user: User;
 
-  // selectedDate: Date;
+  calendar = {
+    mode: 'month',
+    currentDate: new Date(),
+  };
+
+  selectedDate: Date;
   @ViewChild(CalendarComponent) myCal: CalendarComponent;
 
   constructor(
@@ -39,6 +44,19 @@ export class PageCalendarPage implements OnInit {
         this.calendarData = data;
       });
     this.user = this.authService.getUser().value;
+  }
+
+  next() {
+    this.myCal.slideNext();
+  }
+
+  back() {
+    this.myCal.slidePrev();
+  }
+
+  onViewTitleChanged(title) {
+    this.viewTitle = title;
+    console.log(this.viewTitle);
   }
 
   toAddMeeting(){
