@@ -1,13 +1,24 @@
-<ion-content>
-  <ion-card class="card">
-    <!-- <ion-img [src]="news.urlToImage"></ion-img> -->
-
-    <ion-card-content>
-      <ion-card-header style="background-color: mediumvioletred">
-        <ion-card-title>{{news.title}}</ion-card-title>
-        <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
-      </ion-card-header>
-      <p>{{news.description}}</p>
-    </ion-card-content>
-  </ion-card>
+<ion-header>
+  <button class = "round" (click)="goBack()"><img src="../../../assets/icon/ok-left.png"></button>
+</ion-header>
+<ion-content class="background">
+    <ion-grid>
+      <ion-row class="row1"></ion-row>
+      <ion-row class="row2">
+        <ion-content>
+          <div>
+            <ion-card class="card">
+              <!-- <ion-img [src]="news.urlToImage"></ion-img> -->
+              <ion-card-content>
+                <ion-card-subtitle><ion-icon name="golf" class="meetingIcons"></ion-icon>{{news.city}}</ion-card-subtitle>
+                  <ion-card-subtitle>Card Subtitle</ion-card-subtitle>
+                  <ion-card-title>{{news.title}}</ion-card-title>
+                <p>{{news.description}}Description</p>
+              </ion-card-content>
+            </ion-card>
+          </div>
+        </ion-content>
+      </ion-row>
+      <ion-row class="row3"></ion-row>
+    </ion-grid>
 </ion-content>

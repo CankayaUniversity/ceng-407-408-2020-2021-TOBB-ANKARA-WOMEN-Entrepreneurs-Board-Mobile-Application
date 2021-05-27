@@ -2,6 +2,21 @@
   --background: url(../../../assets/backgrounds/bigger-left-bubble-edited.png) 0 0/100% 100% no-repeat;
 }
 
+ion-header{
+  height: 0px;
+  button{
+    margin-top: 12px;
+    margin-left: 25px;
+    bottom: 5px;
+    right: 15px;
+    border-radius: 50%;
+    padding: 5px;
+    background-color: transparent;
+    width:60px;
+    height:30px;
+  }
+}
+
 ion-grid {
   height: 100%;
 }
@@ -12,6 +27,8 @@ ion-grid {
 .row2{
   padding: 7% 9% 11% 3%;
   height: 87%;
+  margin-bottom: 10%;
+  --ion-background-color: transparent !important;
 }
 .row3{
   height: 1%;
@@ -26,15 +43,31 @@ ion-grid {
 }
 
 .card{
-  margin-top: 10%;
-  margin-left: 6%;
-  width: 80%;
+  width: 90%;
   height: 63%;
   display:inline-block;
+  padding: 0;
+}
+
+.meetingIcons{
+  margin-left: 0;
+  margin-top: 0;
+  margin-right: 3%;
+  width: 20px;
+  height: 20px;
 }
 
 ion-card-content{
   height: 44%;
+  color: white;
+}
+
+ion-card-title{
+  color: white;
+}
+
+ion-card-subtitle{
+  color: white;
 }
 
 .card-image{
