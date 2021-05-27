@@ -13,7 +13,7 @@
           <ion-label class="formVariables">{{'City:' | translate}}</ion-label>
           <ion-item color="whitesmoke">
             <ion-icon class="formIcons" name="home"></ion-icon>
-              <ion-select formControlName="city" required="true" placeholder="City">
+              <ion-select formControlName="city" required="true">
                 <ion-select-option *ngFor="let city of cities" [value]="city">{{city.name}}</ion-select-option>
               </ion-select>
           </ion-item>
@@ -23,7 +23,7 @@
           <ion-label class="formVariables">{{'Title:' | translate}}</ion-label>
           <ion-item color="whitesmoke">
             <ion-icon class="formIcons" name="create-outline"></ion-icon>
-            <ion-input formControlName="newsTitle" required="true" placeholder="News Title"></ion-input>
+            <ion-input formControlName="newsTitle" required="true"></ion-input>
           </ion-item>
           <span class="error ion-padding" *ngIf="submitted && errorCtr.newsTitle.errors?.required">
             {{'News Title is required.' | translate}}
@@ -31,7 +31,7 @@
           <ion-label class="formVariables">{{'Description:' | translate}}</ion-label>
           <ion-item color="whitesmoke">
             <ion-icon class="formIcons" name="reorder-four-outline"></ion-icon>
-            <ion-textarea formControlName="newsBody" required="true" placeholder="Description"></ion-textarea>
+            <ion-textarea formControlName="newsBody" required="true"></ion-textarea>
           </ion-item>
           <span class="error ion-padding" *ngIf="submitted && errorCtr.newsBody.errors?.required">
             {{'Description is required.' | translate}}
