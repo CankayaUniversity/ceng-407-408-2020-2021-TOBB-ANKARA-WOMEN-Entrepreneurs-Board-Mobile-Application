@@ -12,6 +12,7 @@ TOBB ANKARA WOMEN Entrepreneurs Board Mobile Application
 * Use this if you want to run the application using IDE
 
 File > Project Structure > Modules > + > Import Module > Select backend folder > Import module from external model > Select Maven > Finish 
+
 File > Project Structure > Modules > + > Import Module > Select frontend folder > Create module from existing sources > Next > Next > Finish
 
 File > Project Structure > Project > Select Project SDK as Java 11 
