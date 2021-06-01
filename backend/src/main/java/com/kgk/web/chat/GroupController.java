@@ -22,7 +22,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
-@Secured(SecurityRule.IS_ANONYMOUS)
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/group")
 public class GroupController {
 
@@ -43,68 +43,81 @@ public class GroupController {
     }
 
     @Get
+    @Secured({"GROUP_ADMIN", "FULL_ADMIN"})
     public List<Group> listAllCreatedGroupsByUser(Principal principal) {
         return groupRepository.listAllCreatedGroupsByUser(principal.getName());
     }
 
     @Get("/{groupId}")
+    @Secured(SecurityRule.IS_ANONYMOUS)
     public Group findGroup(@PathVariable("groupId") String groupId) {
         return groupRepository.findGroupByGroupId(groupId);
     }
 
     @Post
+    @Secured({"GROUP_ADMIN", "FULL_ADMIN"})
     public Group createGroup(Principal principal, @Valid @Body Group group) {
         return groupRepository.createGroup(principal.getName(), group);
     }
 
     @Put("/{groupId}")
+    @Secured({"GROUP_ADMIN", "FULL_ADMIN"})
     public Group updateGroup(@PathVariable("groupId") String groupId, @Valid @Body Group group){
         return groupRepository.updateGroup(groupId, group);
     }
 
     @Delete("/{groupId}")
+    @Secured({"GROUP_ADMIN", "FULL_ADMIN"})
     public void deleteGroup(@PathVariable("groupId") String groupId) {
         groupRepository.deleteGroup(groupId);
     }
 
     //GroupMemberRepository methods
     @Get("/group-members/{groupId}")
+    @Secured({"GROUP_ADMIN", "FULL_ADMIN"})
     public List<GroupMember> listAllUsersByGroupId(@PathVariable("groupId") String groupId) {
         return groupMemberRepository.listAllUsersByGroupId(groupId);
     }
 
     @Get("/group-members/add-user")
+    @Secured({"GROUP_ADMIN", "FULL_ADMIN"})
     public List<User> listAllUsers() {
         return userRepository.listAllUsers();
     }
 
     @Get("/all-groups/{userId}")
+    @Secured(SecurityRule.IS_ANONYMOUS)
     public List<Group> listAllGroupsThatUserIsIn(@PathVariable("userId") String userId) {
         return groupMemberRepository.listAllGroupsByUserId(userId);
     }
 
     @Post("/{userId}/{groupId}")
+    @Secured({"GROUP_ADMIN", "FULL_ADMIN"})
     public GroupMember addUser(@PathVariable("userId") String userId, @PathVariable("groupId") String groupId) {
         return groupMemberRepository.addUser(userId, groupId);
     }
 
     @Delete("/remove-user/{userId}")
+    @Secured({"GROUP_ADMIN", "FULL_ADMIN"})
     public void removeUser(@PathVariable("userId") String userId) {
         groupMemberRepository.removeUser(userId);
     }
 
     //GroupMessageRepository methods
     @Get("/messages/{groupId}")
+    @Secured(SecurityRule.IS_ANONYMOUS)
     public List<GroupMessage> listAllMessagesByGroupId(@PathVariable("groupId") String groupId) {
         return groupMessageRepository.listAllMessagesByGroupId(groupId);
     }
 
     @Post("/messages/{groupId}")
+    @Secured(SecurityRule.IS_ANONYMOUS)
     public GroupMessage sendMessage(Principal principal, @PathVariable("groupId") String groupId, @Valid @Body GroupMessage groupMessage) {
         return groupMessageRepository.saveMessage(principal.getName(), groupId, groupMessage);
     }
 
     @Delete("/messages/{groupId}/{messageId}")
+    @Secured(SecurityRule.IS_ANONYMOUS)
     public void deleteMessage(@PathVariable("groupId") String groupId, @PathVariable("messageId") String messageId) {
         groupMessageRepository.deleteMessage(groupId, messageId);
     }
