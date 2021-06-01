@@ -288,19 +288,6 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 5
           WriteCapacityUnits: 5
-    rolesTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: Roles
-        AttributeDefinitions:
-          - AttributeName: roleName
-            AttributeType: S
-        KeySchema:
-          - AttributeName: roleName
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 5
-          WriteCapacityUnits: 5
     deletedItems:
       Type: AWS::DynamoDB::Table
       Properties:
