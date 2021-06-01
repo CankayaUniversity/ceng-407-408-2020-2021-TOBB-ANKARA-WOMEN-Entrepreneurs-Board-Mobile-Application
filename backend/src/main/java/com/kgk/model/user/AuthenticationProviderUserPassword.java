@@ -13,7 +13,6 @@ import io.reactivex.Flowable;
 import org.reactivestreams.Publisher;
 
 import javax.inject.Singleton;
-import java.util.ArrayList;
 import java.util.Collections;
 
 @Singleton
