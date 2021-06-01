@@ -7,6 +7,7 @@ import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kgk.model.DeletedItem;
 import com.kgk.model.admin.RegisterForm;
+import com.kgk.model.admin.RoleType;
 import com.kgk.model.user.User;
 import com.kgk.repository.admin.MembershipRepository;
 import com.kgk.repository.user.UserRepository;
@@ -65,10 +66,10 @@ public class MembershipRepositoryImpl implements MembershipRepository {
 
         RegisterForm retrievedForm = mapper.load(RegisterForm.class, registerId, config);
         retrievedForm.setApproved("true");
-        retrievedForm.setRoleId("MEMBER");
+        retrievedForm.setRoleId(RoleType.MEMBER.toString());
 
         user.setUserId(UUID.randomUUID().toString());
-        user.setRoleId("MEMBER");
+        user.setRoleId(RoleType.MEMBER.toString());
         user.setFirstName(retrievedForm.getFirstName());
         user.setLastName(retrievedForm.getLastName());
         user.setEmail(retrievedForm.getEmail());
