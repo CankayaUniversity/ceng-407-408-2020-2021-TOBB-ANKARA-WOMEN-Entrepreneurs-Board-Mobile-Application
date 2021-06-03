@@ -49,7 +49,6 @@ public class GroupController {
     }
 
     @Get("/{groupId}")
-    @Secured(SecurityRule.IS_ANONYMOUS)
     public Group findGroup(@PathVariable("groupId") String groupId) {
         return groupRepository.findGroupByGroupId(groupId);
     }
@@ -86,7 +85,6 @@ public class GroupController {
     }
 
     @Get("/all-groups/{userId}")
-    @Secured(SecurityRule.IS_ANONYMOUS)
     public List<Group> listAllGroupsThatUserIsIn(@PathVariable("userId") String userId) {
         return groupMemberRepository.listAllGroupsByUserId(userId);
     }
@@ -105,19 +103,16 @@ public class GroupController {
 
     //GroupMessageRepository methods
     @Get("/messages/{groupId}")
-    @Secured(SecurityRule.IS_ANONYMOUS)
     public List<GroupMessage> listAllMessagesByGroupId(@PathVariable("groupId") String groupId) {
         return groupMessageRepository.listAllMessagesByGroupId(groupId);
     }
 
     @Post("/messages/{groupId}")
-    @Secured(SecurityRule.IS_ANONYMOUS)
     public GroupMessage sendMessage(Principal principal, @PathVariable("groupId") String groupId, @Valid @Body GroupMessage groupMessage) {
         return groupMessageRepository.saveMessage(principal.getName(), groupId, groupMessage);
     }
 
     @Delete("/messages/{groupId}/{messageId}")
-    @Secured(SecurityRule.IS_ANONYMOUS)
     public void deleteMessage(@PathVariable("groupId") String groupId, @PathVariable("messageId") String messageId) {
         groupMessageRepository.deleteMessage(groupId, messageId);
     }

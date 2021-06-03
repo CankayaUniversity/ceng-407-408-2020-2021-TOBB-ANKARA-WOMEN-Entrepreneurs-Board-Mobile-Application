@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
-@Secured(SecurityRule.IS_ANONYMOUS)
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/feed")
 public class FeedController {
 
@@ -27,8 +27,8 @@ public class FeedController {
     }
 
     @Get
-    public List<News> listAllNews(/*Principal principal*/) {
-        return newsRepository.listAllNews(/*principal.getName()*/);
+    public List<News> listAllNews(Principal principal) {
+        return newsRepository.listAllNews(principal.getName());
     }
 
     @Get("/{newsId}")

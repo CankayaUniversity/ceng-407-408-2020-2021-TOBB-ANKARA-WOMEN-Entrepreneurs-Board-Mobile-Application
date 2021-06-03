@@ -15,7 +15,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
-@Secured(SecurityRule.IS_ANONYMOUS)
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/membership")
 public class MembershipController {
 
@@ -26,21 +26,25 @@ public class MembershipController {
     }
 
     @Get
+    @Secured({"MEMBERSHIP_ADMIN", "FULL_ADMIN"})
     public List<RegisterForm> listAll(Principal principal){
         return membershipRepository.listAllUnapprovedRegisterForms(principal.getName());
     }
 
     @Get("/{registerId}")
+    @Secured({"MEMBERSHIP_ADMIN", "FULL_ADMIN"})
     public RegisterForm findRegisterFormById(@PathVariable("registerId") String registerId){
         return membershipRepository.findRegisterFormById(registerId);
     }
 
     @Put("/{registerId}")
+    @Secured({"MEMBERSHIP_ADMIN", "FULL_ADMIN"})
     public RegisterForm approve(@PathVariable("registerId") String registerId, @Valid @Body RegisterForm registerForm) {
         return membershipRepository.approveRegisterForm(registerId, registerForm);
     }
 
     @Delete("/{registerId}")
+    @Secured({"MEMBERSHIP_ADMIN", "FULL_ADMIN"})
     public void decline(@PathVariable("registerId") String registerId) {
         membershipRepository.declineRegisterForm(registerId);
     }

@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface MeetingRepository {
 
-    List<Meeting> listAllMeetings(/*String userId*/);
+    List<Meeting> listAllMeetings(String userId);
 
     Meeting findMeetingByMeetingId(String newsId);
 
