@@ -16,7 +16,7 @@ import javax.validation.Valid;
 import java.security.Principal;
 import java.util.List;
 
-@Secured(SecurityRule.IS_ANONYMOUS)
+@Secured(SecurityRule.IS_AUTHENTICATED)
 @Controller("/api/calendar")
 public class CalendarController {
 
@@ -27,8 +27,8 @@ public class CalendarController {
     }
 
     @Get
-    public List<Meeting> listAllMeetings(/*Principal principal*/) {
-        return meetingRepository.listAllMeetings(/*principal.getName()*/);
+    public List<Meeting> listAllMeetings(Principal principal) {
+        return meetingRepository.listAllMeetings(principal.getName());
     }
 
     @Get("/{meetingId}")

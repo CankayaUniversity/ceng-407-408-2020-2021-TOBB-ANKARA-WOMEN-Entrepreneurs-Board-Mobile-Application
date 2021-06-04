@@ -12,7 +12,6 @@ import com.kgk.repository.admin.MeetingRepository;
 import com.kgk.repository.user.UserRepository;
 
 import javax.inject.Singleton;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,12 +38,11 @@ public class MeetingRepositoryImpl implements MeetingRepository {
     }
 
     @Override
-    public List<Meeting> listAllMeetings(/*String userId*/) {
-        //User currentUser = userRepository.findUserById(userId);
+    public List<Meeting> listAllMeetings(String userId) {
+        User currentUser = userRepository.findUserById(userId);
 
         Map<String, AttributeValue> eav = new HashMap<>();
-        //eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
-        eav.put(":city", new AttributeValue().withS("Ankara"));
+        eav.put(":city", new AttributeValue().withS(currentUser.getCity()));
         eav.put(":updatedAt", new AttributeValue().withN(String.valueOf(System.currentTimeMillis())));
 
         DynamoDBQueryExpression<Meeting> queryExpression = new DynamoDBQueryExpression<Meeting>()
